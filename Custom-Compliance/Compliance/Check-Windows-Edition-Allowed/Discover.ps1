@@ -39,7 +39,6 @@ $ScriptName = 'Discover'
 
 $CurrentVersionRegistryPath = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
 $AllowedEditionIds = @('Enterprise', 'Professional')
-$AllowedProductNamePatterns = @('Windows 11 Enterprise*', 'Windows 11 Pro*')
 
 # =========================
 # LOGGING
@@ -52,18 +51,6 @@ $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 function Initialize-Log { if (-not (Test-Path -LiteralPath $LogRoot)) { New-Item -Path $LogRoot -ItemType Directory -Force | Out-Null } }
 function Write-Log { param([Parameter(Mandatory = $true)][string]$Message, [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'); Add-Content -Path $LogPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Level] $Message" -Encoding UTF8 }
 function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name; Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'." }
-
-function Test-ProductNameAllowed {
-    param([Parameter(Mandatory = $true)][string]$ProductName)
-
-    foreach ($pattern in $AllowedProductNamePatterns) {
-        if ($ProductName -like $pattern) {
-            return $true
-        }
-    }
-
-    return $false
-}
 
 # =========================
 # MAIN
@@ -86,7 +73,7 @@ try {
 
     $result.ProductName = $productName
     $result.EditionId = $editionId
-    $result.WindowsEditionAllowed = (($AllowedEditionIds -contains $editionId) -or (Test-ProductNameAllowed -ProductName $productName))
+    $result.WindowsEditionAllowed = ($AllowedEditionIds -contains $editionId)
 
     Write-Log -Message "Discovery completed. ProductName='$productName'; EditionId='$editionId'; Compliant='$($result.WindowsEditionAllowed)'."
 }

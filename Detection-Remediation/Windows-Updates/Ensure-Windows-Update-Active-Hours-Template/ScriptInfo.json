@@ -11,6 +11,13 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Template remediation that detects and sets Windows Update active hours policy for business devices.",
   "Tags": [
     "Windows Updates",
@@ -19,4 +26,3 @@
     "Template"
   ]
 }
-

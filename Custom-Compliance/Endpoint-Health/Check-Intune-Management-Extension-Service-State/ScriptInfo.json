@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports whether the Intune Management Extension service exists, uses the expected startup mode, and is running. This is useful for finding devices that may fail Win32 app installs, remediations, or PowerShell script delivery.",
   "Tags": [
     "Endpoint-Health",

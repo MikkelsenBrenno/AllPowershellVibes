@@ -11,6 +11,13 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry; Application inventory",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects unsupported MSI applications by product code or display name pattern and can uninstall explicit product codes. This turns the common \"unsupported apps\" remediation idea into a safer copy-and-customize package.",
   "Tags": [
     "Applications",

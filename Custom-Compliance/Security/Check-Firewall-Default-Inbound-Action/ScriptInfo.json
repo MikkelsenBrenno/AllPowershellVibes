@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports whether selected Windows Firewall profiles block inbound traffic by default. The output includes each profile, its enabled state, and the detected default inbound action.",
   "Tags": [
     "Security",

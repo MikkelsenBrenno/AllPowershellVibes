@@ -12,7 +12,7 @@ Run in the system context with 64-bit PowerShell. Review cleanup roots carefully
 
 Edit the CONFIGURATION section in both scripts.
 
-- `$MinimumFreePercent` and `$MinimumFreeGB`: Detection thresholds.
+- `$DriveLetter`, `$MinimumFreePercent`, and `$MinimumFreeGB`: Keep these values identical in detection and remediation.
 - `$CleanupRoots`: Folders to scan for old files.
 - `$MinimumFileAgeDays`: Only files older than this value are targeted.
 - `$ApplyCleanup`: Set to `$true` after pilot testing.
@@ -23,7 +23,7 @@ Upload `Detect.ps1` and `Remediate.ps1` as an Intune remediation package. Run as
 
 ## Expected Results
 
-Detection exits 1 when free space is below either configured threshold. Remediation reports how many files would be removed until `$ApplyCleanup` is enabled.
+Detection exits 1 when free space is below either configured threshold. Remediation stays noncompliant while reporting, then exits 0 only when the final free-space check meets both thresholds and no deletion failed.
 
 ## Troubleshooting
 

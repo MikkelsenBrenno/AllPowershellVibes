@@ -11,6 +11,13 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates the NoLMHash setting to prevent storage of LAN Manager password hashes.",
   "Tags": [
     "Security",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

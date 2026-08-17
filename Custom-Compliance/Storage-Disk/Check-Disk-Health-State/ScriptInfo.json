@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "MarkerOnly",
+  "DetectionEvidenceSource": "Managed state marker file only",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Discovers Disk Health state for Intune custom compliance evaluation in the Storage-Disk category.",
   "Tags": [
     "Storage-Disk",

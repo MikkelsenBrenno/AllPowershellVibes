@@ -1,16 +1,16 @@
 {
   "Rules": [
     {
-      "SettingName": "IsCompliant",
+      "SettingName": "BatteryLogSnapshotCompliant",
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/protect/compliance-custom-script",
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/win32/cimwin32prov/win32-battery",
       "RemediationStrings": [
         {
           "Language": "en_US",
           "Title": "Battery Log Snapshot is not compliant. Current value: {ActualValue}.",
-          "Description": "Review the package README, update the configurable values, and deploy a remediation or policy that makes Battery Log Snapshot compliant."
+          "Description": "Confirm the device exposes Win32_Battery telemetry, or adjust TreatNoBatteryAsCompliant for devices that do not contain a battery."
         }
       ]
     }

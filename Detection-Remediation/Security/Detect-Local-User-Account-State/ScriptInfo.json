@@ -11,6 +11,13 @@
   "WritesTo": "Local device security state",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Local accounts/groups",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects whether a local user account exists and whether it is enabled or disabled. Remediation can optionally disable the account.",
   "Tags": [
     "Security",

@@ -5,7 +5,14 @@
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/client-tools/windows-edition-upgrades"
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/client-tools/windows-edition-upgrades",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "This Windows edition is not permitted. Current value: {ActualValue}.",
+          "Description": "Contact your support team to install or upgrade to an approved Windows edition."
+        }
+      ]
     }
   ]
 }

@@ -5,7 +5,14 @@
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/enrollment/windows-enrollment-status"
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/enrollment/windows-enrollment-status",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The device name does not use the required prefix. Current value: {ActualValue}.",
+          "Description": "Contact your support team to rename and restart the device according to the organization's naming standard."
+        }
+      ]
     }
   ]
 }

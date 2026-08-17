@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports Windows LAPS policy registry values and local service availability for environments using Intune account protection policy.",
   "Tags": [
     "Security",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

@@ -39,8 +39,10 @@ $ErrorActionPreference = 'Stop'
 $ScriptPackageName = 'Local-Administrators-Audit-Unauthorized'
 $ScriptName = 'Remediate'
 
-# Local group to check. Change this on localized Windows builds if needed.
-$LocalGroupName = 'Administrators'
+# Built-in local Administrators group SID. The script resolves the localized
+# group name at runtime before calling the LocalAccounts cmdlets.
+$LocalAdministratorsGroupSid = 'S-1-5-32-544'
+$FallbackLocalAdministratorsGroupName = 'Administrators'
 
 # Allowed members. Use exact names when $CompareAccountNameOnly is $false.
 $AllowedLocalAdministratorMembers = @(
@@ -99,7 +101,24 @@ function ConvertTo-ComparableMemberName {
     return $trimmedName.ToUpperInvariant()
 }
 
+function Get-LocalAdministratorsGroupName {
+    try {
+        $sid = New-Object System.Security.Principal.SecurityIdentifier($LocalAdministratorsGroupSid)
+        $account = $sid.Translate([System.Security.Principal.NTAccount])
+        return ([string]$account.Value -split '\\')[-1]
+    }
+    catch {
+        Write-Log -Message "Could not translate Administrators SID '$LocalAdministratorsGroupSid'. Falling back to '$FallbackLocalAdministratorsGroupName'. $($_.Exception.Message)" -Level 'WARN'
+        return $FallbackLocalAdministratorsGroupName
+    }
+}
+
 function Get-UnauthorizedLocalGroupMembers {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$LocalGroupName
+    )
+
     $allowedComparableNames = @($AllowedLocalAdministratorMembers | ForEach-Object { ConvertTo-ComparableMemberName -Name $_ })
     $members = @(Get-LocalGroupMember -Group $LocalGroupName -ErrorAction Stop)
     $unauthorizedMembers = New-Object System.Collections.Generic.List[object]
@@ -124,7 +143,7 @@ function Get-UnauthorizedLocalGroupMembers {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Remediation started. LocalGroupName='$LocalGroupName'; RemoveUnauthorizedMembers='$RemoveUnauthorizedMembers'."
+    Write-Log -Message "Remediation started. LocalAdministratorsGroupSid='$LocalAdministratorsGroupSid'; RemoveUnauthorizedMembers='$RemoveUnauthorizedMembers'."
 
     if (-not (Get-Command -Name Get-LocalGroupMember -ErrorAction SilentlyContinue)) {
         throw 'Get-LocalGroupMember is not available. Use 64-bit Windows PowerShell 5.1 on supported Windows builds.'
@@ -134,10 +153,11 @@ try {
         throw 'Remove-LocalGroupMember is not available. Use 64-bit Windows PowerShell 5.1 on supported Windows builds.'
     }
 
-    $unauthorizedMembers = @(Get-UnauthorizedLocalGroupMembers)
+    $localGroupName = Get-LocalAdministratorsGroupName
+    $unauthorizedMembers = @(Get-UnauthorizedLocalGroupMembers -LocalGroupName $localGroupName)
 
     if ($unauthorizedMembers.Count -eq 0) {
-        $message = "No unauthorized members found in '$LocalGroupName'."
+        $message = "No unauthorized members found in '$localGroupName'."
         Write-Log -Message $message
         Write-Output $message
         exit 0
@@ -153,14 +173,14 @@ try {
     }
 
     foreach ($member in $unauthorizedMembers) {
-        Write-Log -Message "Removing unauthorized member '$($member.Name)' from '$LocalGroupName'."
-        Remove-LocalGroupMember -Group $LocalGroupName -Member $member.Name -ErrorAction Stop
+        Write-Log -Message "Removing unauthorized member '$($member.Name)' from '$localGroupName'."
+        Remove-LocalGroupMember -Group $localGroupName -Member $member.Name -ErrorAction Stop
     }
 
-    $remainingUnauthorizedMembers = @(Get-UnauthorizedLocalGroupMembers)
+    $remainingUnauthorizedMembers = @(Get-UnauthorizedLocalGroupMembers -LocalGroupName $localGroupName)
 
     if ($remainingUnauthorizedMembers.Count -eq 0) {
-        $message = "Remediation succeeded. Unauthorized members removed from '$LocalGroupName'."
+        $message = "Remediation succeeded. Unauthorized members removed from '$localGroupName'."
         Write-Log -Message $message
         Write-Output $message
         exit 0
@@ -178,6 +198,6 @@ catch {
     catch {
     }
 
-    Write-Output "Remediation failed for local group '$LocalGroupName'."
+    Write-Output 'Remediation failed for the local Administrators group.'
     exit 1
 }

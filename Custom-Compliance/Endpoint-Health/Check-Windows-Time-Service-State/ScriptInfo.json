@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports Windows Time service startup mode, service state, and time source. This helps technicians identify devices that may have authentication, certificate, VPN, or update issues caused by incorrect time sync.",
   "Tags": [
     "Endpoint-Health",

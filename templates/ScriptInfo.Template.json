@@ -2,7 +2,7 @@
   "Name": "<Display Name>",
   "Workload": "<Detection and Remediation | Custom Compliance | Intune Platform Scripts | Win32 Packaged Scripts>",
   "Purpose": "<Security | Compliance | Device-Configuration | Applications | Maintenance | Endpoint-Health | Networking | User-Experience | Inventory-Reporting | Windows-Updates | Browser-Management | Remote-Work | Identity-Access | Printing | Certificates-PKI | Hardware-Drivers | Power-Battery | Backup-Recovery | MDM-Enrollment | Data-Protection | Storage-Disk | Troubleshooting-Support | Peripheral-Devices | Licensing-Activation>",
-  "Status": "Example",
+  "Status": "Template",
   "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "No",
@@ -11,6 +11,20 @@
   "WritesTo": "<What the script changes or reads>",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "Template package has not been evidence-audited",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "Localization",
+    "OsVersion",
+    "CommandParsing",
+    "Scalability",
+    "RegistryView",
+    "PathAssumption"
+  ],
+  "PortabilityNotes": "Template package has not been portability-audited",
   "Summary": "<One-sentence purpose>",
   "Tags": []
 }

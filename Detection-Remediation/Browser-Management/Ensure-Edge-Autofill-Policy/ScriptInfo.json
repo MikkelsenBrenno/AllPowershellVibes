@@ -11,6 +11,13 @@
   "WritesTo": "Registry and logs",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates Edge Autofill Policy state for Intune-managed Windows devices.",
   "Tags": [
     "Browser-Management",

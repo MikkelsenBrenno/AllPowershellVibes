@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and optionally sets the Windows Firewall default inbound action to `Block` for selected profiles. This is useful when teams want a remediation package that catches local drift from a firewall baseline.",
   "Tags": [
     "Security",

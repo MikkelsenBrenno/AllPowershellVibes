@@ -11,6 +11,13 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates lock screen camera policy for managed endpoints that should not expose camera access before sign-in.",
   "Tags": [
     "Device Configuration",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

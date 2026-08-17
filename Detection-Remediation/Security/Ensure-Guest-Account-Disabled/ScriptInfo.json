@@ -11,6 +11,13 @@
   "WritesTo": "Local device security state",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and optionally disables the built-in local Guest account. The scripts locate the account by SID suffix `-501`, so they work even when the account name is localized or renamed.",
   "Tags": [
     "Security",

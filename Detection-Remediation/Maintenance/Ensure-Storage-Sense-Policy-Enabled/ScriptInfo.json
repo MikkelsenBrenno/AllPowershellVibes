@@ -11,6 +11,13 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and optionally configures machine policy registry values for Storage Sense. This gives technicians a simple, copy-friendly baseline for enabling disk cleanup behavior on Windows devices.",
   "Tags": [
     "Maintenance",

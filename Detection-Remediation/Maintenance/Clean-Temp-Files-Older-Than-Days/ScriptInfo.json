@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects and removes old files from configured cleanup paths.",
   "Tags": [
     "Maintenance",

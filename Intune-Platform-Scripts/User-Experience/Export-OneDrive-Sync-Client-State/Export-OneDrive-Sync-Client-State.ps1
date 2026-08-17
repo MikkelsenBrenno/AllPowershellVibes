@@ -14,7 +14,7 @@
     Context:     System recommended
 
 .INTUNE
-    Workload:    Platform Script
+    Workload:    Intune Platform Scripts
     Exit 0:      OneDrive state exported
     Exit 1:      OneDrive state export failed
 
@@ -44,7 +44,6 @@ $OneDriveExecutableCandidates = @(
     (Join-Path -Path $env:ProgramFiles -ChildPath 'Microsoft OneDrive\OneDrive.exe'),
     (Join-Path -Path ${env:ProgramFiles(x86)} -ChildPath 'Microsoft OneDrive\OneDrive.exe')
 )
-$UserProfileRoot = 'C:\Users'
 
 # =========================
 # LOGGING
@@ -58,6 +57,29 @@ function Initialize-Log { if (-not (Test-Path -LiteralPath $LogRoot)) { New-Item
 function Write-Log { param([Parameter(Mandatory = $true)][string]$Message, [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'); Add-Content -Path $LogPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Level] $Message" -Encoding UTF8 }
 function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name; Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'." }
 
+function Get-TargetUserProfilePath {
+    try {
+        $profiles = @(Get-CimInstance -ClassName Win32_UserProfile -ErrorAction Stop |
+            Where-Object { -not $_.Special -and -not [string]::IsNullOrWhiteSpace($_.LocalPath) -and (Test-Path -LiteralPath $_.LocalPath -PathType Container) } |
+            Select-Object -ExpandProperty LocalPath -Unique)
+
+        if ($profiles.Count -gt 0) {
+            return $profiles
+        }
+    }
+    catch {
+        Write-Log -Message "Could not query Win32_UserProfile. Falling back to SystemDrive user profile root. $($_.Exception.Message)" -Level 'WARN'
+    }
+
+    $fallbackProfileRoot = Join-Path -Path $env:SystemDrive -ChildPath 'Users'
+    if (-not (Test-Path -LiteralPath $fallbackProfileRoot -PathType Container)) {
+        return @()
+    }
+
+    return @(Get-ChildItem -LiteralPath $fallbackProfileRoot -Directory -Force -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty FullName)
+}
+
 # =========================
 # MAIN
 # =========================
@@ -70,12 +92,14 @@ try {
     $oneDriveVersion = if ($oneDriveExecutable) { (Get-Item -LiteralPath $oneDriveExecutable).VersionInfo.ProductVersion } else { '' }
     $profileSignals = @()
 
-    if (Test-Path -LiteralPath $UserProfileRoot -PathType Container) {
-        $profileSignals = @(Get-ChildItem -LiteralPath $UserProfileRoot -Directory -ErrorAction SilentlyContinue | ForEach-Object {
-            $oneDriveFolders = @(Get-ChildItem -LiteralPath $_.FullName -Directory -Filter 'OneDrive*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName)
+    $profilePaths = @(Get-TargetUserProfilePath)
+    if ($profilePaths.Count -gt 0) {
+        $profileSignals = @($profilePaths | ForEach-Object {
+            $profilePath = [string]$_
+            $oneDriveFolders = @(Get-ChildItem -LiteralPath $profilePath -Directory -Filter 'OneDrive*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName)
             [pscustomobject]@{
-                ProfileName = $_.Name
-                ProfilePath = $_.FullName
+                ProfileName = Split-Path -Path $profilePath -Leaf
+                ProfilePath = $profilePath
                 OneDriveFolderCount = $oneDriveFolders.Count
                 OneDriveFolders = $oneDriveFolders
             }
@@ -92,8 +116,20 @@ try {
 
     $outputPath = Join-Path -Path $OutputRoot -ChildPath $OutputFileName
     $payload | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $outputPath -Encoding UTF8
-    Write-Log -Message "OneDrive sync client state exported to '$outputPath'."
-    Write-Output "OneDrive sync client state exported to '$outputPath'."
+
+    if (-not (Test-Path -LiteralPath $outputPath -PathType Leaf)) {
+        throw "OneDrive state export '$outputPath' was not created."
+    }
+
+    $validatedPayload = Get-Content -LiteralPath $outputPath -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
+    if ([string]::IsNullOrWhiteSpace([string]$validatedPayload.ComputerName) -or
+        [string]::IsNullOrWhiteSpace([string]$validatedPayload.CapturedAt) -or
+        $null -eq $validatedPayload.ProfileSignals) {
+        throw "OneDrive state export '$outputPath' is missing required payload fields."
+    }
+
+    Write-Log -Message "OneDrive sync client state exported and validated at '$outputPath'."
+    Write-Output "OneDrive sync client state exported and validated at '$outputPath'."
     exit 0
 }
 catch {

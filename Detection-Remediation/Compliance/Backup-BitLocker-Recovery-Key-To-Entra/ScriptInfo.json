@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Event log; BitLocker",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects whether a BitLocker recovery password protector exists and can attempt to back it up to Entra ID using BitLocker PowerShell cmdlets. Optional event-log checking can be enabled if your environment records backup events consistently.",
   "Tags": [
     "Compliance",

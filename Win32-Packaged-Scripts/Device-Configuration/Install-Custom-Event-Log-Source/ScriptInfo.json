@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Installs a custom Windows event log source and writes a versioned detection marker. This is useful when internal scripts, tools, or scheduled tasks should write identifiable events to the Windows event log.",
   "Tags": [
     "Device-Configuration",

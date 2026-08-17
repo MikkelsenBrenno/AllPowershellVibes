@@ -39,6 +39,7 @@ $ScriptName = 'Detect'
 
 $CacheRoot = Join-Path -Path $env:SystemRoot -ChildPath 'SoftwareDistribution\Download'
 $MinimumCacheItemAgeDays = 14
+$MaximumCacheItemsToScan = 10000
 
 # =========================
 # LOGGING
@@ -66,11 +67,13 @@ try {
     }
 
     $cutoff = (Get-Date).AddDays(-[math]::Abs($MinimumCacheItemAgeDays))
-    $candidates = @(Get-ChildItem -LiteralPath $CacheRoot -File -Recurse -Force -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -lt $cutoff })
+    $candidates = @(Get-ChildItem -LiteralPath $CacheRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
+        Where-Object { $_.LastWriteTime -lt $cutoff } |
+        Select-Object -First $MaximumCacheItemsToScan)
     $totalBytes = ($candidates | Measure-Object -Property Length -Sum).Sum
     if ($null -eq $totalBytes) { $totalBytes = 0 }
 
-    Write-Log -Message "Detection completed. CandidateCount='$($candidates.Count)'; TotalBytes='$totalBytes'."
+    Write-Log -Message "Detection completed. CandidateCount='$($candidates.Count)'; TotalBytes='$totalBytes'; MaximumItemsToScan='$MaximumCacheItemsToScan'."
 
     if ($candidates.Count -eq 0) {
         Write-Output 'Compliant. No old Windows Update download cache files found.'

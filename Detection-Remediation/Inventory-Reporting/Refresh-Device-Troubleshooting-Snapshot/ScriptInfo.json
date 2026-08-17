@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "SnapshotFreshness",
+  "DetectionEvidenceSource": "Snapshot file age/freshness",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects whether a local troubleshooting snapshot is missing or stale, then refreshes it with common device, disk, service, update, and recent event information.",
   "Tags": [
     "Inventory-Reporting",

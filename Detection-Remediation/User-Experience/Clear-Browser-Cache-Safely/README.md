@@ -15,12 +15,13 @@ Detects and optionally clears old Microsoft Edge and Google Chrome cache files u
 
 Edit the CONFIGURATION section near the top of each script:
 
-- `$UserProfileRoot`: Root folder containing local user profiles.
 - `$ExcludedProfileNames`: Profile folders that should never be scanned.
 - `$MinimumCacheItemAgeDays`: Minimum age before a cache file becomes a candidate.
 - `$BrowserCacheRelativePaths`: Browser cache paths to scan.
 - `$DeleteCacheItems`: Set to `$true` in `Remediate.ps1` only after pilot testing.
 - `$ExitZeroInReportingOnlyMode`: Set to `$true` only when you want report-only remediation to appear successful.
+
+Local user profiles are discovered through `Win32_UserProfile`, with the system drive's `Users` folder used as a fallback.
 
 ## Intune Settings
 
@@ -36,7 +37,7 @@ Edit the CONFIGURATION section near the top of each script:
 - Detection exits `0` when no old browser cache files are found.
 - Detection exits `1` when old browser cache files are found.
 - Remediation exits `1` in report-only mode by default when candidates exist.
-- Remediation exits `0` after deletion succeeds.
+- Remediation rescans and exits `0` only when no matching files remain and no deletion failed.
 - Logs are written to `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Clear-Browser-Cache-Safely`.
 
 ## Troubleshooting

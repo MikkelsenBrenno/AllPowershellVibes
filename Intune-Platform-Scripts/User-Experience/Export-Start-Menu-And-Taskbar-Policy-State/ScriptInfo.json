@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports common Start menu, taskbar, and Explorer policy registry values that affect Windows 10/11 user experience.",
   "Tags": [
     "User Experience",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

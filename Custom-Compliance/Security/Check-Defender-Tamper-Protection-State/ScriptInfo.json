@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Defender",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports whether Microsoft Defender tamper protection appears enabled according to `Get-MpComputerStatus`. The script also reports whether the tamper protection property is available on the target device.",
   "Tags": [
     "Security",

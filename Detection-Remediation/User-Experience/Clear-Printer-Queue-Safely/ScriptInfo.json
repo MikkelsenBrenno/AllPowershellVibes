@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and optionally clears stale Windows print spooler queue files. This is useful when devices repeatedly show stuck print jobs or technicians need a controlled remediation for local print queue cleanup.",
   "Tags": [
     "User-Experience",

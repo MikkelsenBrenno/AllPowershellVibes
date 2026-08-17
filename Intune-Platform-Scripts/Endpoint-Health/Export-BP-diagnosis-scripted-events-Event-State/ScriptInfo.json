@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports a local Diagnosis Scripted Events event log troubleshooting snapshot for technician troubleshooting.",
   "Tags": [
     "Endpoint-Health",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

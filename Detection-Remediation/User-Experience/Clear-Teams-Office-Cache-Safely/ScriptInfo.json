@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; File system cache",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects old Teams and Office cache files across local user profiles. Remediation is reporting-only by default and deletes files only after `$DeleteCacheItems` is enabled.",
   "Tags": [
     "User-Experience",

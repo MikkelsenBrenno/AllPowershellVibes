@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "BitLocker",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Checks whether the configured BitLocker volume uses an approved encryption method, such as XtsAes128 or XtsAes256. This is useful when technicians need a quick custom compliance rule that reports more detail than simple protection state.",
   "Tags": [
     "Compliance",

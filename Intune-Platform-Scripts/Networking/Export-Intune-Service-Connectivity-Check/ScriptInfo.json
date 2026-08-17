@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Tests configurable Microsoft Intune and Microsoft 365 service URLs and exports HTTP status and timing details.",
   "Tags": [
     "Networking",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

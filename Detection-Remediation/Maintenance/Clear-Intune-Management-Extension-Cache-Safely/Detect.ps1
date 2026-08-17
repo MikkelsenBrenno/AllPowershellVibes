@@ -38,6 +38,7 @@ $ScriptPackageName = 'Clear-Intune-Management-Extension-Cache-Safely'
 $ScriptName = 'Detect'
 
 $MinimumCacheItemAgeDays = 14
+$MaximumCacheItemsToScan = 10000
 $CachePaths = @(
     'C:\Windows\IMECache',
     'C:\Program Files (x86)\Microsoft Intune Management Extension\Content\Incoming',
@@ -58,14 +59,29 @@ function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsId
 
 function Get-CacheCandidate {
     $cutoff = (Get-Date).AddDays(-[math]::Abs($MinimumCacheItemAgeDays))
+    $emittedCount = 0
+
+    if ($MaximumCacheItemsToScan -le 0) {
+        return
+    }
 
     foreach ($cachePath in $CachePaths) {
         if (-not (Test-Path -LiteralPath $cachePath -PathType Container)) {
             continue
         }
 
+        $remaining = $MaximumCacheItemsToScan - $emittedCount
+        if ($remaining -le 0) {
+            return
+        }
+
         Get-ChildItem -LiteralPath $cachePath -File -Recurse -Force -ErrorAction SilentlyContinue |
-            Where-Object { $_.LastWriteTime -lt $cutoff }
+            Where-Object { $_.LastWriteTime -lt $cutoff } |
+            Select-Object -First $remaining |
+            ForEach-Object {
+                $emittedCount++
+                $_
+            }
     }
 }
 
@@ -80,7 +96,7 @@ try {
     $totalBytes = ($candidates | Measure-Object -Property Length -Sum).Sum
     if ($null -eq $totalBytes) { $totalBytes = 0 }
 
-    Write-Log -Message "Detection completed. CandidateCount='$($candidates.Count)'; TotalBytes='$totalBytes'."
+    Write-Log -Message "Detection completed. CandidateCount='$($candidates.Count)'; TotalBytes='$totalBytes'; MaximumItemsToScan='$MaximumCacheItemsToScan'."
 
     if ($candidates.Count -eq 0) {
         Write-Output 'Compliant. No old IME cache files found.'

@@ -47,7 +47,7 @@ Deploy in reporting-only mode first, then enable `$ClearCacheItems` only after c
 
 - Detection `0` - No old cache files found.
 - Detection `1` - Old cache files found.
-- Remediation `0` - Files are absent or removed.
+- Remediation `0` - Files are absent, or removal completes and the final rescan finds no matching files.
 - Remediation `1` - Files remain, deletion failed, or deletion is disabled.
 
 ## Expected Results

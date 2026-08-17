@@ -11,6 +11,13 @@
   "WritesTo": "Firewall policy",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Network configuration; Application inventory",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects a local Windows Firewall rule and can create or update it after an explicit safety switch is enabled.",
   "Tags": [
     "Networking",

@@ -5,7 +5,14 @@
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/dns/deploy/dns-suffix-search-list"
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/dns/deploy/dns-suffix-search-list",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The DNS suffix search list does not match the required configuration. Current value: {ActualValue}.",
+          "Description": "Sync the device with Intune and contact your support team if the required DNS configuration is not restored."
+        }
+      ]
     }
   ]
 }

@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData managed state marker files",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "MarkerOnly",
+  "DetectionEvidenceSource": "Managed state marker file only",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates USB Selective Suspend state for technician gap scenarios in the Power-Battery category.",
   "Tags": [
     "Power-Battery",

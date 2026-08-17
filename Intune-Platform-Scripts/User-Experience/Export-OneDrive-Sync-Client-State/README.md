@@ -15,7 +15,8 @@ Edit the CONFIGURATION section in `Export-OneDrive-Sync-Client-State.ps1`.
 - `$OutputRoot`: Folder where JSON output is written.
 - `$OutputFileName`: Output file name.
 - `$OneDriveExecutableCandidates`: OneDrive executable paths to check.
-- `$UserProfileRoot`: User profile root to scan.
+
+Local user profiles are discovered through `Win32_UserProfile`, with the system drive's `Users` folder used as a fallback.
 
 ## Intune Settings
 
@@ -23,7 +24,7 @@ Upload `Export-OneDrive-Sync-Client-State.ps1` as an Intune platform script. Run
 
 ## Expected Results
 
-The script writes `OneDriveSyncClientState.json` and exits 0 when export succeeds.
+The script writes `OneDriveSyncClientState.json`, parses the saved JSON, validates required fields, and exits 0 only when the export is usable.
 
 ## Troubleshooting
 

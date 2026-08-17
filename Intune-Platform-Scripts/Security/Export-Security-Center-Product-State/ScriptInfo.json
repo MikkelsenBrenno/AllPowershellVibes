@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports Windows Security Center antivirus and firewall product state for quick third-party security product troubleshooting.",
   "Tags": [
     "Security",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

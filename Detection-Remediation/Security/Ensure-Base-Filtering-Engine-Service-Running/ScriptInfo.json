@@ -11,6 +11,13 @@
   "WritesTo": "Service control",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates devices where Base Filtering Engine is stopped, which can break Windows Firewall and IPsec behavior.",
   "Tags": [
     "Security",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

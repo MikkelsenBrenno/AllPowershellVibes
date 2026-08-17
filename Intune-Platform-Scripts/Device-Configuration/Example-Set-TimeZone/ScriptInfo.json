@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This platform script sets the Windows time zone to a configurable Windows time zone ID. The default example uses `UTC`. The script uses `tzutil.exe` for Windows PowerShell 5.1 compatibility and validates the final state before exiting successfully.",
   "Tags": [
     "Device-Configuration",

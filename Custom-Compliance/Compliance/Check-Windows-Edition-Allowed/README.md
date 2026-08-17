@@ -13,7 +13,6 @@ Run in the system context with 64-bit PowerShell. Confirm your accepted Windows 
 Edit the CONFIGURATION section in `Discover.ps1`.
 
 - `$AllowedEditionIds`: Approved registry `EditionID` values.
-- `$AllowedProductNamePatterns`: Approved product name patterns.
 - `$CurrentVersionRegistryPath`: Registry path used for Windows version details.
 
 ## Intune Settings

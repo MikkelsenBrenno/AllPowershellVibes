@@ -2,6 +2,8 @@
 
 Intune uses exit codes differently depending on workload. Keep script output small and predictable.
 
+See `docs/Intune-Workload-Contracts.md` for the complete workload decision and package rules.
+
 ## Detection And Remediation
 
 Detection script:
@@ -38,6 +40,8 @@ Discovery scripts should:
 
 The JSON rule file decides whether the returned values are compliant.
 
+Custom Compliance reports device compliance. Access is blocked only when a Microsoft Entra Conditional Access policy uses the resulting compliant-device state.
+
 ## Platform Scripts
 
 Platform scripts generally use:
@@ -46,6 +50,8 @@ Platform scripts generally use:
 | --- | --- |
 | `0` | Script completed successfully. |
 | `1` | Script failed or intentionally refused to run because customization is incomplete. |
+
+A successful Platform script normally does not run again unless its script or policy changes. Intune retries a failed script during the next three consecutive Intune Management Extension check-ins.
 
 ## Practical Rules
 

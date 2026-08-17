@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "PackageMarker",
+  "DetectionEvidenceSource": "Win32 package install/version marker",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This Win32 packaged script installs, detects, and removes an all-users desktop URL shortcut with a version marker.",
   "Tags": [
     "User-Experience",

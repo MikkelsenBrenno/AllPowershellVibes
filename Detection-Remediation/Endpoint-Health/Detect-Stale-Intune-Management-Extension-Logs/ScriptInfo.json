@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects stale or missing Intune Management Extension logs so technicians can find devices that may have stopped checking in properly.",
   "Tags": [
     "Endpoint-Health",

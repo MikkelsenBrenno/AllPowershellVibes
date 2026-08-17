@@ -11,6 +11,15 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry; Application inventory",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "Low",
+  "PortabilityRiskAreas": [
+    "PathAssumption"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): PathAssumption.",
   "Summary": "This Win32 packaged script template installs, detects, and uninstalls an application using a local EXE installer and registry-based detection.",
   "Tags": [
     "Applications",

@@ -11,6 +11,13 @@
   "WritesTo": "Service control",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates devices where the Diagnostic Policy Service is stopped, reducing troubleshooting signal for network and Windows diagnostics.",
   "Tags": [
     "Endpoint Health",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

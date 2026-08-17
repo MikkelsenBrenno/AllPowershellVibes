@@ -11,6 +11,15 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "Low",
+  "PortabilityRiskAreas": [
+    "OsVersion"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): OsVersion.",
   "Summary": "This custom compliance package checks whether Windows Update for Business target release policy values match the configured expected version.",
   "Tags": [
     "Windows-Updates",

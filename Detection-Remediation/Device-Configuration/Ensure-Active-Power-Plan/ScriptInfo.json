@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "powercfg",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 2 portability finding(s): CommandParsing.",
   "Summary": "Detects and optionally sets the active Windows power plan. The remediation starts in report-only mode so administrators can confirm the target power plan GUID before enforcement.",
   "Tags": [
     "Device-Configuration",

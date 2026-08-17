@@ -38,9 +38,9 @@ $ErrorActionPreference = 'Stop'
 $ScriptPackageName = 'Clear-Teams-Office-Cache-Safely'
 $ScriptName = 'Remediate'
 
-$UserProfileRoot = 'C:\Users'
 $ExcludedProfileNames = @('Public', 'Default', 'Default User', 'All Users')
 $MinimumCacheItemAgeDays = 7
+$MaximumCacheItemsToScan = 10000
 $DeleteCacheItems = $false
 $ExitZeroInReportingOnlyMode = $false
 $CacheRelativePaths = @(
@@ -62,26 +62,60 @@ function Initialize-Log { if (-not (Test-Path -LiteralPath $LogRoot)) { New-Item
 function Write-Log { param([Parameter(Mandatory = $true)][string]$Message, [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'); Add-Content -Path $LogPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Level] $Message" -Encoding UTF8 }
 function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name; Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'." }
 
+function Get-TargetUserProfilePath {
+    try {
+        $profiles = @(Get-CimInstance -ClassName Win32_UserProfile -ErrorAction Stop |
+            Where-Object { -not $_.Special -and -not [string]::IsNullOrWhiteSpace($_.LocalPath) -and (Test-Path -LiteralPath $_.LocalPath -PathType Container) } |
+            Select-Object -ExpandProperty LocalPath -Unique)
+
+        if ($profiles.Count -gt 0) {
+            return $profiles
+        }
+    }
+    catch {
+        Write-Log -Message "Could not query Win32_UserProfile. Falling back to SystemDrive user profile root. $($_.Exception.Message)" -Level 'WARN'
+    }
+
+    $fallbackProfileRoot = Join-Path -Path $env:SystemDrive -ChildPath 'Users'
+    if (-not (Test-Path -LiteralPath $fallbackProfileRoot -PathType Container)) {
+        return @()
+    }
+
+    return @(Get-ChildItem -LiteralPath $fallbackProfileRoot -Directory -Force -ErrorAction SilentlyContinue |
+        Where-Object { $ExcludedProfileNames -notcontains $_.Name } |
+        Select-Object -ExpandProperty FullName)
+}
+
 function Get-CacheCandidate {
     $cutoff = (Get-Date).AddDays(-[math]::Abs($MinimumCacheItemAgeDays))
+    $emittedCount = 0
 
-    if (-not (Test-Path -LiteralPath $UserProfileRoot -PathType Container)) {
+    if ($MaximumCacheItemsToScan -le 0) {
         return
     }
 
-    $profiles = Get-ChildItem -LiteralPath $UserProfileRoot -Directory -Force -ErrorAction SilentlyContinue |
-        Where-Object { $ExcludedProfileNames -notcontains $_.Name }
+    $profiles = @(Get-TargetUserProfilePath)
 
-    foreach ($profile in $profiles) {
+    foreach ($profilePath in $profiles) {
         foreach ($relativePath in $CacheRelativePaths) {
-            $cachePath = Join-Path -Path $profile.FullName -ChildPath $relativePath
+            $cachePath = Join-Path -Path $profilePath -ChildPath $relativePath
 
             if (-not (Test-Path -LiteralPath $cachePath -PathType Container)) {
                 continue
             }
 
+            $remaining = $MaximumCacheItemsToScan - $emittedCount
+            if ($remaining -le 0) {
+                return
+            }
+
             Get-ChildItem -LiteralPath $cachePath -File -Recurse -Force -ErrorAction SilentlyContinue |
-                Where-Object { $_.LastWriteTime -lt $cutoff }
+                Where-Object { $_.LastWriteTime -lt $cutoff } |
+                Select-Object -First $remaining |
+                ForEach-Object {
+                    $emittedCount++
+                    $_
+                }
         }
     }
 }
@@ -121,9 +155,10 @@ try {
         }
     }
 
-    Write-Output "Removed $removedCount old cache file(s). Failed removals: $failedCount."
+    $remainingCandidates = @(Get-CacheCandidate | Select-Object -First 1)
+    Write-Output "Removed $removedCount old cache file(s). Failed removals: $failedCount. Remaining matches: $($remainingCandidates.Count)."
 
-    if ($failedCount -eq 0) {
+    if ($failedCount -eq 0 -and $remainingCandidates.Count -eq 0) {
         exit 0
     }
 

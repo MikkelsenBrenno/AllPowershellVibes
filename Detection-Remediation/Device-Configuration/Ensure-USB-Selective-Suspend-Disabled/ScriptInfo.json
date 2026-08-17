@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "powercfg",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 2 portability finding(s): CommandParsing.",
   "Summary": "Detects whether USB selective suspend is disabled on the active power scheme and can set the AC and DC values. This is useful for devices with USB peripherals, docks, smart-card readers, or other devices that misbehave after power saving.",
   "Tags": [
     "Device-Configuration",

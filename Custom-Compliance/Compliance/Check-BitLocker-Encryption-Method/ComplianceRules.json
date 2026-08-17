@@ -5,7 +5,14 @@
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/"
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The BitLocker encryption method does not meet the required policy. Current value: {ActualValue}.",
+          "Description": "Contact your support team or follow the linked BitLocker guidance to apply the required encryption method."
+        }
+      ]
     }
   ]
 }

@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "MarkerOnly",
+  "DetectionEvidenceSource": "Managed state marker file only",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Discovers Certificate Configuration Snapshot state for Intune custom compliance evaluation.",
   "Tags": [
     "Inventory-Reporting",

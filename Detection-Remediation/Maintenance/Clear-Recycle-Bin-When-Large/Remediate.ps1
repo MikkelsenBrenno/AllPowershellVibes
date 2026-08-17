@@ -9,12 +9,12 @@
     Name:        Remediate.ps1
     Version:     1.0.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     User recommended
 
 .INTUNE
     Workload:    Detection and Remediation
-    Exit 0:      Recycle Bin cleanup completed or reported
-    Exit 1:      Recycle Bin cleanup failed
+    Exit 0:      Recycle Bin is below threshold after cleanup
+    Exit 1:      Recycle Bin remains noncompliant or cleanup is disabled
 
 .CUSTOMIZATION
     Update values in the CONFIGURATION section before deployment.
@@ -39,14 +39,16 @@ $ScriptPackageName = 'Clear-Recycle-Bin-When-Large'
 $ScriptName = 'Remediate'
 
 $MaximumRecycleBinSizeMB = 2048
+$MaximumRecycleBinItemsToScan = 10000
 $ClearRecycleBin = $false
+$ExitZeroInReportingOnlyMode = $false
 $ValidationDelaySeconds = 3
 
 # =========================
 # LOGGING
 # =========================
 
-$BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
+$BaseLogRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
@@ -75,23 +77,32 @@ function Write-ScriptMetadata {
     Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
 }
 
-function Get-RecycleBinSizeBytes {
-    $totalBytes = [int64]0
-    $drives = @(Get-CimInstance -ClassName Win32_LogicalDisk -Filter 'DriveType=3' -ErrorAction SilentlyContinue)
-
-    foreach ($drive in $drives) {
-        $recyclePath = Join-Path -Path $drive.DeviceID -ChildPath '$Recycle.Bin'
-        if (-not (Test-Path -LiteralPath $recyclePath)) {
-            continue
-        }
-
-        $items = Get-ChildItem -LiteralPath $recyclePath -Recurse -Force -File -ErrorAction SilentlyContinue
-        foreach ($item in $items) {
-            $totalBytes += [int64]$item.Length
-        }
+function Get-RecycleBinState {
+    if ($MaximumRecycleBinItemsToScan -lt 1) {
+        throw 'MaximumRecycleBinItemsToScan must be 1 or greater.'
     }
 
-    return $totalBytes
+    $drives = @(Get-CimInstance -ClassName Win32_LogicalDisk -Filter 'DriveType=3' -ErrorAction SilentlyContinue)
+    $recyclePaths = @($drives | ForEach-Object {
+        $path = Join-Path -Path $_.DeviceID -ChildPath '$Recycle.Bin'
+        if (Test-Path -LiteralPath $path -PathType Container) { $path }
+    })
+
+    $items = @()
+    if ($recyclePaths.Count -gt 0) {
+        $items = @(Get-ChildItem -LiteralPath $recyclePaths -Recurse -Force -File -ErrorAction SilentlyContinue |
+            Select-Object -First ($MaximumRecycleBinItemsToScan + 1))
+    }
+
+    $scanLimitExceeded = ($items.Count -gt $MaximumRecycleBinItemsToScan)
+    $measuredItems = @($items | Select-Object -First $MaximumRecycleBinItemsToScan)
+    $measure = $measuredItems | Measure-Object -Property Length -Sum
+
+    return [pscustomobject]@{
+        TotalBytes = [int64]$measure.Sum
+        ScannedItemCount = $measuredItems.Count
+        ScanLimitExceeded = $scanLimitExceeded
+    }
 }
 
 function Convert-BytesToMB {
@@ -110,16 +121,23 @@ function Convert-BytesToMB {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Remediation started. ClearRecycleBin='$ClearRecycleBin'; MaximumRecycleBinSizeMB='$MaximumRecycleBinSizeMB'."
+    Write-Log -Message "Remediation started. ClearRecycleBin='$ClearRecycleBin'; MaximumRecycleBinSizeMB='$MaximumRecycleBinSizeMB'; MaximumItemsToScan='$MaximumRecycleBinItemsToScan'."
 
-    $beforeMB = Convert-BytesToMB -Bytes (Get-RecycleBinSizeBytes)
+    $beforeState = Get-RecycleBinState
+    $beforeMB = Convert-BytesToMB -Bytes $beforeState.TotalBytes
     Write-Log -Message "Recycle Bin estimated size before remediation is '$beforeMB' MB."
+
+    if (-not $beforeState.ScanLimitExceeded -and $beforeMB -le $MaximumRecycleBinSizeMB) {
+        Write-Output "No change needed. Recycle Bin estimated size is $beforeMB MB."
+        exit 0
+    }
 
     if (-not $ClearRecycleBin) {
         $message = 'Report-only mode. Set $ClearRecycleBin to $true to empty Recycle Bin contents.'
         Write-Log -Message $message -Level 'WARN'
         Write-Output $message
-        exit 0
+        if ($ExitZeroInReportingOnlyMode) { exit 0 }
+        exit 1
     }
 
     if (-not (Get-Command -Name Clear-RecycleBin -ErrorAction SilentlyContinue)) {
@@ -129,15 +147,16 @@ try {
     Clear-RecycleBin -Force -ErrorAction Stop
     Start-Sleep -Seconds $ValidationDelaySeconds
 
-    $afterMB = Convert-BytesToMB -Bytes (Get-RecycleBinSizeBytes)
-    if ($afterMB -le $MaximumRecycleBinSizeMB) {
+    $afterState = Get-RecycleBinState
+    $afterMB = Convert-BytesToMB -Bytes $afterState.TotalBytes
+    if (-not $afterState.ScanLimitExceeded -and $afterMB -le $MaximumRecycleBinSizeMB) {
         $message = "Remediation succeeded. Recycle Bin estimated size is $afterMB MB."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Remediation failed. Recycle Bin estimated size is $afterMB MB."
+    $message = "Remediation failed. Recycle Bin estimated size is at least $afterMB MB; ScanLimitExceeded='$($afterState.ScanLimitExceeded)'."
     Write-Log -Message $message -Level 'ERROR'
     Write-Output $message
     exit 1

@@ -11,6 +11,15 @@
   "WritesTo": "Registry",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "Low",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "Exports WinHTTP proxy output and common Internet Settings proxy values to JSON for Business Premium connectivity troubleshooting.",
   "Tags": [
     "Networking",

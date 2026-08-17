@@ -2,7 +2,7 @@
 
 ## Summary
 
-Detects large Recycle Bin usage across fixed drives and optionally clears it after an admin enables the safety toggle.
+Detects the signed-in user's accessible Recycle Bin usage across fixed drives and optionally clears it after an admin enables the safety toggle.
 
 ## Files
 
@@ -23,7 +23,7 @@ Open both scripts and review the `CONFIGURATION` section before changing anythin
 
 - Windows device enrolled in Microsoft Intune.
 - PowerShell 5.1.
-- System context recommended for all-user visibility.
+- User context is required so detection and `Clear-RecycleBin` evaluate the same signed-in user's state.
 - Pilot carefully because this deletes user-restorable files when enabled.
 
 ## Customization
@@ -37,7 +37,7 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep tenan
 | Script type | Remediation |
 | Detection script | `Detect.ps1` |
 | Remediation script | `Remediate.ps1` |
-| Run this script using the logged-on credentials | No |
+| Run this script using the logged-on credentials | Yes |
 | Enforce script signature check | Tenant policy |
 | Run script in 64-bit PowerShell | Yes |
 
@@ -55,12 +55,13 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep tenan
 
 - Detection exits `0` when estimated Recycle Bin usage is under the threshold.
 - Detection exits `1` when usage exceeds the threshold.
-- Remediation reports by default and clears Recycle Bin only after `$ClearRecycleBin` is set to `$true`.
+- Remediation remains noncompliant while reporting and clears Recycle Bin only after `$ClearRecycleBin` is set to `$true`.
+- Remediation exits `0` only after the final size is under the configured threshold.
 
 ## Troubleshooting
 
-- Review logs in `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Clear-Recycle-Bin-When-Large`.
-- Confirm whether the script should run as system or user context for the recycle bin scope you want.
+- Review logs in `%LOCALAPPDATA%\Microsoft\IntuneScriptLibrary\Logs\Clear-Recycle-Bin-When-Large`.
+- Confirm the package is assigned in user context for the signed-in user's Recycle Bin.
 - Some files can remain if locked or owned by profiles the context cannot access.
 
 ## Source Inspiration

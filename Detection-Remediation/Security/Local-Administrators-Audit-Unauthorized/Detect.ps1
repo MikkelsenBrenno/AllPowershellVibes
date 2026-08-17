@@ -39,8 +39,10 @@ $ErrorActionPreference = 'Stop'
 $ScriptPackageName = 'Local-Administrators-Audit-Unauthorized'
 $ScriptName = 'Detect'
 
-# Local group to check. Change this on localized Windows builds if needed.
-$LocalGroupName = 'Administrators'
+# Built-in local Administrators group SID. The script resolves the localized
+# group name at runtime before calling the LocalAccounts cmdlets.
+$LocalAdministratorsGroupSid = 'S-1-5-32-544'
+$FallbackLocalAdministratorsGroupName = 'Administrators'
 
 # Allowed members. Use exact names when $CompareAccountNameOnly is $false.
 # When $CompareAccountNameOnly is $true, DOMAIN\User and COMPUTER\User compare as User.
@@ -97,6 +99,18 @@ function ConvertTo-ComparableMemberName {
     return $trimmedName.ToUpperInvariant()
 }
 
+function Get-LocalAdministratorsGroupName {
+    try {
+        $sid = New-Object System.Security.Principal.SecurityIdentifier($LocalAdministratorsGroupSid)
+        $account = $sid.Translate([System.Security.Principal.NTAccount])
+        return ([string]$account.Value -split '\\')[-1]
+    }
+    catch {
+        Write-Log -Message "Could not translate Administrators SID '$LocalAdministratorsGroupSid'. Falling back to '$FallbackLocalAdministratorsGroupName'. $($_.Exception.Message)" -Level 'WARN'
+        return $FallbackLocalAdministratorsGroupName
+    }
+}
+
 # =========================
 # MAIN
 # =========================
@@ -104,14 +118,15 @@ function ConvertTo-ComparableMemberName {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Detection started. LocalGroupName='$LocalGroupName'; CompareAccountNameOnly='$CompareAccountNameOnly'."
+    Write-Log -Message "Detection started. LocalAdministratorsGroupSid='$LocalAdministratorsGroupSid'; CompareAccountNameOnly='$CompareAccountNameOnly'."
 
     if (-not (Get-Command -Name Get-LocalGroupMember -ErrorAction SilentlyContinue)) {
         throw 'Get-LocalGroupMember is not available. Use 64-bit Windows PowerShell 5.1 on supported Windows builds.'
     }
 
+    $localGroupName = Get-LocalAdministratorsGroupName
     $allowedComparableNames = @($AllowedLocalAdministratorMembers | ForEach-Object { ConvertTo-ComparableMemberName -Name $_ })
-    $members = @(Get-LocalGroupMember -Group $LocalGroupName -ErrorAction Stop)
+    $members = @(Get-LocalGroupMember -Group $localGroupName -ErrorAction Stop)
     $unauthorizedMembers = New-Object System.Collections.Generic.List[string]
 
     foreach ($member in $members) {
@@ -125,13 +140,13 @@ try {
     }
 
     if ($unauthorizedMembers.Count -eq 0) {
-        $message = "Compliant. No unauthorized members found in '$LocalGroupName'."
+        $message = "Compliant. No unauthorized members found in '$localGroupName'."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Not compliant. Unauthorized members in '$LocalGroupName': $($unauthorizedMembers -join ', ')."
+    $message = "Not compliant. Unauthorized members in '$localGroupName': $($unauthorizedMembers -join ', ')."
     Write-Log -Message $message -Level 'WARN'
     Write-Output $message
     exit 1
@@ -143,6 +158,6 @@ catch {
     catch {
     }
 
-    Write-Output "Not compliant. Local group '$LocalGroupName' could not be validated."
+    Write-Output "Not compliant. Local Administrators group could not be validated."
     exit 1
 }

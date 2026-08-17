@@ -11,6 +11,13 @@
   "WritesTo": "Service control",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates devices where the DNS Client service is not running, which can break name resolution and Intune connectivity troubleshooting.",
   "Tags": [
     "Networking",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

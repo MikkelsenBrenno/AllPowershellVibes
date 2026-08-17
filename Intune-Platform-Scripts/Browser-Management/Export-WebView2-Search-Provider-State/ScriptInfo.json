@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData inventory snapshot and logs",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports WebView2 Search Provider state to a local JSON troubleshooting snapshot.",
   "Tags": [
     "Browser-Management",

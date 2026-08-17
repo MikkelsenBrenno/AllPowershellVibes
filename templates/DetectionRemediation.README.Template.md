@@ -4,6 +4,15 @@
 
 Describe what the detection script checks and what the remediation script changes.
 
+## Workload Contract
+
+- `Detect.ps1` must read direct evidence for the state named by this package.
+- Detection exit `0` means no repair is required. Exit `1` means Intune should run remediation.
+- `Remediate.ps1` must change the same state and verify the final result before exit `0`.
+- Do not substitute a repository-created marker for the claimed device state.
+- Do not put reboot commands in Remediation scripts.
+- Review `docs/Intune-Workload-Contracts.md` before changing this scaffold's `Status` from `Template`.
+
 ## Files
 
 - `Detect.ps1` - Checks the current state.
@@ -76,6 +85,7 @@ Describe the compliant state after remediation.
 - Detection exits `1` when the remediation should run.
 - Remediation exits `0` only after validating the final state.
 - Logs show start, current state, attempted change, and validation result.
+- `tools\Test-IntuneWorkloadContracts.ps1` passes before the package is promoted to `PilotReady`.
 
 ## Troubleshooting
 

@@ -24,8 +24,8 @@ Upload `Detect.ps1` and `Remediate.ps1` as an Intune remediation package. Run us
 
 ## Expected Results
 
-Detection exits 0 when cache size is below the threshold and exits 1 when it is too large. Remediation reports target paths until cleanup is enabled.
+Detection exits 0 when cache size is below the threshold and exits 1 when it is too large. Remediation remains noncompliant in report-only mode, then remeasures the cache and exits 0 only after the configured threshold is met.
 
 ## Troubleshooting
 
-Check logs under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Clear-Microsoft-Store-Cache-Safely`. If no paths are found, verify the package folder exists under the user's `%LOCALAPPDATA%\Packages` path.
+Check logs under `%LOCALAPPDATA%\Microsoft\IntuneScriptLibrary\Logs\Clear-Microsoft-Store-Cache-Safely`. If no paths are found, verify the package folder exists under the user's `%LOCALAPPDATA%\Packages` path.

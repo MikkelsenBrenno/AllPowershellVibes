@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "This platform script writes a local JSON snapshot with Wi-Fi profile names and expected profile presence. It does not export wireless keys.",
   "Tags": [
     "Networking",

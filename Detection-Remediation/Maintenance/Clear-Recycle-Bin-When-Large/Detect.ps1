@@ -9,7 +9,7 @@
     Name:        Detect.ps1
     Version:     1.0.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     User recommended
 
 .INTUNE
     Workload:    Detection and Remediation
@@ -39,12 +39,13 @@ $ScriptPackageName = 'Clear-Recycle-Bin-When-Large'
 $ScriptName = 'Detect'
 
 $MaximumRecycleBinSizeMB = 2048
+$MaximumRecycleBinItemsToScan = 10000
 
 # =========================
 # LOGGING
 # =========================
 
-$BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
+$BaseLogRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
@@ -73,23 +74,32 @@ function Write-ScriptMetadata {
     Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
 }
 
-function Get-RecycleBinSizeBytes {
-    $totalBytes = [int64]0
-    $drives = @(Get-CimInstance -ClassName Win32_LogicalDisk -Filter 'DriveType=3' -ErrorAction SilentlyContinue)
-
-    foreach ($drive in $drives) {
-        $recyclePath = Join-Path -Path $drive.DeviceID -ChildPath '$Recycle.Bin'
-        if (-not (Test-Path -LiteralPath $recyclePath)) {
-            continue
-        }
-
-        $items = Get-ChildItem -LiteralPath $recyclePath -Recurse -Force -File -ErrorAction SilentlyContinue
-        foreach ($item in $items) {
-            $totalBytes += [int64]$item.Length
-        }
+function Get-RecycleBinState {
+    if ($MaximumRecycleBinItemsToScan -lt 1) {
+        throw 'MaximumRecycleBinItemsToScan must be 1 or greater.'
     }
 
-    return $totalBytes
+    $drives = @(Get-CimInstance -ClassName Win32_LogicalDisk -Filter 'DriveType=3' -ErrorAction SilentlyContinue)
+    $recyclePaths = @($drives | ForEach-Object {
+        $path = Join-Path -Path $_.DeviceID -ChildPath '$Recycle.Bin'
+        if (Test-Path -LiteralPath $path -PathType Container) { $path }
+    })
+
+    $items = @()
+    if ($recyclePaths.Count -gt 0) {
+        $items = @(Get-ChildItem -LiteralPath $recyclePaths -Recurse -Force -File -ErrorAction SilentlyContinue |
+            Select-Object -First ($MaximumRecycleBinItemsToScan + 1))
+    }
+
+    $scanLimitExceeded = ($items.Count -gt $MaximumRecycleBinItemsToScan)
+    $measuredItems = @($items | Select-Object -First $MaximumRecycleBinItemsToScan)
+    $measure = $measuredItems | Measure-Object -Property Length -Sum
+
+    return [pscustomobject]@{
+        TotalBytes = [int64]$measure.Sum
+        ScannedItemCount = $measuredItems.Count
+        ScanLimitExceeded = $scanLimitExceeded
+    }
 }
 
 function Convert-BytesToMB {
@@ -108,20 +118,20 @@ function Convert-BytesToMB {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Detection started. MaximumRecycleBinSizeMB='$MaximumRecycleBinSizeMB'."
+    Write-Log -Message "Detection started. MaximumRecycleBinSizeMB='$MaximumRecycleBinSizeMB'; MaximumItemsToScan='$MaximumRecycleBinItemsToScan'."
 
-    $sizeBytes = Get-RecycleBinSizeBytes
-    $sizeMB = Convert-BytesToMB -Bytes $sizeBytes
-    Write-Log -Message "Recycle Bin estimated size is '$sizeMB' MB."
+    $state = Get-RecycleBinState
+    $sizeMB = Convert-BytesToMB -Bytes $state.TotalBytes
+    Write-Log -Message "Recycle Bin estimated size is '$sizeMB' MB; ScannedItems='$($state.ScannedItemCount)'; ScanLimitExceeded='$($state.ScanLimitExceeded)'."
 
-    if ($sizeMB -le $MaximumRecycleBinSizeMB) {
+    if (-not $state.ScanLimitExceeded -and $sizeMB -le $MaximumRecycleBinSizeMB) {
         $message = "Compliant. Recycle Bin estimated size is $sizeMB MB."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Not compliant. Recycle Bin estimated size is $sizeMB MB. Threshold is $MaximumRecycleBinSizeMB MB."
+    $message = "Not compliant. Recycle Bin estimated size is at least $sizeMB MB. Threshold is $MaximumRecycleBinSizeMB MB; ScanLimitExceeded='$($state.ScanLimitExceeded)'."
     Write-Log -Message $message -Level 'WARN'
     Write-Output $message
     exit 1

@@ -43,8 +43,8 @@ param(
 
     [switch]$Requires64Bit,
 
-    [ValidateSet('Example', 'Template', 'Planned')]
-    [string]$Status = 'Example',
+    [ValidateSet('Template', 'Planned', 'Example', 'NeedsReview')]
+    [string]$Status = 'Template',
 
     [string]$WritesTo = '',
 
@@ -107,7 +107,8 @@ function Set-ScriptIdentity {
     $content = $content.Replace('Created:     <YYYY-MM-DD>', "Created:     $createdDate")
     $content = $content.Replace('Updated:     <YYYY-MM-DD>', "Updated:     $createdDate")
     $content = $content.Replace('Context:     <System or User>', "Context:     $Context")
-    $content = $content.Replace('Workload:    <Remediation | Custom Compliance | Platform Script | Win32 App>', "Workload:    $Workload")
+    $workloadDisplayName = Get-WorkloadDisplayName -WorkloadFolderName $Workload
+    $content = $content.Replace('Workload:    <Remediation | Custom Compliance | Platform Script | Win32 App>', "Workload:    $workloadDisplayName")
     $content = $content.Replace('$ScriptPackageName = ''<Script-Folder-Name>''', "`$ScriptPackageName = '$Name'")
     $content = $content.Replace('$ScriptName = ''<ScriptName>''', "`$ScriptName = '$ScriptFileBaseName'")
     Set-Content -Path $Path -Value $content -Encoding UTF8
@@ -215,7 +216,7 @@ function New-ScriptInfoFile {
     $metadataSummary = if ([string]::IsNullOrWhiteSpace($Summary)) { '<One-sentence purpose>' } else { $Summary }
     $metadataWritesTo = if ([string]::IsNullOrWhiteSpace($WritesTo)) {
         switch ($Workload) {
-            'Custom-Compliance' { 'JSON output only' }
+            'Custom-Compliance' { 'Compressed JSON to STDOUT; local diagnostic logs only' }
             'Detection-Remediation' { '<What remediation changes or Logs only>' }
             'Intune-Platform-Scripts' { '<What the script changes>' }
             'Win32-Packaged-Scripts' { '<What install/uninstall changes>' }
@@ -231,6 +232,26 @@ function New-ScriptInfoFile {
     $requires64BitValue = if ($Requires64Bit) { 'Required' } else { 'Recommended' }
     $metadataTags = @($ScriptCategory, $Workload) + $Tags
 
+    if ($Workload -eq 'Intune-Platform-Scripts') {
+        $detectionEvidenceType = 'N/A'
+        $detectionEvidenceSource = 'No detection script for this workload'
+        $detectionReviewStatus = 'NotApplicable'
+    }
+    else {
+        $detectionEvidenceType = 'NeedsReview'
+        $detectionEvidenceSource = 'Generated package has not been evidence-audited'
+        $detectionReviewStatus = 'NeedsReview'
+    }
+
+    $portabilityRiskAreas = @(
+        'Localization',
+        'OsVersion',
+        'CommandParsing',
+        'Scalability',
+        'RegistryView',
+        'PathAssumption'
+    )
+
     $metadata = [ordered]@{
         Name = $displayName
         Workload = $workloadDisplayName
@@ -244,6 +265,13 @@ function New-ScriptInfoFile {
         WritesTo = $metadataWritesTo
         Reboot = $Reboot
         Risk = $Risk
+        DetectionEvidenceType = $detectionEvidenceType
+        DetectionEvidenceSource = $detectionEvidenceSource
+        DetectionReviewStatus = $detectionReviewStatus
+        PortabilityReviewStatus = 'NeedsReview'
+        PortabilityRiskLevel = 'Medium'
+        PortabilityRiskAreas = $portabilityRiskAreas
+        PortabilityNotes = 'Generated package has not been portability-audited'
         Summary = $metadataSummary
         Tags = $metadataTags
     }
@@ -255,8 +283,8 @@ switch ($Workload) {
     'Detection-Remediation' {
         $detectPath = Join-Path -Path $targetPath -ChildPath 'Detect.ps1'
         $remediatePath = Join-Path -Path $targetPath -ChildPath 'Remediate.ps1'
-        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\ScriptHeader.Template.ps1') -Destination $detectPath
-        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\ScriptHeader.Template.ps1') -Destination $remediatePath
+        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\RemediationDetection.Template.ps1') -Destination $detectPath
+        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\RemediationAction.Template.ps1') -Destination $remediatePath
         Set-ScriptIdentity -Path $detectPath -ScriptFileBaseName 'Detect'
         Set-ScriptIdentity -Path $remediatePath -ScriptFileBaseName 'Remediate'
         if ($IncludeTeamsAlertBlock) {
@@ -268,21 +296,36 @@ switch ($Workload) {
     }
     'Custom-Compliance' {
         $discoverPath = Join-Path -Path $targetPath -ChildPath 'Discover.ps1'
-        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\ScriptHeader.Template.ps1') -Destination $discoverPath
+        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\CustomComplianceDiscovery.Template.ps1') -Destination $discoverPath
         Set-ScriptIdentity -Path $discoverPath -ScriptFileBaseName 'Discover'
         $readmePath = Join-Path -Path $targetPath -ChildPath 'README.md'
         Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\CustomCompliance.README.Template.md') -Destination $readmePath
         Set-ReadmePlaceholders -Path $readmePath -PrimaryScriptFileName 'Discover.ps1'
 
-        $json = @{
-            Rules = @()
-        } | ConvertTo-Json -Depth 4
+        $json = [ordered]@{
+            Rules = @(
+                [ordered]@{
+                    SettingName = 'ExampleSetting'
+                    Operator = 'IsEquals'
+                    DataType = 'String'
+                    Operand = '<Expected value>'
+                    MoreInfoUrl = 'https://learn.microsoft.com/en-us/intune/device-security/compliance/create-custom-json'
+                    RemediationStrings = @(
+                        [ordered]@{
+                            Language = 'en_US'
+                            Title = 'The required setting is not compliant. Current value: {ActualValue}.'
+                            Description = 'Contact your support team or follow the linked guidance to restore compliance.'
+                        }
+                    )
+                }
+            )
+        } | ConvertTo-Json -Depth 8
 
         Set-Content -Path (Join-Path -Path $targetPath -ChildPath 'ComplianceRules.json') -Value $json -Encoding UTF8
     }
     'Intune-Platform-Scripts' {
         $scriptPath = Join-Path -Path $targetPath -ChildPath "$Name.ps1"
-        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\ScriptHeader.Template.ps1') -Destination $scriptPath
+        Copy-Item -LiteralPath (Join-Path -Path $RepositoryRoot -ChildPath 'templates\PlatformScriptAction.Template.ps1') -Destination $scriptPath
         Set-ScriptIdentity -Path $scriptPath -ScriptFileBaseName $Name
         if ($IncludeTeamsAlertBlock) {
             Add-TeamsAlertBlock -Path $scriptPath
@@ -323,6 +366,7 @@ if (-not [string]::IsNullOrWhiteSpace($Summary)) {
 }
 
 Write-Output "Default context: $Context."
+Write-Output "Package status: $Status. Generated workload scaffolds must pass tools\Test-IntuneWorkloadContracts.ps1 before promotion to PilotReady."
 
 if ($Requires64Bit) {
     Write-Output '64-bit PowerShell guidance was prefilled as required.'
