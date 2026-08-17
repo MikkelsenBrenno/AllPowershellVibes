@@ -1,0 +1,20 @@
+{
+  "Name": "Check Policy Sync State",
+  "Workload": "Custom Compliance",
+  "Purpose": "MDM-Enrollment",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Policy Sync state for Intune custom compliance evaluation in the MDM-Enrollment category.",
+  "Tags": [
+    "MDM-Enrollment",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "Name": "Check Feature Update Target Release Policy",
+  "Workload": "Custom Compliance",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether Windows Update for Business target release policy values match the configured expected version.",
+  "Tags": [
+    "Windows-Updates",
+    "Custom-Compliance"
+  ]
+}

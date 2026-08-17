@@ -1,0 +1,21 @@
+{
+  "Name": "Export Defender Tamper Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Defender policy values useful when troubleshooting Defender for Business compliance posture.",
+  "Tags": [
+    "Compliance",
+    "Defender",
+    "Business Premium"
+  ]
+}
+

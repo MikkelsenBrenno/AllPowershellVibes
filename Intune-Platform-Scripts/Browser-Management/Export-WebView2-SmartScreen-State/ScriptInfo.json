@@ -1,0 +1,20 @@
+{
+  "Name": "Export WebView2 SmartScreen State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData inventory snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports WebView2 SmartScreen State state to a local JSON troubleshooting snapshot.",
+  "Tags": [
+    "Browser-Management",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

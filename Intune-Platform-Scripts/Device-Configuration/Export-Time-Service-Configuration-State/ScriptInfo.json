@@ -1,0 +1,21 @@
+{
+  "Name": "Export Time Service Configuration State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Time service state for devices with sign-in, Kerberos, or compliance timestamp issues.",
+  "Tags": [
+    "Device Configuration",
+    "Time",
+    "Business Premium"
+  ]
+}
+

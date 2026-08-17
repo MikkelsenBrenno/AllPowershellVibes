@@ -1,0 +1,22 @@
+{
+  "Name": "Export Edge Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "User or System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports common Microsoft Edge policy registry values for browser configuration and SmartScreen troubleshooting.",
+  "Tags": [
+    "User Experience",
+    "Edge",
+    "Policy",
+    "Business Premium"
+  ]
+}
+

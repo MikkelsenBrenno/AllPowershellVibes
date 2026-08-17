@@ -1,0 +1,20 @@
+{
+  "Name": "Install CompanyPortal Policy State Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Packages CompanyPortal Policy State configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "Name": "Export CBS And DISM Log State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports CBS and DISM log folder size details for servicing troubleshooting.",
+  "Tags": [
+    "Maintenance",
+    "Servicing",
+    "Business Premium"
+  ]
+}
+

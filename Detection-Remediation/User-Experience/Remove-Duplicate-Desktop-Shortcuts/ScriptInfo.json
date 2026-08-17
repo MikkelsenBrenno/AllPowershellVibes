@@ -1,0 +1,20 @@
+{
+  "Name": "Remove Duplicate Desktop Shortcuts",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects duplicate `.lnk` or `.url` desktop shortcuts across configured desktop folders and can remove duplicates. The remediation is report-only by default so technicians can review the exact files first.",
+  "Tags": [
+    "User-Experience",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

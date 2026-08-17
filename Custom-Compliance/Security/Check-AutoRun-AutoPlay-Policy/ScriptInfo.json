@@ -1,0 +1,19 @@
+{
+  "Name": "Check AutoRun AutoPlay Policy",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether machine-wide AutoRun and AutoPlay policy registry values match your endpoint hardening baseline. The default expects AutoRun to be disabled for all drive types.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

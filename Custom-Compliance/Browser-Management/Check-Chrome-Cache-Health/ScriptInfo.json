@@ -1,0 +1,20 @@
+{
+  "Name": "Check Chrome Cache Health",
+  "Workload": "Custom Compliance",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Chrome Cache Health state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Browser-Management",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

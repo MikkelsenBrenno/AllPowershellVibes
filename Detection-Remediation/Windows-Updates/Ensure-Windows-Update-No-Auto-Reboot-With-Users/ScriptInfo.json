@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Windows Update No Auto Reboot With Users",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Update policy so signed-in users are not automatically rebooted for scheduled update installation.",
+  "Tags": [
+    "Windows Updates",
+    "WUfB",
+    "Business Premium"
+  ]
+}
+

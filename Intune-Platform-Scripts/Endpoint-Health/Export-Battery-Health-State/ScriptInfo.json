@@ -1,0 +1,22 @@
+{
+  "Name": "Export Battery Health State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports battery inventory and estimated charge state for laptop support and device replacement conversations.",
+  "Tags": [
+    "Endpoint Health",
+    "Battery",
+    "Hardware",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "Name": "Backup BitLocker Recovery Key To Entra",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether a BitLocker recovery password protector exists and can attempt to back it up to Entra ID using BitLocker PowerShell cmdlets. Optional event-log checking can be enabled if your environment records backup events consistently.",
+  "Tags": [
+    "Compliance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

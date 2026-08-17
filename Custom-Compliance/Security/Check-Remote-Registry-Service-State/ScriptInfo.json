@@ -1,0 +1,19 @@
+{
+  "Name": "Check Remote Registry Service State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the Remote Registry service is disabled and stopped. This gives technicians a focused signal for a common Windows hardening setting.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

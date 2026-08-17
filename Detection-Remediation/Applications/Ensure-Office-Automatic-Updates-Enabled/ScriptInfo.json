@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure Office Automatic Updates Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Microsoft 365 Apps policy that keeps Office automatic updates enabled.",
+  "Tags": [
+    "Applications",
+    "Microsoft 365 Apps",
+    "Office Updates",
+    "Business Premium"
+  ]
+}
+

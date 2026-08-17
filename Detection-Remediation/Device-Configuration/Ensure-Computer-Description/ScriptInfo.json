@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Computer Description",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects and can set the local computer description shown through LanmanServer metadata.",
+  "Tags": [
+    "Device-Configuration",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

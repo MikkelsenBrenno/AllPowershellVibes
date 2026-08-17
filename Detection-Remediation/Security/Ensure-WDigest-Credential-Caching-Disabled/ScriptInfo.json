@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure WDigest Credential Caching Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates WDigest credential caching so cleartext credentials are not stored in memory on managed Windows endpoints.",
+  "Tags": [
+    "Security",
+    "Credentials",
+    "Business Premium"
+  ]
+}
+

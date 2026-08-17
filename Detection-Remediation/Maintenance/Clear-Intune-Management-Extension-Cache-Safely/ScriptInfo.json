@@ -1,0 +1,20 @@
+{
+  "Name": "Clear Intune Management Extension Cache Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package detects old Intune Management Extension cache files and can remove them only after an explicit safety switch is enabled.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

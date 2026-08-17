@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Tailored Experiences Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Cloud Content policy that disables tailored experiences with diagnostic data.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

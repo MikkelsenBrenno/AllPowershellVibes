@@ -1,0 +1,23 @@
+{
+  "Name": "Export Compliance Prerequisite State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports key local signals often used by Intune compliance policies: TPM, Secure Boot, BitLocker, OS build, and activation state.",
+  "Tags": [
+    "Compliance",
+    "TPM",
+    "Secure Boot",
+    "BitLocker",
+    "Business Premium"
+  ]
+}
+

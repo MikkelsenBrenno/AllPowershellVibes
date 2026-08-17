@@ -1,0 +1,20 @@
+{
+  "Name": "Export OneDrive Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Remote-Work",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData inventory snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports OneDrive Service State state to a local JSON troubleshooting snapshot.",
+  "Tags": [
+    "Remote-Work",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

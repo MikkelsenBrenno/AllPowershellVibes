@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure NetBIOS Over TCPIP Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects IP-enabled adapters where NetBIOS over TCP/IP is not disabled and can remediate them. The remediation is report-only by default because network adapter targeting should be tested carefully.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

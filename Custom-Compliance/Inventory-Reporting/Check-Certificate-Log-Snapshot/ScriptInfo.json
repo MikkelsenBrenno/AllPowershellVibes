@@ -1,0 +1,20 @@
+{
+  "Name": "Check Certificate Log Snapshot",
+  "Workload": "Custom Compliance",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Certificate Log Snapshot state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

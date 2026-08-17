@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "RemoteRegistryServiceCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/administration/windows-commands/sc-config",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Remote Registry service state is not compliant. Current value: {ActualValue}.",
+          "Description": "Disable and stop the Remote Registry service unless the device has an approved exception."
+        }
+      ]
+    },
+    {
+      "SettingName": "ServiceExists",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/administration/windows-commands/sc-config",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Remote Registry service was not found. Current value: {ActualValue}.",
+          "Description": "Confirm the device supports the Remote Registry service before enforcing this check."
+        }
+      ]
+    }
+  ]
+}

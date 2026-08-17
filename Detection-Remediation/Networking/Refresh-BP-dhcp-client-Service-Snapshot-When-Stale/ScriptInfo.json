@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP DHCP Client Service Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local DHCP Client service state troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Networking",
+    "Services",
+    "Business Premium"
+  ]
+}
+

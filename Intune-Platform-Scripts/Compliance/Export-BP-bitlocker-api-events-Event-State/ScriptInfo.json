@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP BitLocker API Events Event State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local BitLocker API Events event log troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Compliance",
+    "Events",
+    "Business Premium"
+  ]
+}
+

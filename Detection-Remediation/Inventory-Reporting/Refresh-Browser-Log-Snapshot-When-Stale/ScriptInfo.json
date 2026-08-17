@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh Browser Log Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates Browser Log Snapshot state for Intune-managed Windows devices.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

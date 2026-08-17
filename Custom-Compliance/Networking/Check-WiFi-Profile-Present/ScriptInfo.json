@@ -1,0 +1,19 @@
+{
+  "Name": "Check WiFi Profile Present",
+  "Workload": "Custom Compliance",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether a configured Wi-Fi profile name is present on the device.",
+  "Tags": [
+    "Networking",
+    "Custom-Compliance"
+  ]
+}

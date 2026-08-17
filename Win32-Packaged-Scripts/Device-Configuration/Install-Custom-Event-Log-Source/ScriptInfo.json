@@ -1,0 +1,19 @@
+{
+  "Name": "Install Custom Event Log Source",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs a custom Windows event log source and writes a versioned detection marker. This is useful when internal scripts, tools, or scheduled tasks should write identifiable events to the Windows event log.",
+  "Tags": [
+    "Device-Configuration",
+    "Win32-Packaged-Scripts"
+  ]
+}

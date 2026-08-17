@@ -1,0 +1,21 @@
+{
+  "Name": "Export M365 App Repair Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Office and Click-to-Run scheduled task state for update and repair troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Microsoft 365 Apps",
+    "Business Premium"
+  ]
+}
+

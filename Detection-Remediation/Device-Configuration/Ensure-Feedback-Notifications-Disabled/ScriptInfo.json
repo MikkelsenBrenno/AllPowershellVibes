@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Feedback Notifications Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Data Collection policy that suppresses feedback notification prompts on managed devices.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

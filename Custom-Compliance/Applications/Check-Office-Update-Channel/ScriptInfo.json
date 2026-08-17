@@ -1,0 +1,19 @@
+{
+  "Name": "Check Office Update Channel",
+  "Workload": "Custom Compliance",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether Microsoft 365 Apps is using the expected update channel URL.",
+  "Tags": [
+    "Applications",
+    "Custom-Compliance"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Detect Company Portal Installed",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects whether Company Portal is installed or provisioned. Remediation is reporting-only and points admins back to an Intune app deployment.",
+  "Tags": [
+    "Applications",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

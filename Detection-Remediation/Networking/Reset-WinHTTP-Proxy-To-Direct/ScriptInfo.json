@@ -1,0 +1,22 @@
+{
+  "Name": "Reset WinHTTP Proxy To Direct",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Network configuration",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects WinHTTP proxy settings that are not direct access and optionally resets them for environments that do not require device-level proxy configuration.",
+  "Tags": [
+    "Networking",
+    "Proxy",
+    "WinHTTP",
+    "Business Premium"
+  ]
+}
+

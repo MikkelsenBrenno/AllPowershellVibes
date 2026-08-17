@@ -1,0 +1,19 @@
+{
+  "Name": "Example Install File Version Marker",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script example installs, detects, and removes a file-based version marker. It is useful as a simple pattern for packages where detection should check a file and expected version.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts"
+  ]
+}

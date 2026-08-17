@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Windows Update Policy Keys Present",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and optionally creates expected Windows Update policy registry values. This is meant as a copy-and-customize baseline for technicians who need visible registry settings near the top of the script.",
+  "Tags": [
+    "Windows-Updates",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Export WMI Repository Status",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script runs WMI repository verification and writes the output to a local JSON snapshot for technician troubleshooting.",
+  "Tags": [
+    "Endpoint-Health",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

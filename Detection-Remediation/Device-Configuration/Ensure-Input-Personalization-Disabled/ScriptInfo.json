@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Input Personalization Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates input personalization policy so Windows does not collect typing and inking personalization data.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

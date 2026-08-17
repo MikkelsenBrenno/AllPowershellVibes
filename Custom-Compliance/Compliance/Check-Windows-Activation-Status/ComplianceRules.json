@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WindowsActivated",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/volume-activation/monitor-activation-client",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows is not activated. Current value: {ActualValue}.",
+          "Description": "Review activation state, product key assignment, KMS/MAK connectivity, or subscription activation."
+        }
+      ]
+    }
+  ]
+}

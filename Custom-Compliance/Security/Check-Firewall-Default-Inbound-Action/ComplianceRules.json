@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "FirewallDefaultInboundCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/network-security/windows-firewall/configure-with-command-line",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Firewall default inbound action is not compliant. Current value: {ActualValue}.",
+          "Description": "Set selected firewall profiles to block inbound traffic by default, or assign an approved exception."
+        }
+      ]
+    }
+  ]
+}

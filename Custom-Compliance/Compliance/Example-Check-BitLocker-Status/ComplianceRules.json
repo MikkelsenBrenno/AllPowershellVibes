@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "BitLockerProtected",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "BitLocker must be enabled on the operating system drive. Current value: {ActualValue}.",
+          "Description": "Enable BitLocker on the operating system drive or contact your IT support team."
+        }
+      ]
+    },
+    {
+      "SettingName": "BitLockerEncryptionPercentage",
+      "Operator": "GreaterEquals",
+      "DataType": "Int64",
+      "Operand": 100,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The operating system drive must be fully encrypted. Current value: {ActualValue}.",
+          "Description": "Allow BitLocker encryption to complete or contact your IT support team."
+        }
+      ]
+    }
+  ]
+}

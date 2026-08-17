@@ -1,0 +1,21 @@
+{
+  "Name": "Export Temp Folder Usage State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports system temp and Windows temp folder usage to help technicians spot cleanup candidates.",
+  "Tags": [
+    "Maintenance",
+    "Temp Files",
+    "Business Premium"
+  ]
+}
+

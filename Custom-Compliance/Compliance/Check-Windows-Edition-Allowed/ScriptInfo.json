@@ -1,0 +1,19 @@
+{
+  "Name": "Check Windows Edition Allowed",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Checks whether a device is running an approved Windows edition. This helps technicians flag devices that are accidentally deployed with Pro, Enterprise, Education, or another edition outside the expected standard.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance"
+  ]
+}

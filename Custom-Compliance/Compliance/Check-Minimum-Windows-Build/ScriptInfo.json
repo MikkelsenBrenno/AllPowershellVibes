@@ -1,0 +1,19 @@
+{
+  "Name": "Check Minimum Windows Build",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether Windows meets a configurable minimum build number.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance"
+  ]
+}

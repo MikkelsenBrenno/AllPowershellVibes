@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Edge Password Manager Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Microsoft Edge policy so the built-in password manager is disabled where another password manager is standard.",
+  "Tags": [
+    "Applications",
+    "Microsoft Edge",
+    "Business Premium"
+  ]
+}
+

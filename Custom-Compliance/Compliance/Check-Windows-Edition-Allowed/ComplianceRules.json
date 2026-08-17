@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WindowsEditionAllowed",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/client-tools/windows-edition-upgrades"
+    }
+  ]
+}

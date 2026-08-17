@@ -1,0 +1,20 @@
+{
+  "Name": "Install Firewall Client State Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Packages Firewall Client State configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Networking",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

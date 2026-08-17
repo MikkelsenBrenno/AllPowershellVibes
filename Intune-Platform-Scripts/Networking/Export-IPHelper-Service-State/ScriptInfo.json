@@ -1,0 +1,21 @@
+{
+  "Name": "Export IP Helper Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports IP Helper service state for VPN, IPv6 transition, and network troubleshooting.",
+  "Tags": [
+    "Networking",
+    "VPN",
+    "Business Premium"
+  ]
+}
+

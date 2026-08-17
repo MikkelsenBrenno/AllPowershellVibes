@@ -1,0 +1,19 @@
+{
+  "Name": "Check Guest Account State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the built-in local Guest account is disabled. The script locates the account by SID suffix `-501`, so it works even when the account name is localized or renamed.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

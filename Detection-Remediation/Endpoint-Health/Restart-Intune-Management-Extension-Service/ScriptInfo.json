@@ -1,0 +1,20 @@
+{
+  "Name": "Restart Intune Management Extension Service",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects whether the Intune Management Extension service is running and can start or optionally restart it.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

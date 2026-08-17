@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Firewall Private Profile Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Firewall policy so the private profile is enabled.",
+  "Tags": [
+    "Security",
+    "Firewall",
+    "Business Premium"
+  ]
+}
+

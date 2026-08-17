@@ -1,0 +1,22 @@
+{
+  "Name": "Remove Stale WiFi Profiles Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Network configuration",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects saved Wi-Fi profiles that are not in an allowed list and optionally removes them after an admin enables the safety toggle.",
+  "Tags": [
+    "Networking",
+    "WiFi",
+    "Cleanup",
+    "Template",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "Name": "Ensure Edge Extension Blocklist Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Template remediation that detects and applies an editable Microsoft Edge extension blocklist.",
+  "Tags": [
+    "Applications",
+    "Microsoft Edge",
+    "Extensions",
+    "Business Premium",
+    "Template"
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Windows Time Service Automatic",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Time service startup mode. This is useful when devices have time sync issues and you want a focused service-baseline remediation separate from full time resync repair.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "Name": "Install Generic ZIP App Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Provides a copy-and-customize Win32 template for applications delivered as a ZIP archive. The install script extracts the archive to a configurable folder and writes a version marker for detection.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts"
+  ]
+}

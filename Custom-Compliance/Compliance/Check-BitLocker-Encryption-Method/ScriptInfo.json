@@ -1,0 +1,19 @@
+{
+  "Name": "Check BitLocker Encryption Method",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Checks whether the configured BitLocker volume uses an approved encryption method, such as XtsAes128 or XtsAes256. This is useful when technicians need a quick custom compliance rule that reports more detail than simple protection state.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance"
+  ]
+}

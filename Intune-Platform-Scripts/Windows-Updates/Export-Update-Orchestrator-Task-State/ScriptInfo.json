@@ -1,0 +1,21 @@
+{
+  "Name": "Export Update Orchestrator Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Update Orchestrator scheduled task state for Windows Update for Business troubleshooting.",
+  "Tags": [
+    "Windows Updates",
+    "Update Orchestrator",
+    "Business Premium"
+  ]
+}
+

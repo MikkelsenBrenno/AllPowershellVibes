@@ -1,0 +1,20 @@
+{
+  "Name": "Install WindowsHello Policy State Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Packages WindowsHello Policy State configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Compliance",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

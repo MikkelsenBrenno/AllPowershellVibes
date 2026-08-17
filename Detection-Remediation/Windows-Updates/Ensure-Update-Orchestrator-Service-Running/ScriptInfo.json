@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Update Orchestrator Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the Windows Update Orchestrator service is not running, which can affect Windows Update for Business processing.",
+  "Tags": [
+    "Windows Updates",
+    "Service",
+    "Business Premium"
+  ]
+}
+

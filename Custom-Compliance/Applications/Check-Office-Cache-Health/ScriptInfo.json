@@ -1,0 +1,20 @@
+{
+  "Name": "Check Office Cache Health",
+  "Workload": "Custom Compliance",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Office Cache Health state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Applications",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

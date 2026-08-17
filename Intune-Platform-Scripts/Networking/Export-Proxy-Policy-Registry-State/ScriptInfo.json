@@ -1,0 +1,21 @@
+{
+  "Name": "Export Proxy Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports machine and user proxy policy registry values for Intune connectivity troubleshooting.",
+  "Tags": [
+    "Networking",
+    "Proxy",
+    "Business Premium"
+  ]
+}
+

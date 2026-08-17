@@ -1,0 +1,21 @@
+{
+  "Name": "Export Setup Log Folder State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Panther, setup, and rollback log folder size details for upgrade troubleshooting.",
+  "Tags": [
+    "Maintenance",
+    "Setup Logs",
+    "Business Premium"
+  ]
+}
+

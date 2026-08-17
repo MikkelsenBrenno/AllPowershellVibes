@@ -1,0 +1,21 @@
+{
+  "Name": "Export Windows Update Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Update scheduled task state for update scan and install troubleshooting.",
+  "Tags": [
+    "Windows Updates",
+    "Scheduled Tasks",
+    "Business Premium"
+  ]
+}
+

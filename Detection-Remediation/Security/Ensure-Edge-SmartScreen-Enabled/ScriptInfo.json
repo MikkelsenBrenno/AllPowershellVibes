@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure Edge SmartScreen Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Microsoft Edge SmartScreen policy values commonly used to reduce phishing, malicious site, and unwanted app exposure.",
+  "Tags": [
+    "Security",
+    "Edge",
+    "SmartScreen",
+    "Business Premium"
+  ]
+}
+

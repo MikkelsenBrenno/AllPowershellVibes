@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Network List Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Network List Service is stopped, which can affect network profile detection and firewall behavior.",
+  "Tags": [
+    "Networking",
+    "Firewall",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WindowsScriptHostCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/administration/windows-commands/cscript",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Script Host state is not compliant. Current value: {ActualValue}.",
+          "Description": "Disable Windows Script Host or assign an approved exception for devices that require it."
+        }
+      ]
+    },
+    {
+      "SettingName": "EnabledValue",
+      "Operator": "IsEquals",
+      "DataType": "Int64",
+      "Operand": 0,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/administration/windows-commands/cscript",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Script Host registry value does not match policy. Current value: {ActualValue}.",
+          "Description": "Set the Windows Script Host Enabled value to the expected policy value."
+        }
+      ]
+    }
+  ]
+}

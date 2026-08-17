@@ -1,0 +1,19 @@
+{
+  "Name": "Install Font Files",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs one or more font files by copying them to the Windows Fonts folder and creating matching registry entries.",
+  "Tags": [
+    "User-Experience",
+    "Win32-Packaged-Scripts"
+  ]
+}

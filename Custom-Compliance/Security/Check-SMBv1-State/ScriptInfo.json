@@ -1,0 +1,19 @@
+{
+  "Name": "Check SMBv1 State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether the SMBv1 optional Windows feature is disabled.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

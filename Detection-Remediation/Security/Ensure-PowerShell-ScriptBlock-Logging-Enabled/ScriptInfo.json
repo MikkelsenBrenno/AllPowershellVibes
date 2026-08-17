@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure PowerShell ScriptBlock Logging Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates PowerShell policy so script block logging is enabled for troubleshooting and security review.",
+  "Tags": [
+    "Security",
+    "PowerShell",
+    "Business Premium"
+  ]
+}
+

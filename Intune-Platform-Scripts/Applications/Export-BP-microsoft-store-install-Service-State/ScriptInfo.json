@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Microsoft Store Install Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Microsoft Store Install service state troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Services",
+    "Business Premium"
+  ]
+}
+

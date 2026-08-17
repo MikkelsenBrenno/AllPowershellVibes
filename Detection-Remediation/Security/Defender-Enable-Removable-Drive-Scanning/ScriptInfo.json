@@ -1,0 +1,22 @@
+{
+  "Name": "Defender Enable Removable Drive Scanning",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Defender preference",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and remediates Microsoft Defender removable drive scanning by keeping `DisableRemovableDriveScanning` set to `$false`.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Business Premium",
+    "Removable Storage"
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh Edge Cache Health When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates Edge Cache Health state for Intune-managed Windows devices.",
+  "Tags": [
+    "Browser-Management",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

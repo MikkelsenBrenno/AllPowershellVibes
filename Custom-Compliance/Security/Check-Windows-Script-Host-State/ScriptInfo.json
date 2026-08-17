@@ -1,0 +1,19 @@
+{
+  "Name": "Check Windows Script Host State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether Windows Script Host is disabled through the standard machine registry setting. This is useful when `.vbs` and `.js` script execution should be blocked on managed endpoints.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

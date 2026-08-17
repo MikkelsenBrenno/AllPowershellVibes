@@ -1,0 +1,20 @@
+{
+  "Name": "Export Firewall Profile State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports Windows Firewall profile and active network connection profile state to JSON for Business Premium troubleshooting.",
+  "Tags": [
+    "Security",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

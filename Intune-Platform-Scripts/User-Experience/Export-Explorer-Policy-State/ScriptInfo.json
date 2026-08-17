@@ -1,0 +1,21 @@
+{
+  "Name": "Export Explorer Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Explorer policy values that affect search, taskbar, and shell user experience.",
+  "Tags": [
+    "User Experience",
+    "Explorer",
+    "Business Premium"
+  ]
+}
+

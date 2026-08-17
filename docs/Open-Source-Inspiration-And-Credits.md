@@ -1,0 +1,683 @@
+# Open Source Inspiration And Credits
+
+This repository contains original copy-and-customize scripts written for this project structure. Some package ideas are inspired by public Intune Remediations and Proactive Remediations examples from Microsoft docs, GitHub repositories, and GitHub gists.
+
+When an idea is inspired by another public project, credit the source here and keep the generated script implementation aligned with this repository's own standards:
+
+- Clear `CONFIGURATION` section.
+- `CUSTOMIZE HERE` guidance.
+- Predictable logging under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs`.
+- README sections for prerequisites, customization, Intune deployment, expected results, and troubleshooting.
+- No tenant-specific values, secrets, or real webhook URLs.
+
+## Sources
+
+- [Microsoft Intune remediation script reference](https://learn.microsoft.com/en-us/intune/device-management/tools/ref-remediation-scripts) - Microsoft examples for certificate cleanup, certificate notification, and stale Group Policy refresh patterns.
+- [Microsoft Intune Remediations deployment documentation](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations) - Intune behavior, prerequisites, exit-code expectations, and deployment guidance.
+- [aaronparker/remediations](https://github.com/aaronparker/remediations) - Public Remediations examples covering TLS, Local Security Authority, AppX cleanup, shortcuts, Microsoft 365 Apps, firewall auditing, and related endpoint administration patterns.
+- [aaronparker/intune](https://github.com/aaronparker/intune) - Public Microsoft Intune scripts and endpoint administration patterns for Defender, policy, reporting, and Windows customization ideas.
+- [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations) - Public Endpoint Analytics remediation examples including disk cleanup, unsupported applications, feature update guardrails, and runtime prerequisites.
+- [MSEndpointMgr/IntuneWin32App](https://github.com/MSEndpointMgr/IntuneWin32App) - Public Win32 app packaging and Intune Win32 app management module used for package workflow inspiration.
+- [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts) - Community remediation library used for broad topic inspiration and package organization patterns.
+- [jmanuelng/MEM_BitlockerKeyBackup](https://github.com/jmanuelng/MEM_BitlockerKeyBackup) - BitLocker recovery key backup remediation idea and operational context.
+- [Smalls1652 USB selective suspend gist](https://gist.github.com/Smalls1652/70e3b7d191321e72ba572c1143d902f0) - USB selective suspend detection/remediation idea using the active power scheme.
+- [nickj76/Intune-Proactive-Remediations](https://github.com/nickj76/Intune-Proactive-Remediations) - Additional community examples and topic inspiration for Intune proactive remediation workflows.
+- [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs) - Microsoft Intune and Microsoft Defender policy documentation used for setting names, deployment context, and Business Premium suitability checks.
+- [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc) - Public Intune tenant documentation project used for export/reporting topic inspiration across policies, scripts, endpoint security, apps, and remediations.
+- [microsoftgraph/powershell-intune-samples](https://github.com/microsoftgraph/powershell-intune-samples) - Microsoft Graph Intune PowerShell samples used for Intune inventory/reporting and device management topic inspiration.
+
+## Inspired Packages
+
+The packages below were generated as original implementations for this repository after reviewing public remediation patterns:
+
+- `Detection-Remediation/Maintenance/Refresh-Group-Policy-When-Stale`
+- `Detection-Remediation/Security/Ensure-TLS12-For-NETFramework`
+- `Detection-Remediation/Security/Ensure-LSA-Protection-Enabled`
+- `Detection-Remediation/Device-Configuration/Ensure-USB-Selective-Suspend-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Fast-Startup-Disabled`
+- `Detection-Remediation/Applications/Remove-Unsupported-MSI-Products`
+- `Detection-Remediation/User-Experience/Remove-Duplicate-Desktop-Shortcuts`
+- `Detection-Remediation/Windows-Updates/Ensure-Feature-Update-Safeguard-Holds-Allowed`
+- `Detection-Remediation/Security/Ensure-Cached-Domain-Logons-Limited`
+- `Detection-Remediation/Security/Ensure-Windows-Firewall-Logging-Enabled`
+- `Detection-Remediation/Applications/Remove-BuiltIn-Appx-Packages-Template`
+- `Detection-Remediation/Applications/Ensure-Microsoft-365-Apps-Update-Channel`
+- `Detection-Remediation/Maintenance/Run-Disk-Cleanup-When-Low-Free-Space`
+- `Detection-Remediation/Compliance/Backup-BitLocker-Recovery-Key-To-Entra`
+- `Detection-Remediation/Security/Defender-Enable-IOAV-Protection`
+- `Detection-Remediation/Security/Defender-Enable-Archive-Scanning`
+- `Detection-Remediation/Security/Defender-Enable-Email-Scanning`
+- `Detection-Remediation/Security/Defender-Enable-Removable-Drive-Scanning`
+- `Detection-Remediation/Security/Defender-Set-Cloud-Block-Level-High`
+- `Detection-Remediation/Security/Ensure-Edge-SmartScreen-Enabled`
+- `Detection-Remediation/Security/Ensure-Office-Block-Macros-From-Internet`
+- `Detection-Remediation/Networking/Ensure-DNS-Client-Service-Running`
+- `Detection-Remediation/Networking/Reset-WinHTTP-Proxy-To-Direct`
+- `Detection-Remediation/Networking/Remove-Stale-WiFi-Profiles-Template`
+- `Detection-Remediation/Maintenance/Clear-Recycle-Bin-When-Large`
+- `Detection-Remediation/Windows-Updates/Clear-Delivery-Optimization-Cache-When-Large`
+- `Detection-Remediation/Windows-Updates/Ensure-Update-Orchestrator-Service-Running`
+- `Detection-Remediation/Endpoint-Health/Repair-WMI-Repository-When-Inconsistent`
+- `Intune-Platform-Scripts/Security/Export-ASR-Rule-Preference-State`
+- `Intune-Platform-Scripts/Security/Export-Defender-Exclusion-State`
+- `Intune-Platform-Scripts/Security/Export-Security-Center-Product-State`
+- `Intune-Platform-Scripts/Security/Export-Windows-LAPS-Policy-State`
+- `Intune-Platform-Scripts/Security/Export-Credential-Guard-And-VBS-State`
+- `Intune-Platform-Scripts/Applications/Export-Teams-Client-Install-State`
+- `Intune-Platform-Scripts/Applications/Export-Office-Addin-Inventory`
+- `Intune-Platform-Scripts/Applications/Export-Company-Portal-Install-Details`
+- `Intune-Platform-Scripts/User-Experience/Export-Edge-Policy-State`
+- `Intune-Platform-Scripts/User-Experience/Export-OneDrive-KFM-Policy-State`
+- `Intune-Platform-Scripts/User-Experience/Export-Start-Menu-And-Taskbar-Policy-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-Pending-Reboot-Signals`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-Battery-Health-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-Storage-Reliability-Snapshot`
+- `Intune-Platform-Scripts/Device-Configuration/Export-MDM-Enrollment-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Device-Certificate-Enrollment-State`
+- `Intune-Platform-Scripts/Networking/Export-Intune-Service-Connectivity-Check`
+- `Intune-Platform-Scripts/Networking/Export-VPN-Profile-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-WindowsUpdate-Operational-Summary`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Delivery-Optimization-Status`
+- `Intune-Platform-Scripts/Windows-Updates/Export-WUfB-Policy-Registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BitLocker-Protector-Details`
+- `Intune-Platform-Scripts/Compliance/Export-Compliance-Prerequisite-State`
+- `Detection-Remediation/Applications/Ensure-AppX-Deployment-Service-Running`
+- `Detection-Remediation/Applications/Ensure-Microsoft-Store-Install-Service-Running`
+- `Detection-Remediation/Endpoint-Health/Ensure-Diagnostic-Policy-Service-Running`
+- `Detection-Remediation/Endpoint-Health/Ensure-Windows-Event-Log-Service-Running`
+- `Detection-Remediation/Endpoint-Health/Ensure-Windows-Error-Reporting-Service-Running`
+- `Detection-Remediation/Endpoint-Health/Ensure-Device-Association-Service-Running`
+- `Detection-Remediation/Windows-Updates/Ensure-Cryptographic-Service-Running`
+- `Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Medic-Service-Running`
+- `Detection-Remediation/Networking/Ensure-DHCP-Client-Service-Running`
+- `Detection-Remediation/Networking/Ensure-Network-List-Service-Running`
+- `Detection-Remediation/Networking/Ensure-Network-Location-Awareness-Service-Running`
+- `Detection-Remediation/Security/Ensure-Security-Center-Service-Running`
+- `Detection-Remediation/Security/Ensure-Base-Filtering-Engine-Service-Running`
+- `Detection-Remediation/Maintenance/Ensure-Task-Scheduler-Service-Running`
+- `Detection-Remediation/Security/Ensure-WDigest-Credential-Caching-Disabled`
+- `Detection-Remediation/Security/Ensure-LM-Hash-Storage-Disabled`
+- `Detection-Remediation/Security/Ensure-Anonymous-SAM-Enumeration-Restricted`
+- `Detection-Remediation/Security/Ensure-Windows-Installer-AlwaysElevated-Machine-Disabled`
+- `Detection-Remediation/Security/Ensure-Insecure-Guest-Logons-Disabled`
+- `Detection-Remediation/Networking/Ensure-LLMNR-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Windows-Consumer-Features-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Start-Menu-Web-Search-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-News-And-Interests-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Feedback-Notifications-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Advertising-ID-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Tailored-Experiences-Disabled`
+- `Detection-Remediation/Applications/Ensure-Office-Automatic-Updates-Enabled`
+- `Detection-Remediation/User-Experience/Ensure-OneDrive-Files-On-Demand-Enabled`
+- `Detection-Remediation/User-Experience/Ensure-OneDrive-Silent-Account-Config-Enabled`
+- `Detection-Remediation/Windows-Updates/Ensure-Delivery-Optimization-LAN-Mode`
+- `Intune-Platform-Scripts/Maintenance/Export-Intune-Management-Extension-Cache-State`
+- `Intune-Platform-Scripts/Maintenance/Export-Intune-Script-Library-Log-State`
+- `Intune-Platform-Scripts/Maintenance/Export-Temp-Folder-Usage-State`
+- `Intune-Platform-Scripts/Maintenance/Export-Windows-Update-Cache-State`
+- `Intune-Platform-Scripts/Maintenance/Export-CBS-And-DISM-Log-State`
+- `Intune-Platform-Scripts/Maintenance/Export-Scheduled-Maintenance-Task-State`
+- `Intune-Platform-Scripts/Maintenance/Export-Reliability-Monitor-Event-Summary`
+- `Intune-Platform-Scripts/Maintenance/Export-Setup-Log-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-ProgramData-Cache-Usage-State`
+- `Intune-Platform-Scripts/Maintenance/Export-User-Profile-Temp-Usage-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Power-Policy-Registry-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Time-Service-Configuration-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Remote-Desktop-Policy-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Local-User-Profile-Policy-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-Bluetooth-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BitLocker-Policy-Registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-Windows-Hello-Policy-State`
+- `Intune-Platform-Scripts/Compliance/Export-Compliance-Policy-Registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-SecureBoot-Policy-Registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-Defender-Tamper-Policy-State`
+- `Intune-Platform-Scripts/Networking/Export-DNS-Client-Policy-State`
+- `Intune-Platform-Scripts/Networking/Export-WiFi-AutoConfig-Service-State`
+- `Intune-Platform-Scripts/Networking/Export-IPHelper-Service-State`
+- `Intune-Platform-Scripts/Networking/Export-Proxy-Policy-Registry-State`
+- `Intune-Platform-Scripts/Networking/Export-Firewall-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-Office-Update-Policy-State`
+- `Intune-Platform-Scripts/Applications/Export-Teams-Policy-Registry-State`
+- `Intune-Platform-Scripts/Applications/Export-App-Readiness-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-Store-And-Appx-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-M365-App-Repair-Task-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Windows-Update-Service-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Windows-Update-Task-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Windows-Update-Policy-Safety-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Update-Orchestrator-Task-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-Windows-Servicing-Event-Summary`
+- `Intune-Platform-Scripts/Security/Export-SMB-Client-Policy-State`
+- `Intune-Platform-Scripts/Security/Export-Credential-Policy-Registry-State`
+- `Intune-Platform-Scripts/Security/Export-Firewall-Logging-Policy-State`
+- `Intune-Platform-Scripts/User-Experience/Export-Explorer-Policy-State`
+- `Intune-Platform-Scripts/User-Experience/Export-Widgets-And-Consumer-Experience-State`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Defender-Preference-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Defender-Exclusion-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-ASR-Preference-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Firewall-Profile-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BitLocker-Protector-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Windows-Update-Policy-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-M365-Apps-Update-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Teams-Install-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-OneDrive-KFM-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Company-Portal-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-IME-Log-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Network-Adapter-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Proxy-State-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-WiFi-Profile-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Local-Admins-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Startup-Programs-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Event-Error-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Appx-Provisioned-Package-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-Device-Enrollment-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-LAPS-Policy-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-Compliance-Readiness-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-SecureBoot-TPM-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BitLocker-Compliance-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-Defender-Compliance-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-Windows-Hello-Compliance-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-Office-Addin-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-Office-ClickToRun-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-Store-App-Health-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-Teams-Cache-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-App-Install-Error-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-Windows-Update-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-Windows-Update-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-Delivery-Optimization-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-Update-Orchestrator-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-Pending-Reboot-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-DNS-Client-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-Firewall-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-VPN-Profile-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-Network-Connectivity-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-Network-Profile-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Ensure-Windows-Script-Host-Disabled`
+- `Detection-Remediation/Security/Ensure-AutoRun-Disabled-All-Drives`
+- `Detection-Remediation/Security/Ensure-Remote-Assistance-Disabled`
+- `Detection-Remediation/Security/Ensure-Remote-Desktop-Disabled-Template`
+- `Detection-Remediation/Security/Ensure-RDP-NLA-Required`
+- `Detection-Remediation/Security/Ensure-SMBv1-Server-Disabled`
+- `Detection-Remediation/Security/Ensure-SMBv1-Client-Driver-Disabled`
+- `Detection-Remediation/Security/Ensure-PowerShell-ScriptBlock-Logging-Enabled`
+- `Detection-Remediation/Security/Ensure-PowerShell-Module-Logging-Enabled`
+- `Detection-Remediation/Security/Ensure-Defender-PUA-Protection-Enabled`
+- `Detection-Remediation/Security/Ensure-Defender-Cloud-Protection-Enabled`
+- `Detection-Remediation/Security/Ensure-Defender-Network-Protection-Enabled`
+- `Detection-Remediation/Security/Ensure-Controlled-Folder-Access-Audit-Template`
+- `Detection-Remediation/Security/Ensure-Firewall-Domain-Profile-Enabled`
+- `Detection-Remediation/Security/Ensure-Firewall-Private-Profile-Enabled`
+- `Detection-Remediation/Security/Ensure-Firewall-Public-Profile-Enabled`
+- `Detection-Remediation/Security/Ensure-UAC-Enabled`
+- `Detection-Remediation/Security/Ensure-UAC-Secure-Desktop-Enabled`
+- `Detection-Remediation/Security/Ensure-Local-Account-Remote-UAC-Filtering-Enabled`
+- `Detection-Remediation/Security/Ensure-CredSSP-Oracle-Remediation-Enforced`
+- `Detection-Remediation/User-Experience/Ensure-Clipboard-History-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Cloud-Clipboard-Sync-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Activity-History-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Location-Access-Disabled-Template`
+- `Detection-Remediation/Device-Configuration/Ensure-Input-Personalization-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Windows-Spotlight-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Windows-Tips-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-Camera-Disabled`
+- `Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-App-Notifications-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-GameDVR-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Windows-Copilot-Disabled-Template`
+- `Detection-Remediation/User-Experience/Ensure-Cortana-Disabled`
+- `Detection-Remediation/User-Experience/Ensure-Search-Highlights-Disabled`
+- `Detection-Remediation/Applications/Ensure-Edge-Password-Manager-Disabled`
+- `Detection-Remediation/Applications/Ensure-Edge-Extension-Blocklist-Template`
+- `Detection-Remediation/Applications/Ensure-Edge-Startup-Boost-Disabled`
+- `Detection-Remediation/Applications/Ensure-Edge-Shopping-Features-Disabled`
+- `Detection-Remediation/Windows-Updates/Ensure-Windows-Update-No-Auto-Reboot-With-Users`
+- `Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Active-Hours-Template`
+- `Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Drivers-Excluded-Template`
+- `Detection-Remediation/Networking/Ensure-Teredo-Disabled-Template`
+- `Detection-Remediation/Networking/Ensure-IPv6-Transition-Technologies-Disabled-Template`
+
+## Business Premium Completion Batch Packages
+
+The generated Refresh-BP-* remediation packages and Export-BP-* platform scripts are original implementations for this repository. Topic inspiration comes from the public sources listed above, especially Microsoft Intune Remediations documentation, Microsoft Intune tenant documentation examples, Microsoft Graph Intune PowerShell samples, and community remediation libraries from JayRHa, MSEndpointMgr, aaronparker, and nickj76.
+
+### Completion Remediation Packages
+
+- `Detection-Remediation/Applications/Refresh-BP-app-readiness-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-application-identity-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-application-information-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-appx-deployment-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-appx-deployment-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-appx-deployment-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-client-license-service-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-company-portal-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-edge-update-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-excel-security-policy-blockcontentexecutionfrominternet-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-excel-security-policy-disableallactivex-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-excel-security-policy-extensionhardening-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-excel-security-policy-markinternalasunsafe-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-excel-security-policy-vbawarnings-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-common-security-policy-automationsecurity-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-common-security-policy-blockcontentexecutionfrominternet-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-common-security-policy-disableallactivex-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-common-security-policy-disableinternetfilesinpv-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-common-security-policy-markinternalasunsafe-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-enableautomaticupdates-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-hideupdatenotifications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-officemgmtcom-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-preventteamsinstall-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-targetversion-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-365-apps-update-policy-updatebranch-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-background-mode-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-hubs-sidebar-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-password-manager-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-prevent-smart-screen-prompt-override-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-smart-screen-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-core-policy-startup-boost-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-dns-over-https-mode-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-insecure-forms-warnings-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-renderer-app-container-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-site-per-process-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-sslerror-override-allowed-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-security-policy-typosquatting-checker-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-update-policy-auto-update-check-period-minutes-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-update-policy-install-default-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-update-policy-update-default-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-update-policy-updates-suppressed-duration-min-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-edge-update-policy-updates-suppressed-start-hour-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-microsoft-store-install-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-office-alert-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-office-click-to-run-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-office-click-to-run-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-office-maintenance-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-office-update-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-power-point-security-policy-blockcontentexecutionfrominternet-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-power-point-security-policy-disableallactivex-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-power-point-security-policy-extensionhardening-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-power-point-security-policy-markinternalasunsafe-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-power-point-security-policy-vbawarnings-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-store-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-store-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-store-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-teams-machine-installer-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-teams-programdata-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-windows-installer-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-winget-links-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-word-security-policy-blockcontentexecutionfrominternet-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-word-security-policy-disableallactivex-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-word-security-policy-extensionhardening-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-word-security-policy-markinternalasunsafe-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Applications/Refresh-BP-word-security-policy-vbawarnings-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-app-readiness-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-bitlocker-api-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-bitlocker-drive-encryption-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-bitlocker-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-device-install-service-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-device-setup-manager-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-deviceguard-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-laps-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-tpm-base-services-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-tpm-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Compliance/Refresh-BP-tpm-wmi-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-autopilot-diagnostics-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-device-management-enterprise-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-device-metadata-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-device-setup-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-enterprise-management-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-mdm-diagnostics-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-provisioning-diagnostics-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-provisioning-diagnostics-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-user-device-registration-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-data-collection-policy-allow-telemetry-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-data-collection-policy-disable-enterprise-auth-proxy-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-data-collection-policy-do-not-show-feedback-notifications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-data-collection-policy-limit-diagnostic-log-collection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-data-collection-policy-limit-dump-collection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-system-privacy-policy-allow-clipboard-history-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-system-privacy-policy-allow-cross-device-clipboard-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-system-privacy-policy-publish-user-activities-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-windows-system-privacy-policy-upload-user-activities-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Device-Configuration/Refresh-BP-workplace-join-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-application-error-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-device-management-enrollment-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-diagnosis-scripted-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-diagnosis-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-diagnostic-data-viewer-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-diagnostic-policy-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-intune-management-extension-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-livekernelreports-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-maintenance-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-minidump-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-performance-logs-alerts-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-problem-reports-control-panel-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-system-service-control-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-task-scheduler-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-wdi-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-wer-report-archive-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-wer-report-queue-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-windows-error-reporting-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-windows-event-log-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-windows-management-instrumentation-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-windows-time-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Endpoint-Health/Refresh-BP-wmi-activity-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-certificate-services-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-customer-experience-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-group-policy-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-powershell-operational-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-powershell-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Inventory-Reporting/Refresh-BP-script-library-inventory-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-cbs-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-cbs-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-defrag-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-disk-cleanup-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-disk-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-dism-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-file-history-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-intune-management-extension-content-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-intune-management-extension-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-intune-script-library-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-prefetch-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-programdata-temp-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-restart-manager-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-servicing-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-setup-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-software-protection-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-storage-service-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-sysmain-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-system32-logfiles-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-task-scheduler-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-volsnap-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-volume-shadow-copy-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-windows-modules-installer-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-windows-search-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Maintenance/Refresh-BP-windows-temp-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dhcp-client-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dhcp-client-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dns-cache-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dns-client-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dns-client-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-dns-client-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-ip-helper-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-nettrace-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-network-connections-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-network-list-profiles-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-network-list-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-network-location-awareness-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-network-profile-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-ras-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-rasclient-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-webclient-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-wifi-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-winhttp-web-proxy-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-wlan-autoconfig-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-wlan-autoconfig-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-wlan-report-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Networking/Refresh-BP-wwan-autoconfig-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-application-experience-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-applocker-exe-dll-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-base-filtering-engine-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-certificate-propagation-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-certificate-services-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-codeintegrity-operational-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-credential-manager-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-cloud-protection-policy-cloud-block-level-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-cloud-protection-policy-cloud-extended-timeout-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-cloud-protection-policy-disable-block-at-first-seen-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-cloud-protection-policy-spynet-reporting-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-cloud-protection-policy-submit-samples-consent-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-controlled-folder-access-policy-controlled-folder-access-allowed-applications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-controlled-folder-access-policy-disable-restore-point-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-controlled-folder-access-policy-enable-controlled-folder-access-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-controlled-folder-access-policy-exploit-guard-controlled-folder-access-allowed-applications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-controlled-folder-access-policy-exploit-guard-controlled-folder-access-protected-folders-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-inspection-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-protection-policy-allow-network-protection-on-win-server-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-protection-policy-disable-datagram-processing-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-protection-policy-disable-dns-parsing-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-protection-policy-disable-http-parsing-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-network-protection-policy-enable-network-protection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-operational-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-policy-disable-anti-spyware-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-policy-disable-anti-virus-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-policy-puaprotection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-policy-randomize-schedule-task-times-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-platform-policy-service-keep-alive-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-behavior-monitoring-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-ioavprotection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-on-access-protection-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-realtime-monitoring-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-scan-on-realtime-enable-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-realtime-protection-policy-disable-script-scanning-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-avg-cpuload-factor-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-check-for-signatures-before-running-scan-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-disable-archive-scanning-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-disable-email-scanning-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-disable-removable-drive-scanning-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scan-policy-disable-scanning-network-files-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scans-history-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-scheduled-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-defender-support-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-deviceguard-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-advanced-security-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-logging-policy-log-dropped-packets-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-logging-policy-log-file-path-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-logging-policy-log-file-size-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-logging-policy-log-ignored-rules-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-logging-policy-log-successful-connections-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-allow-local-ipsec-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-allow-local-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-default-inbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-default-outbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-disable-notifications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-domain-profile-policy-enable-firewall-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-log-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-logging-policy-log-dropped-packets-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-logging-policy-log-file-path-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-logging-policy-log-file-size-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-logging-policy-log-ignored-rules-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-logging-policy-log-successful-connections-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-allow-local-ipsec-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-allow-local-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-default-inbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-default-outbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-disable-notifications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-private-profile-policy-enable-firewall-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-logging-policy-log-dropped-packets-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-logging-policy-log-file-path-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-logging-policy-log-file-size-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-logging-policy-log-ignored-rules-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-logging-policy-log-successful-connections-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-allow-local-ipsec-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-allow-local-policy-merge-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-default-inbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-default-outbound-action-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-disable-notifications-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-firewall-public-profile-policy-enable-firewall-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-key-isolation-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-laps-operational-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-powershell-transcripts-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-remote-registry-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-security-accounts-manager-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-security-center-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-windows-defender-antivirus-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Security/Refresh-BP-windows-firewall-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-cloud-experience-host-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-edge-crashpad-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-edge-user-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-explorer-thumbnail-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-feedback-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-disable-file-sync-ngsc-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-disable-personal-sync-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-files-on-demand-enabled-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-kfmblock-opt-out-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-kfmsilent-opt-in-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-one-drive-sync-policy-silent-account-config-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-onedrive-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-onedrive-logs-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-shell-core-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-shell-hardware-detection-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-shell-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-state-repository-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-themes-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-touch-keyboard-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-user-profile-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-user-profile-service-Service-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-configure-windows-spotlight-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-disable-soft-landing-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-disable-tailored-experiences-with-diagnostic-data-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-disable-third-party-suggestions-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-disable-windows-consumer-features-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/User-Experience/Refresh-BP-windows-cloud-content-policy-disable-windows-spotlight-features-Registry-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-bits-client-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-catroot2-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-delivery-optimization-cache-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-delivery-optimization-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-softwaredistribution-datastore-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-softwaredistribution-download-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-update-medic-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-update-orchestrator-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-update-orchestrator-tasks-Task-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-update-stack-folder-Folder-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-windows-update-client-events-Event-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-windows-update-Service-Snapshot-When-Stale`
+- `Detection-Remediation/Windows-Updates/Refresh-BP-windows-update-tasks-Task-Snapshot-When-Stale`
+
+### Completion Platform Scripts
+
+- `Intune-Platform-Scripts/Applications/Export-BP-app-readiness-events-Event-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-appx-deployment-events-Event-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-appx-deployment-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-appx-deployment-tasks-Task-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-client-license-service-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-company-portal-cache-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-microsoft-store-install-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-office-click-to-run-logs-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-office-click-to-run-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-office-maintenance-tasks-Task-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-office-update-cache-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-store-cache-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-store-tasks-Task-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-teams-machine-installer-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-teams-programdata-Folder-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-windows-installer-Service-State`
+- `Intune-Platform-Scripts/Applications/Export-BP-winget-links-Folder-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-app-readiness-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bit-locker-operating-system-drive-policy-encryption-method-with-xts-os-registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bit-locker-operating-system-drive-policy-use-advanced-startup-registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bit-locker-operating-system-drive-policy-use-tpm-registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bit-locker-operating-system-drive-policy-use-tpmkey-pin-registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bit-locker-operating-system-drive-policy-use-tpmpin-registry-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bitlocker-api-events-Event-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bitlocker-drive-encryption-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-bitlocker-tasks-Task-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-device-install-service-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-device-setup-manager-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-deviceguard-events-Event-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-laps-tasks-Task-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-tpm-base-services-Service-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-tpm-tasks-Task-State`
+- `Intune-Platform-Scripts/Compliance/Export-BP-tpm-wmi-events-Event-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-BP-windows-system-privacy-policy-allow-clipboard-history-registry-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-BP-windows-system-privacy-policy-allow-cross-device-clipboard-registry-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-BP-windows-system-privacy-policy-disable-lock-screen-app-notifications-registry-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-BP-windows-system-privacy-policy-publish-user-activities-registry-State`
+- `Intune-Platform-Scripts/Device-Configuration/Export-BP-windows-system-privacy-policy-upload-user-activities-registry-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-application-error-events-Event-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-diagnosis-scripted-events-Event-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-minidump-folder-Folder-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-system-service-control-events-Event-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-task-scheduler-events-Event-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-wer-report-archive-Folder-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-wer-report-queue-Folder-State`
+- `Intune-Platform-Scripts/Endpoint-Health/Export-BP-wmi-activity-events-Event-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-cbs-logs-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-dism-logs-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-intune-management-extension-content-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-intune-management-extension-logs-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-intune-script-library-logs-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-prefetch-folder-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-programdata-temp-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-setup-logs-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-system32-logfiles-Folder-State`
+- `Intune-Platform-Scripts/Maintenance/Export-BP-windows-temp-Folder-State`
+- `Intune-Platform-Scripts/Security/Export-BP-application-experience-tasks-Task-State`
+- `Intune-Platform-Scripts/Security/Export-BP-applocker-exe-dll-events-Event-State`
+- `Intune-Platform-Scripts/Security/Export-BP-base-filtering-engine-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-certificate-propagation-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-certificate-services-tasks-Task-State`
+- `Intune-Platform-Scripts/Security/Export-BP-codeintegrity-operational-events-Event-State`
+- `Intune-Platform-Scripts/Security/Export-BP-credential-manager-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-defender-network-inspection-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-defender-operational-events-Event-State`
+- `Intune-Platform-Scripts/Security/Export-BP-defender-scheduled-tasks-Task-State`
+- `Intune-Platform-Scripts/Security/Export-BP-deviceguard-tasks-Task-State`
+- `Intune-Platform-Scripts/Security/Export-BP-firewall-advanced-security-events-Event-State`
+- `Intune-Platform-Scripts/Security/Export-BP-key-isolation-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-laps-operational-events-Event-State`
+- `Intune-Platform-Scripts/Security/Export-BP-remote-registry-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-security-accounts-manager-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-security-center-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-windows-defender-antivirus-Service-State`
+- `Intune-Platform-Scripts/Security/Export-BP-windows-firewall-Service-State`
+- `Intune-Platform-Scripts/User-Experience/Export-BP-windows-search-policy-allow-cloud-search-registry-State`
+- `Intune-Platform-Scripts/User-Experience/Export-BP-windows-search-policy-allow-cortana-registry-State`
+- `Intune-Platform-Scripts/User-Experience/Export-BP-windows-search-policy-connected-search-use-web-registry-State`
+- `Intune-Platform-Scripts/User-Experience/Export-BP-windows-search-policy-disable-web-search-registry-State`
+- `Intune-Platform-Scripts/User-Experience/Export-BP-windows-search-policy-enable-dynamic-content-in-wsb-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-doabsolute-max-cache-size-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-dodownload-mode-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-dogroup-id-source-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-domin-disk-size-allowed-to-peer-caching-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-domin-ramallowed-to-peer-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-delivery-optimization-policy-dorestrict-peer-selection-by-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-auoptions-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-no-auto-reboot-with-logged-on-users-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-no-auto-update-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-scheduled-install-day-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-scheduled-install-time-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-automatic-update-policy-use-wuserver-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-defer-feature-updates-period-in-days-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-defer-feature-updates-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-defer-quality-updates-period-in-days-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-defer-quality-updates-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-exclude-wudrivers-in-quality-update-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-product-version-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-target-release-version-info-registry-State`
+- `Intune-Platform-Scripts/Windows-Updates/Export-BP-windows-update-for-business-policy-target-release-version-registry-State`
+## Attribution Guidance
+
+If a future package is based on a specific public script, add the source link here and mention the inspiration in that package README. Do not copy code verbatim unless the license permits it and the copied code is clearly attributed.
+
+
+## Technician Gap Category Expansion Batch
+
+The technician gap category expansion packages are original implementations generated for this repository. They use source material only as topic and workflow inspiration; no external code was copied.
+
+### Credited Sources
+
+- [Microsoft Intune Remediations deployment documentation](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+- [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts)
+- [nickj76/Intune-Proactive-Remediations](https://github.com/nickj76/Intune-Proactive-Remediations)
+- [MSEndpointMgr/IntuneWin32App](https://github.com/MSEndpointMgr/IntuneWin32App)
+- [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc)
+
+### Batch Counts By Workload
+
+- `Custom-Compliance`: 110 package(s)
+- `Detection-Remediation`: 160 package(s)
+- `Intune-Platform-Scripts`: 110 package(s)
+- `Win32-Packaged-Scripts`: 120 package(s)
+
+### Batch Counts By Category
+
+- `Backup-Recovery`: 40 package(s)
+- `Certificates-PKI`: 45 package(s)
+- `Data-Protection`: 50 package(s)
+- `Hardware-Drivers`: 45 package(s)
+- `Identity-Access`: 50 package(s)
+- `Licensing-Activation`: 25 package(s)
+- `MDM-Enrollment`: 50 package(s)
+- `Peripheral-Devices`: 30 package(s)
+- `Power-Battery`: 40 package(s)
+- `Printing`: 40 package(s)
+- `Storage-Disk`: 45 package(s)
+- `Troubleshooting-Support`: 40 package(s)
+

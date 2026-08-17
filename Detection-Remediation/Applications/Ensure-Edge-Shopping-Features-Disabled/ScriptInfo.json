@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Edge Shopping Features Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Microsoft Edge shopping assistant policy for a quieter managed browser experience.",
+  "Tags": [
+    "Applications",
+    "Microsoft Edge",
+    "Business Premium"
+  ]
+}
+

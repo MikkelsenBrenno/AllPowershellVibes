@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Cloud Printer State",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Printing",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData managed state marker files",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Cloud Printer state for technician gap scenarios in the Printing category.",
+  "Tags": [
+    "Printing",
+    "Detection-Remediation",
+    "Technician-Gap-Expansion"
+  ]
+}

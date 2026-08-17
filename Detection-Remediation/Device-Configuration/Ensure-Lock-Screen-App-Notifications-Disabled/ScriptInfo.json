@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Lock Screen App Notifications Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates lock screen notification policy to reduce information exposure before sign-in.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

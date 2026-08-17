@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "UserProfileCountCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/sharedpc-csp",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The device has more local user profiles than policy allows. Current value: {ActualValue}.",
+          "Description": "Review local profiles and remove stale profiles using an approved cleanup process."
+        }
+      ]
+    },
+    {
+      "SettingName": "UserProfileCount",
+      "Operator": "LessEquals",
+      "DataType": "Int64",
+      "Operand": 20,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/sharedpc-csp",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The local user profile count is above policy. Current value: {ActualValue}.",
+          "Description": "Investigate profile buildup, especially on shared or kiosk-style devices."
+        }
+      ]
+    }
+  ]
+}

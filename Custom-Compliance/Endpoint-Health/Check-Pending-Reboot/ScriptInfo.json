@@ -1,0 +1,19 @@
+{
+  "Name": "Check Pending Reboot",
+  "Workload": "Custom Compliance",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "Yes to remediate",
+  "Risk": "Low",
+  "Summary": "This custom compliance package reports whether Windows has a pending reboot.",
+  "Tags": [
+    "Endpoint-Health",
+    "Custom-Compliance"
+  ]
+}

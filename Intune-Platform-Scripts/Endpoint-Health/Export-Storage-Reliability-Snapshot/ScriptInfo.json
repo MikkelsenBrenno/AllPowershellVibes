@@ -1,0 +1,22 @@
+{
+  "Name": "Export Storage Reliability Snapshot",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports local physical disk, logical disk, and volume state for storage reliability troubleshooting.",
+  "Tags": [
+    "Endpoint Health",
+    "Storage",
+    "Hardware",
+    "Business Premium"
+  ]
+}
+

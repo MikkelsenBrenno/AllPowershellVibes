@@ -1,0 +1,22 @@
+{
+  "Name": "Export ASR Rule Preference State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Microsoft Defender Attack Surface Reduction rule preference IDs, actions, and configured names for Business Premium troubleshooting.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "ASR",
+    "Business Premium"
+  ]
+}
+

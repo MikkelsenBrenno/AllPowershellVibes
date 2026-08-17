@@ -1,0 +1,20 @@
+{
+  "Name": "Detect Stale Intune Management Extension Logs",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects stale or missing Intune Management Extension logs so technicians can find devices that may have stopped checking in properly.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

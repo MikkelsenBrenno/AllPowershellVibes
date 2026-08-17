@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure TLS12 For NETFramework",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and optionally configures .NET Framework strong crypto and system default TLS registry values. This package is useful for older applications and automation that still depend on .NET Framework TLS defaults.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure PowerShell Module Logging Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates PowerShell module logging policy with an editable module-name template.",
+  "Tags": [
+    "Security",
+    "PowerShell",
+    "Business Premium",
+    "Template"
+  ]
+}
+

@@ -1,0 +1,19 @@
+{
+  "Name": "Install Local MSI Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This Win32 packaged script template installs, detects, and uninstalls a local MSI included in the package folder.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts"
+  ]
+}

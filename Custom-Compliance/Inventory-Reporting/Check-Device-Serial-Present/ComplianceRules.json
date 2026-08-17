@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "DeviceSerialPresent",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/protect/compliance-custom-script",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The device serial number is missing or generic. Current value: {ActualValue}.",
+          "Description": "Review hardware inventory, BIOS data, or virtual machine serial number configuration."
+        }
+      ]
+    }
+  ]
+}

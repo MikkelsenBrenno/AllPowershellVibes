@@ -1,0 +1,20 @@
+{
+  "Name": "Check Firewall Policy State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Discovers Firewall Policy State state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

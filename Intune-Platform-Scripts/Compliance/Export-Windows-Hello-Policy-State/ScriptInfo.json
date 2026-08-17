@@ -1,0 +1,21 @@
+{
+  "Name": "Export Windows Hello Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Hello for Business policy registry values for enrollment and compliance troubleshooting.",
+  "Tags": [
+    "Compliance",
+    "Windows Hello",
+    "Business Premium"
+  ]
+}
+

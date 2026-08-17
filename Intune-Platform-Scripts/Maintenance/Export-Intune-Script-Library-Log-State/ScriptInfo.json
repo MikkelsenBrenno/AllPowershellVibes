@@ -1,0 +1,21 @@
+{
+  "Name": "Export Intune Script Library Log State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports local Intune Script Library log folder size, file count, and last-write timing.",
+  "Tags": [
+    "Maintenance",
+    "Logs",
+    "Business Premium"
+  ]
+}
+

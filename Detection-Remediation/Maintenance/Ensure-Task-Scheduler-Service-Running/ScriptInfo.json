@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Task Scheduler Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Task Scheduler is stopped, which can break scheduled maintenance, update, and app tasks.",
+  "Tags": [
+    "Maintenance",
+    "Scheduled Tasks",
+    "Business Premium"
+  ]
+}
+

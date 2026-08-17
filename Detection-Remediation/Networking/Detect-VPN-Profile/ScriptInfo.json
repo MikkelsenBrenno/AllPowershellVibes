@@ -1,0 +1,20 @@
+{
+  "Name": "Detect VPN Profile",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects whether a configured VPN profile exists and reports when it is missing.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

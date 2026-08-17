@@ -1,0 +1,19 @@
+{
+  "Name": "Install Local Configuration Files",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs local configuration files from a packaged `Payload` folder to a configurable device path. The package writes a versioned marker file so Intune custom detection can verify the exact payload version.",
+  "Tags": [
+    "Device-Configuration",
+    "Win32-Packaged-Scripts"
+  ]
+}

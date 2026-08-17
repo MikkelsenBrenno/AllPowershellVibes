@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh Delivery Optimization Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Delivery Optimization service snapshot when it is missing or stale.",
+  "Tags": [
+    "Windows Updates",
+    "Delivery Optimization",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Edge Startup Boost Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Microsoft Edge Startup Boost policy for devices where background browser startup should be disabled.",
+  "Tags": [
+    "Applications",
+    "Microsoft Edge",
+    "Business Premium"
+  ]
+}
+

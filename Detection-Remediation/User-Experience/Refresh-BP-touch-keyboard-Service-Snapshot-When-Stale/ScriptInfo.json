@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Touch Keyboard And Handwriting Service Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Touch Keyboard And Handwriting service state troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "User-Experience",
+    "Services",
+    "Business Premium"
+  ]
+}
+

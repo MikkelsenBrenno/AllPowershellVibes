@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Office Maintenance Tasks Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Office Maintenance Tasks scheduled task troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Scheduled Tasks",
+    "Business Premium"
+  ]
+}
+

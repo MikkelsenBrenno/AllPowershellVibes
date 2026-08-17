@@ -1,0 +1,20 @@
+{
+  "Name": "Set Windows Update Active Hours",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script configures Windows Update active hours using policy registry values.",
+  "Tags": [
+    "Windows-Updates",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

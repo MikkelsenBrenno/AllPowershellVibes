@@ -1,0 +1,19 @@
+{
+  "Name": "Install Local Support Tool Bundle",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs a local support-tool bundle from a packaged `Payload` folder to a configurable device path. This is useful for deploying approved troubleshooting utilities, documentation, or helper files through Intune Win32 apps.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts"
+  ]
+}

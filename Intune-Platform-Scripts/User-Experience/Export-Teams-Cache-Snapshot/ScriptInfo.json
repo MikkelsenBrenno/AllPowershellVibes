@@ -1,0 +1,20 @@
+{
+  "Name": "Export Teams Cache Snapshot",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script writes a local JSON snapshot with configured Microsoft Teams cache folder existence, file count, and approximate size. It does not delete cache content.",
+  "Tags": [
+    "User-Experience",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

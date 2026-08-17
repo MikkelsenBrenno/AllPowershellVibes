@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "AutoRunAutoPlayCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/policy-csp-admx-autoplay",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "AutoRun or AutoPlay policy is not compliant. Current value: {ActualValue}.",
+          "Description": "Configure AutoRun and AutoPlay policy values according to your endpoint hardening baseline."
+        }
+      ]
+    },
+    {
+      "SettingName": "NoDriveTypeAutoRunValue",
+      "Operator": "IsEquals",
+      "DataType": "Int64",
+      "Operand": 255,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/policy-csp-admx-autoplay",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "NoDriveTypeAutoRun does not match policy. Current value: {ActualValue}.",
+          "Description": "Set NoDriveTypeAutoRun to the expected policy value."
+        }
+      ]
+    }
+  ]
+}

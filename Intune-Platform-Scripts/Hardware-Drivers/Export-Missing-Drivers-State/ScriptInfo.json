@@ -1,0 +1,20 @@
+{
+  "Name": "Export Missing Drivers State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Hardware-Drivers",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Missing Drivers state for technician troubleshooting and reporting in the Hardware-Drivers category.",
+  "Tags": [
+    "Hardware-Drivers",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

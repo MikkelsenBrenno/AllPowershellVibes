@@ -1,0 +1,16 @@
+{
+  "Name": "<Display Name>",
+  "Workload": "<Detection and Remediation | Custom Compliance | Intune Platform Scripts | Win32 Packaged Scripts>",
+  "Purpose": "<Security | Compliance | Device-Configuration | Applications | Maintenance | Endpoint-Health | Networking | User-Experience | Inventory-Reporting | Windows-Updates | Browser-Management | Remote-Work | Identity-Access | Printing | Certificates-PKI | Hardware-Drivers | Power-Battery | Backup-Recovery | MDM-Enrollment | Data-Protection | Storage-Disk | Troubleshooting-Support | Peripheral-Devices | Licensing-Activation>",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "<What the script changes or reads>",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "<One-sentence purpose>",
+  "Tags": []
+}

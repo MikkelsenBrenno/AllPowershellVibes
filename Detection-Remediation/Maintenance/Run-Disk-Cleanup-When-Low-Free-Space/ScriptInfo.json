@@ -1,0 +1,20 @@
+{
+  "Name": "Run Disk Cleanup When Low Free Space",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects low free space on the system drive and can remove old files from configurable cleanup folders. This is inspired by common proactive remediation disk cleanup patterns, but defaults to report-only mode.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "Name": "Export Scheduled Maintenance Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports scheduled maintenance tasks so technicians can verify task state and availability.",
+  "Tags": [
+    "Maintenance",
+    "Scheduled Tasks",
+    "Business Premium"
+  ]
+}
+

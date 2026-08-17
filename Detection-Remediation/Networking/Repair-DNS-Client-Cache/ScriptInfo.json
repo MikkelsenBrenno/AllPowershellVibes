@@ -1,0 +1,20 @@
+{
+  "Name": "Repair DNS Client Cache",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects DNS resolution failure for a configured hostname and clears the local DNS client cache during remediation.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

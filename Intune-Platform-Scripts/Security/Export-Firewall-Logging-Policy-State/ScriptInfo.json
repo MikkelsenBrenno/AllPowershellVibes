@@ -1,0 +1,21 @@
+{
+  "Name": "Export Firewall Logging Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Firewall logging policy values for troubleshooting missing firewall logs.",
+  "Tags": [
+    "Security",
+    "Firewall",
+    "Business Premium"
+  ]
+}
+

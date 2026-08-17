@@ -1,0 +1,19 @@
+{
+  "Name": "Example Install Registry Setting",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script example installs a registry-based configuration marker under HKLM. It includes install, uninstall, and custom detection scripts. The example is intentionally simple so administrators can replace the registry path and value with their own app or configuration state.",
+  "Tags": [
+    "Device-Configuration",
+    "Win32-Packaged-Scripts"
+  ]
+}

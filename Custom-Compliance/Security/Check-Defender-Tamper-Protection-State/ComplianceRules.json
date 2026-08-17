@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "DefenderTamperProtectionCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Microsoft Defender tamper protection is not compliant. Current value: {ActualValue}.",
+          "Description": "Review Defender tamper protection state and assigned security policy."
+        }
+      ]
+    },
+    {
+      "SettingName": "IsTamperProtected",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Microsoft Defender tamper protection is not enabled. Current value: {ActualValue}.",
+          "Description": "Confirm the device is targeted by the expected Defender security policy."
+        }
+      ]
+    }
+  ]
+}

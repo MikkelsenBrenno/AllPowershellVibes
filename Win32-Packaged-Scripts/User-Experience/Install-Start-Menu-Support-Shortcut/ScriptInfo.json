@@ -1,0 +1,19 @@
+{
+  "Name": "Install Start Menu Support Shortcut",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs, detects, and removes a Start Menu URL shortcut that points users to an IT support page, portal, ticket form, or knowledge base.",
+  "Tags": [
+    "User-Experience",
+    "Win32-Packaged-Scripts"
+  ]
+}

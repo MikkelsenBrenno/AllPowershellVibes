@@ -1,0 +1,9 @@
+{
+  "Package": "Install-Local-Configuration-Files",
+  "Version": "1.0.0",
+  "Description": "Replace this sample payload with your own configuration files before packaging.",
+  "Settings": {
+    "ExampleSetting": "Enabled",
+    "SupportOwner": "IT"
+  }
+}

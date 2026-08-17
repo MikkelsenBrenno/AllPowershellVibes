@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure BITS Service Available",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Background Intelligent Transfer Service is disabled. BITS is commonly involved in Windows Update and background download behavior, so this gives technicians a focused health repair package.",
+  "Tags": [
+    "Windows-Updates",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

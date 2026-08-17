@@ -1,0 +1,20 @@
+{
+  "Name": "Repair Windows Time Sync",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects Windows Time service issues and can start the service and request a time resync.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

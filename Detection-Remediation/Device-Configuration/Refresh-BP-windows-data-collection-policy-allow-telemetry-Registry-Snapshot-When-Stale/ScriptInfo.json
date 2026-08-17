@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Windows Data Collection Policy AllowTelemetry Registry Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Windows Data Collection Policy AllowTelemetry registry policy troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Device-Configuration",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

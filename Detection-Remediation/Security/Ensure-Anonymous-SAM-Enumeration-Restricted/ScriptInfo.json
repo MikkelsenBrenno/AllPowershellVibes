@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Anonymous SAM Enumeration Restricted",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates local security policy registry state that restricts anonymous SAM account enumeration.",
+  "Tags": [
+    "Security",
+    "Local Security Policy",
+    "Business Premium"
+  ]
+}
+

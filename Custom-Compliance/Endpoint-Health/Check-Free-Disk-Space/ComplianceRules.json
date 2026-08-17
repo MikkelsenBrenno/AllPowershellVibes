@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "FreeSpaceCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/waas-delivery-optimization",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The operating system drive does not have enough free space. Current value: {ActualValue}.",
+          "Description": "Free disk space on the operating system drive or contact IT support."
+        }
+      ]
+    },
+    {
+      "SettingName": "FreeSpacePercent",
+      "Operator": "GreaterEquals",
+      "DataType": "Int64",
+      "Operand": 15,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/waas-delivery-optimization",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The operating system drive free-space percentage is below policy. Current value: {ActualValue}.",
+          "Description": "Free disk space on the operating system drive or contact IT support."
+        }
+      ]
+    }
+  ]
+}

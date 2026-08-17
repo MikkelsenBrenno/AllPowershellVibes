@@ -1,0 +1,19 @@
+{
+  "Name": "Install Trusted Certificate",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Certificate store",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script example installs, detects, and removes a certificate in a configurable certificate store.",
+  "Tags": [
+    "Security",
+    "Win32-Packaged-Scripts"
+  ]
+}

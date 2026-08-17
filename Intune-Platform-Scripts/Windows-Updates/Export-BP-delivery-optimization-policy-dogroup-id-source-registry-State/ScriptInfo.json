@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Delivery Optimization Policy DOGroupIdSource Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Delivery Optimization Policy DOGroupIdSource registry policy troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Windows-Updates",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

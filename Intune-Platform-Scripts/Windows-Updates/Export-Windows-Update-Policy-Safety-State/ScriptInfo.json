@@ -1,0 +1,21 @@
+{
+  "Name": "Export Windows Update Policy Safety State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Update policy values that commonly block scans, downloads, or Microsoft Update integration.",
+  "Tags": [
+    "Windows Updates",
+    "Policy",
+    "Business Premium"
+  ]
+}
+

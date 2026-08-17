@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Activity History Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Activity History publishing and upload policies on managed business devices.",
+  "Tags": [
+    "User Experience",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

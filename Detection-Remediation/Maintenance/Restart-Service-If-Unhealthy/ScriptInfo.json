@@ -1,0 +1,20 @@
+{
+  "Name": "Restart Service If Unhealthy",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package starts a stopped service and can optionally restart it even when it is already running.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

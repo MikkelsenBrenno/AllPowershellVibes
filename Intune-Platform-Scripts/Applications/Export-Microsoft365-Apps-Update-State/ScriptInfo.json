@@ -1,0 +1,20 @@
+{
+  "Name": "Export Microsoft365 Apps Update State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports Microsoft 365 Apps Click-to-Run update channel and version state to JSON for Business Premium app update troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

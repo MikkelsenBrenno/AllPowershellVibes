@@ -1,0 +1,21 @@
+{
+  "Name": "Export WiFi AutoConfig Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports WLAN AutoConfig service state for Wi-Fi troubleshooting.",
+  "Tags": [
+    "Networking",
+    "WiFi",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh Network Adapter Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local network adapter and IP configuration snapshot when it is missing or stale.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Networking",
+    "Business Premium"
+  ]
+}
+

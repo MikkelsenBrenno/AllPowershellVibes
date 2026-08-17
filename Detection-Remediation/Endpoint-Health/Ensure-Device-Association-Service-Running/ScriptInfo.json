@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Device Association Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Device Association Service is stopped, useful for Bluetooth, peripheral, and device pairing support cases.",
+  "Tags": [
+    "Endpoint Health",
+    "Devices",
+    "Business Premium"
+  ]
+}
+

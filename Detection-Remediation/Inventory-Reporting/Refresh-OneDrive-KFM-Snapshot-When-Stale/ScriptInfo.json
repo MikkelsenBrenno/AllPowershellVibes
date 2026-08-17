@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh OneDrive KFM Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local OneDrive Known Folder Move policy snapshot when it is missing or stale.",
+  "Tags": [
+    "Inventory-Reporting",
+    "OneDrive",
+    "Business Premium"
+  ]
+}
+

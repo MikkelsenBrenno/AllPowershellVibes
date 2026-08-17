@@ -1,0 +1,23 @@
+{
+  "Name": "Ensure Controlled Folder Access Audit Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Template remediation that detects and enables Controlled Folder Access audit mode before administrators choose block mode.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Controlled Folder Access",
+    "Business Premium",
+    "Template"
+  ]
+}
+

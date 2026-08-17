@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Firewall Advanced Security Events Event Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Firewall Advanced Security Events event log troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Security",
+    "Events",
+    "Business Premium"
+  ]
+}
+

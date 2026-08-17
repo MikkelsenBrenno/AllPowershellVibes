@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure Windows Copilot Disabled Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Template remediation that detects and disables Windows Copilot policy where organizations have not approved Copilot use.",
+  "Tags": [
+    "User Experience",
+    "Copilot",
+    "Business Premium",
+    "Template"
+  ]
+}
+

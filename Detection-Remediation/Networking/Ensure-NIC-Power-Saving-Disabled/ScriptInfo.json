@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure NIC Power Saving Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects physical network adapters that allow Windows to turn off the device for power saving. The remediation is report-only by default so technicians can confirm adapter matching before making changes.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

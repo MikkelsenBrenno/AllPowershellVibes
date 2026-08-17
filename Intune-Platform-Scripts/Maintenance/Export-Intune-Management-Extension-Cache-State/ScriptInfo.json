@@ -1,0 +1,22 @@
+{
+  "Name": "Export Intune Management Extension Cache State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Intune Management Extension cache and log folder size details for technician troubleshooting.",
+  "Tags": [
+    "Maintenance",
+    "Intune",
+    "IME",
+    "Business Premium"
+  ]
+}
+

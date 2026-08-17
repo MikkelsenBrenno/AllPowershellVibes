@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Windows Update For Business Policy ExcludeWUDriversInQualityUpdate Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Windows Update For Business Policy ExcludeWUDriversInQualityUpdate registry policy troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Windows-Updates",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

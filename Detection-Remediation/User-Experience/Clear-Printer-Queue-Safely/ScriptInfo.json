@@ -1,0 +1,20 @@
+{
+  "Name": "Clear Printer Queue Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and optionally clears stale Windows print spooler queue files. This is useful when devices repeatedly show stuck print jobs or technicians need a controlled remediation for local print queue cleanup.",
+  "Tags": [
+    "User-Experience",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

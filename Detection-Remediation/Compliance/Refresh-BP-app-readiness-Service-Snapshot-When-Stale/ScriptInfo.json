@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP App Readiness Service Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local App Readiness service state troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Compliance",
+    "Services",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Cryptographic Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Cryptographic Services is stopped, which can affect Windows Update, certificates, and app installs.",
+  "Tags": [
+    "Windows Updates",
+    "Certificates",
+    "Business Premium"
+  ]
+}
+

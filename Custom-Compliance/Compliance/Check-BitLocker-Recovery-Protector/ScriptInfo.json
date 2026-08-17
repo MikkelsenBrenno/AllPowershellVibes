@@ -1,0 +1,19 @@
+{
+  "Name": "Check BitLocker Recovery Protector",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether the configured BitLocker volume has a recovery password or recovery key protector.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance"
+  ]
+}

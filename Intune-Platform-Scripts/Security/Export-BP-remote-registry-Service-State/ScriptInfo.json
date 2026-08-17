@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Remote Registry Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Remote Registry service state troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Security",
+    "Services",
+    "Business Premium"
+  ]
+}
+

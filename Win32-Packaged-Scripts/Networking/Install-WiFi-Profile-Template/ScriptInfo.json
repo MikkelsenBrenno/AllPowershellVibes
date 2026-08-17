@@ -1,0 +1,19 @@
+{
+  "Name": "Install WiFi Profile Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This Win32 packaged script installs, detects, and removes a Wi-Fi profile from an XML payload using `netsh wlan`.",
+  "Tags": [
+    "Networking",
+    "Win32-Packaged-Scripts"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Install Policy Sync Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "MDM-Enrollment",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker files",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Packages Policy Sync configuration or evidence as a reusable Win32 script deployment.",
+  "Tags": [
+    "MDM-Enrollment",
+    "Win32-Packaged-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

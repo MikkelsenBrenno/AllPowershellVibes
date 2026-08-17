@@ -1,0 +1,20 @@
+{
+  "Name": "Install Remote Desktop Profile State Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Remote-Work",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Packages Remote Desktop Profile State configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Remote-Work",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

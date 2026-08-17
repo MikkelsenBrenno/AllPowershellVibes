@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure SMBv1 Server Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Lanman Server policy so SMBv1 server support is disabled.",
+  "Tags": [
+    "Security",
+    "SMB",
+    "Business Premium"
+  ]
+}
+

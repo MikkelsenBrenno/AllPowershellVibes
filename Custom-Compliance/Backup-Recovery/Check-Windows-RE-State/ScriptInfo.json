@@ -1,0 +1,20 @@
+{
+  "Name": "Check Windows RE State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Backup-Recovery",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Windows RE state for Intune custom compliance evaluation in the Backup-Recovery category.",
+  "Tags": [
+    "Backup-Recovery",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

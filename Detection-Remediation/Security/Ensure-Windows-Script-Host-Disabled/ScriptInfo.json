@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Windows Script Host Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Script Host policy so unmanaged VBScript and JScript execution is disabled on managed endpoints.",
+  "Tags": [
+    "Security",
+    "Windows Script Host",
+    "Business Premium"
+  ]
+}
+

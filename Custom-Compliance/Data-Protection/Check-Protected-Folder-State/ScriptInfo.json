@@ -1,0 +1,20 @@
+{
+  "Name": "Check Protected Folder State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Data-Protection",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Protected Folder state for Intune custom compliance evaluation in the Data-Protection category.",
+  "Tags": [
+    "Data-Protection",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

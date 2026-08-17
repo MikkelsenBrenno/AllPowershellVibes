@@ -1,0 +1,21 @@
+{
+  "Name": "Export ProgramData Cache Usage State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports common ProgramData cache folder usage to help technicians spot local storage pressure.",
+  "Tags": [
+    "Maintenance",
+    "Cache",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Application Error Events Event State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Application Error Events event log troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Endpoint-Health",
+    "Events",
+    "Business Premium"
+  ]
+}
+

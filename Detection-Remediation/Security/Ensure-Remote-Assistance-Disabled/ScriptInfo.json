@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Remote Assistance Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Remote Assistance policy so unsolicited help sessions are disabled unless intentionally re-enabled.",
+  "Tags": [
+    "Security",
+    "Remote Assistance",
+    "Business Premium"
+  ]
+}
+

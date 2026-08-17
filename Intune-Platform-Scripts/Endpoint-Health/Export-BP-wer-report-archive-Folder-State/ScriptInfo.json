@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Windows Error Reporting Archive Folder State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Windows Error Reporting Archive folder usage troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Endpoint-Health",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

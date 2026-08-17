@@ -1,0 +1,20 @@
+{
+  "Name": "Firewall Enable All Profiles",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package checks whether Windows Firewall is enabled for the configured profiles and enables it when needed. The default configuration checks the `Domain`, `Private`, and `Public` profiles.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

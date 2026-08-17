@@ -1,0 +1,22 @@
+{
+  "Name": "Export Teams Client Install State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "User or System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports classic Teams, new Teams MSIX, and Teams Machine-Wide Installer signals for Microsoft 365 support cases.",
+  "Tags": [
+    "Applications",
+    "Teams",
+    "Microsoft 365",
+    "Business Premium"
+  ]
+}
+

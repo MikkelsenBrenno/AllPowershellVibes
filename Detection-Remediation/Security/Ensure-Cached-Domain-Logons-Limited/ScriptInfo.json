@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Cached Domain Logons Limited",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether cached domain logons are above a configured maximum and can set the Winlogon `CachedLogonsCount` value. This is useful for security baselines where offline domain credential caching should be limited.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

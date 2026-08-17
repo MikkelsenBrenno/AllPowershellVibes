@@ -1,0 +1,22 @@
+{
+  "Name": "Export Credential Guard And VBS State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports virtualization-based security and Credential Guard registry/CIM state for endpoint hardening troubleshooting.",
+  "Tags": [
+    "Security",
+    "Credential Guard",
+    "VBS",
+    "Business Premium"
+  ]
+}
+

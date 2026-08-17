@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Security Center Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Windows Security Center service is stopped, helping Defender and firewall status reporting.",
+  "Tags": [
+    "Security",
+    "Windows Security",
+    "Business Premium"
+  ]
+}
+

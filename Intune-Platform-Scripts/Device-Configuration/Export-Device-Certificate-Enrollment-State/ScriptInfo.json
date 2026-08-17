@@ -1,0 +1,22 @@
+{
+  "Name": "Export Device Certificate Enrollment State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports local machine certificate enrollment policy and recent certificate enrollment event IDs for troubleshooting trust and access issues.",
+  "Tags": [
+    "Device Configuration",
+    "Certificates",
+    "Enrollment",
+    "Business Premium"
+  ]
+}
+

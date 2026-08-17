@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Pagefile Automatic Management",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether Windows automatic pagefile management matches the configured target and can remediate it. The remediation is report-only by default because pagefile changes may require a reboot.",
+  "Tags": [
+    "Device-Configuration",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

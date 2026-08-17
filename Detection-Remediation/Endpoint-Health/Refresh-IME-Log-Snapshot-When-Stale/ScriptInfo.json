@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh IME Log Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates IME Log Snapshot state for Intune-managed Windows devices.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

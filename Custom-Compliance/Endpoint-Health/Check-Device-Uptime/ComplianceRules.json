@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "DeviceUptimeWithinLimit",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/protect/compliance-custom-script",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Device uptime is above the configured threshold. Current value: {ActualValue}.",
+          "Description": "Restart the device during an approved maintenance window."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Setup Logs Folder Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Setup Logs folder usage troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Maintenance",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

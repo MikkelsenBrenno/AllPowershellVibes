@@ -1,0 +1,20 @@
+{
+  "Name": "Export Enrollment Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData inventory snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports Enrollment Policy State state to a local JSON troubleshooting snapshot.",
+  "Tags": [
+    "Device-Configuration",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

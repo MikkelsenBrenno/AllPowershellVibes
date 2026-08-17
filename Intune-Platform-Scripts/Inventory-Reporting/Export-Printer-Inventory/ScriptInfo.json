@@ -1,0 +1,20 @@
+{
+  "Name": "Export Printer Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports installed printer details to a local JSON file for support and troubleshooting. The script uses `Get-Printer` when available and can fall back to `Win32_Printer`.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

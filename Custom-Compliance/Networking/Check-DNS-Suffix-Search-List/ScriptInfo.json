@@ -1,0 +1,19 @@
+{
+  "Name": "Check DNS Suffix Search List",
+  "Workload": "Custom Compliance",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Checks whether required DNS suffixes are configured on the device. This helps support teams validate name-resolution configuration for hybrid domains, VPN scenarios, and internal applications.",
+  "Tags": [
+    "Networking",
+    "Custom-Compliance"
+  ]
+}

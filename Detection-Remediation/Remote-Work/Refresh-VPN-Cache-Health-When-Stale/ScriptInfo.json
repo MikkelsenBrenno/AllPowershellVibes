@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh VPN Cache Health When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Remote-Work",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates VPN Cache Health state for Intune-managed Windows devices.",
+  "Tags": [
+    "Remote-Work",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

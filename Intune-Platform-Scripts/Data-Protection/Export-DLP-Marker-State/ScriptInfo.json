@@ -1,0 +1,20 @@
+{
+  "Name": "Export DLP Marker State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Data-Protection",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports DLP Marker state for technician troubleshooting and reporting in the Data-Protection category.",
+  "Tags": [
+    "Data-Protection",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

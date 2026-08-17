@@ -1,0 +1,21 @@
+{
+  "Name": "Export SecureBoot Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Secure Boot and Device Guard-adjacent registry values for compliance troubleshooting.",
+  "Tags": [
+    "Compliance",
+    "Secure Boot",
+    "Business Premium"
+  ]
+}
+

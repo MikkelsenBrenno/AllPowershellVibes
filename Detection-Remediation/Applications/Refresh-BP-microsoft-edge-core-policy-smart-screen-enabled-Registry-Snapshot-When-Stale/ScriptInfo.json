@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Microsoft Edge Core Policy SmartScreenEnabled Registry Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Microsoft Edge Core Policy SmartScreenEnabled registry policy troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Applications",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

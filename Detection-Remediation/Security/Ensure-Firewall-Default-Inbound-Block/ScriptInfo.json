@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Firewall Default Inbound Block",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and optionally sets the Windows Firewall default inbound action to `Block` for selected profiles. This is useful when teams want a remediation package that catches local drift from a firewall baseline.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

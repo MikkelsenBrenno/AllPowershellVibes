@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "DeliveryOptimizationCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Delivery Optimization service state is not compliant. Current value: {ActualValue}.",
+          "Description": "Verify the Delivery Optimization service exists and is not disabled."
+        }
+      ]
+    },
+    {
+      "SettingName": "ServiceExists",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Delivery Optimization service was not found. Current value: {ActualValue}.",
+          "Description": "Confirm the device has a supported Windows client version."
+        }
+      ]
+    }
+  ]
+}

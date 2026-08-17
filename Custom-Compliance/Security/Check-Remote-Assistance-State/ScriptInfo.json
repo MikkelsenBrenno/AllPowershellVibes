@@ -1,0 +1,19 @@
+{
+  "Name": "Check Remote Assistance State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether Remote Assistance is disabled through the standard registry setting. This gives technicians a quick compliance signal for devices where unsolicited or invitation-based assistance should not be enabled.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

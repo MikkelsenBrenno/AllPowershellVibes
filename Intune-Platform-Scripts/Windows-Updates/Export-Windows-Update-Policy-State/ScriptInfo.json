@@ -1,0 +1,20 @@
+{
+  "Name": "Export Windows Update Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script writes a local JSON snapshot of common Windows Update policy registry paths for update ring, target release, active hours, and update source troubleshooting.",
+  "Tags": [
+    "Windows-Updates",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure WiFi Connectivity",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Remote-Work",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates WiFi Connectivity state for Intune-managed Windows devices.",
+  "Tags": [
+    "Remote-Work",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

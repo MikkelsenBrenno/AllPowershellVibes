@@ -1,0 +1,19 @@
+{
+  "Name": "Check Free Disk Space",
+  "Workload": "Custom Compliance",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package reports whether a configurable local drive has enough free disk space.",
+  "Tags": [
+    "Endpoint-Health",
+    "Custom-Compliance"
+  ]
+}

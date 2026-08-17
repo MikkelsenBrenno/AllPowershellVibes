@@ -1,0 +1,21 @@
+{
+  "Name": "Export Power Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports power policy registry values that affect sleep, hibernate, and fast startup behavior.",
+  "Tags": [
+    "Device Configuration",
+    "Power",
+    "Business Premium"
+  ]
+}
+

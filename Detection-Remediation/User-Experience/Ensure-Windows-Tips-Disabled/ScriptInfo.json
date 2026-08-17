@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Windows Tips Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows soft landing and tips policy so managed devices show fewer consumer prompts.",
+  "Tags": [
+    "User Experience",
+    "Cloud Content",
+    "Business Premium"
+  ]
+}
+

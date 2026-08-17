@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure RDP NLA Required",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Remote Desktop listener policy so Network Level Authentication is required when RDP is enabled.",
+  "Tags": [
+    "Security",
+    "Remote Desktop",
+    "Business Premium"
+  ]
+}
+

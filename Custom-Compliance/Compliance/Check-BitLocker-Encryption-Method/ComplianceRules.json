@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "SettingName": "EncryptionMethodCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/"
+    }
+  ]
+}

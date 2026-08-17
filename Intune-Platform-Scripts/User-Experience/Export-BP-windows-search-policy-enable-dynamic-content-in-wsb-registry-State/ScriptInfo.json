@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Windows Search Policy EnableDynamicContentInWSB Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Windows Search Policy EnableDynamicContentInWSB registry policy troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "User-Experience",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

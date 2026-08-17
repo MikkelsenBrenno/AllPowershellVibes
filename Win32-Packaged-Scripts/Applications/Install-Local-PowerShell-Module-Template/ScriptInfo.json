@@ -1,0 +1,19 @@
+{
+  "Name": "Install Local PowerShell Module Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs a packaged PowerShell module into the machine-wide PowerShell module path. This template is useful when technicians need to deploy internal helper modules, troubleshooting cmdlets, or script dependencies through Intune Win32 apps.",
+  "Tags": [
+    "Applications",
+    "Win32-Packaged-Scripts"
+  ]
+}

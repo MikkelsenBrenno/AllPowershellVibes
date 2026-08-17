@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Teams Machine Installer Folder State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Teams Machine Installer folder usage troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

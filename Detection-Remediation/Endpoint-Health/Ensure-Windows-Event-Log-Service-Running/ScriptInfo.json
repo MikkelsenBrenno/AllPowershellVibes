@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Windows Event Log Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the Windows Event Log service is not running, which can break support evidence and monitoring.",
+  "Tags": [
+    "Endpoint Health",
+    "Event Log",
+    "Business Premium"
+  ]
+}
+

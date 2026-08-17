@@ -1,0 +1,20 @@
+{
+  "Name": "Export Driver Policy Snapshot State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData inventory snapshot and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Driver Policy Snapshot state to a local JSON troubleshooting snapshot.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

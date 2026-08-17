@@ -1,0 +1,19 @@
+{
+  "Name": "Check OneDrive KFM State",
+  "Workload": "Custom Compliance",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks configurable OneDrive Known Folder Move policy values, including silent account configuration and optional tenant ID matching.",
+  "Tags": [
+    "User-Experience",
+    "Custom-Compliance"
+  ]
+}

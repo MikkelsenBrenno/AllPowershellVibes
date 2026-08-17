@@ -1,0 +1,21 @@
+{
+  "Name": "Export DNS Client Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports DNS Client policy values such as LLMNR and DNS suffix configuration.",
+  "Tags": [
+    "Networking",
+    "DNS",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Fast Startup Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether Windows Fast Startup is disabled and can apply the `HiberbootEnabled` registry value. This is useful when support teams see update, driver, VPN, or hardware issues that only clear after a true restart.",
+  "Tags": [
+    "Device-Configuration",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

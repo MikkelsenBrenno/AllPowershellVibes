@@ -1,0 +1,19 @@
+{
+  "Name": "Check Windows Update Pending Reboot",
+  "Workload": "Custom Compliance",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "Yes to remediate",
+  "Risk": "Low",
+  "Summary": "Reports whether common Windows Update and servicing locations show a pending reboot. This gives helpdesk teams a simple compliance signal for devices that need a restart before updates can continue.",
+  "Tags": [
+    "Windows-Updates",
+    "Custom-Compliance"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Defender Enable Cloud Protection",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Defender preference",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package checks Microsoft Defender cloud protection settings and remediates them when needed. The default configuration sets `MAPSReporting` to `Advanced` and `SubmitSamplesConsent` to `SendSafeSamples`. Review your organization's privacy requirements before changing sample submission to `SendAllSamples`.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

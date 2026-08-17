@@ -1,0 +1,20 @@
+{
+  "Name": "Check Teams SignIn Readiness",
+  "Workload": "Custom Compliance",
+  "Purpose": "Remote-Work",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Teams SignIn Readiness state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Remote-Work",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

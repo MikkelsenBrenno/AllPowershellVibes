@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "BitLockerRecoveryProtectorPresent",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/operating-system-security/data-protection/bitlocker/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "BitLocker recovery protector is missing. Current value: {ActualValue}.",
+          "Description": "Add or escrow a BitLocker recovery protector, or contact IT support."
+        }
+      ]
+    }
+  ]
+}

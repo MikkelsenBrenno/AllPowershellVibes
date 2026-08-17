@@ -1,0 +1,19 @@
+{
+  "Name": "Example Check BitLocker Status",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance example reports whether BitLocker is protected and fully encrypted on a configurable volume. The default volume is `C:`. `Discover.ps1` returns compressed JSON. `ComplianceRules.json` defines the compliant values.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance"
+  ]
+}

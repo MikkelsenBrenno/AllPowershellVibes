@@ -1,0 +1,21 @@
+{
+  "Name": "Export Teams Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports common Microsoft Teams policy registry values for client deployment and user experience troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Teams",
+    "Business Premium"
+  ]
+}
+

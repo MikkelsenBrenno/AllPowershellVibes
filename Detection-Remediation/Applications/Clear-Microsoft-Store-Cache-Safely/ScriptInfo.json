@@ -1,0 +1,20 @@
+{
+  "Name": "Clear Microsoft Store Cache Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects when the current user's Microsoft Store cache exceeds a configured size and can clear selected cache folders. The remediation defaults to report-only mode so technicians can verify the paths first.",
+  "Tags": [
+    "Applications",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

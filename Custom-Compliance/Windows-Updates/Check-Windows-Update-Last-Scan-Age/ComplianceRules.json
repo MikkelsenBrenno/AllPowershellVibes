@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WindowsUpdateLastScanWithinLimit",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Update has not scanned recently. Current value: {ActualValue}.",
+          "Description": "Review Windows Update policy, service health, and network connectivity."
+        }
+      ]
+    }
+  ]
+}

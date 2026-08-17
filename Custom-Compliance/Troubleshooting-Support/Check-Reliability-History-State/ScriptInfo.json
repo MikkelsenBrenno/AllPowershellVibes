@@ -1,0 +1,20 @@
+{
+  "Name": "Check Reliability History State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Troubleshooting-Support",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Reliability History state for Intune custom compliance evaluation in the Troubleshooting-Support category.",
+  "Tags": [
+    "Troubleshooting-Support",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

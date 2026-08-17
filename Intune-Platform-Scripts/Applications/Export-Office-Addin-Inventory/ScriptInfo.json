@@ -1,0 +1,22 @@
+{
+  "Name": "Export Office Addin Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "User or System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Office add-in registration keys for common Microsoft 365 Apps so technicians can troubleshoot slow startup and unstable add-ins.",
+  "Tags": [
+    "Applications",
+    "Microsoft 365 Apps",
+    "Office",
+    "Business Premium"
+  ]
+}
+

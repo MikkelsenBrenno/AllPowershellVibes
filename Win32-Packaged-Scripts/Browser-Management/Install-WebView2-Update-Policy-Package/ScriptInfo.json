@@ -1,0 +1,20 @@
+{
+  "Name": "Install WebView2 Update Policy Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Packages WebView2 Update Policy configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Browser-Management",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

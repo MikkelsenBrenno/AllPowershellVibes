@@ -1,0 +1,22 @@
+{
+  "Name": "Export Defender Exclusion State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Microsoft Defender exclusion paths, processes, extensions, and IP addresses to help technicians find risky local exclusions.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Exclusions",
+    "Business Premium"
+  ]
+}
+

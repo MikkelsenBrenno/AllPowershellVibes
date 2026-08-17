@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Office ClickToRun Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and repairs Microsoft Office Click-to-Run service state. This helps with Office update, repair, and launch issues where `ClickToRunSvc` is disabled or stopped.",
+  "Tags": [
+    "Applications",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

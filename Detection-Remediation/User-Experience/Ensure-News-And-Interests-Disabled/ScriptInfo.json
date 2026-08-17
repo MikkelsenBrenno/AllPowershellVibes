@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure News And Interests Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates policy that disables News and Interests or Widgets surfaces on managed Windows endpoints.",
+  "Tags": [
+    "User Experience",
+    "Widgets",
+    "Business Premium"
+  ]
+}
+

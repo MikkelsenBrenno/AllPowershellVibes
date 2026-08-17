@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure Location Access Disabled Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Template remediation that detects and disables Windows location access policy for devices where location services are not required.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium",
+    "Template"
+  ]
+}
+

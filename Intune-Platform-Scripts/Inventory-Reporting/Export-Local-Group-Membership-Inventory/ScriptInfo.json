@@ -1,0 +1,20 @@
+{
+  "Name": "Export Local Group Membership Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports local groups and group members to JSON. This helps technicians inspect local administrator drift, local support groups, remote access groups, and nested/domain principals visible on the endpoint.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

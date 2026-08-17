@@ -1,0 +1,22 @@
+{
+  "Name": "Refresh SecureBoot TPM Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Secure Boot and TPM state snapshot when it is missing or stale.",
+  "Tags": [
+    "Compliance",
+    "TPM",
+    "Secure Boot",
+    "Business Premium"
+  ]
+}
+

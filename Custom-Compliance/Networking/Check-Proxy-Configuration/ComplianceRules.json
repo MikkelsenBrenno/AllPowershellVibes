@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "ProxyConfigurationCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/troubleshoot/windows-client/networking/configure-proxy-server-settings",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Proxy configuration does not match the expected values. Current value: {ActualValue}.",
+          "Description": "Review WinHTTP, Internet Settings proxy values, PAC URL configuration, and tenant network policy."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Export Sleep Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Power-Battery",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Sleep Policy state for technician troubleshooting and reporting in the Power-Battery category.",
+  "Tags": [
+    "Power-Battery",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

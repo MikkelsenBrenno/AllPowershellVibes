@@ -1,0 +1,20 @@
+{
+  "Name": "Export OneDrive Sync Client State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports OneDrive sync client version and per-profile OneDrive folder signals for Business Premium Known Folder Move and sync troubleshooting.",
+  "Tags": [
+    "User-Experience",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

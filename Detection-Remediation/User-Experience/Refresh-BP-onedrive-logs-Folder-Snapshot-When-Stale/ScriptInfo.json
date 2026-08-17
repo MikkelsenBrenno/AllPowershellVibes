@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP OneDrive Logs Folder Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local OneDrive Logs folder usage troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "User-Experience",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

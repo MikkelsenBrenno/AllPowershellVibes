@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure GameDVR Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates GameDVR policy so capture features are disabled on managed business endpoints.",
+  "Tags": [
+    "User Experience",
+    "GameDVR",
+    "Business Premium"
+  ]
+}
+

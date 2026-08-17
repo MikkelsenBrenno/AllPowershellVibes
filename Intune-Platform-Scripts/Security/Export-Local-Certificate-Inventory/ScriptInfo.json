@@ -1,0 +1,20 @@
+{
+  "Name": "Export Local Certificate Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Certificate store",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Exports local machine certificate inventory to JSON and marks certificates that are expired or expiring soon. This gives support teams a quick view of certificate state without exposing private key material.",
+  "Tags": [
+    "Security",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

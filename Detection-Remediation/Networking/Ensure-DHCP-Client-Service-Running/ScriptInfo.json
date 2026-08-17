@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure DHCP Client Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the DHCP Client service is stopped, which can break IP addressing and network access.",
+  "Tags": [
+    "Networking",
+    "DHCP",
+    "Business Premium"
+  ]
+}
+

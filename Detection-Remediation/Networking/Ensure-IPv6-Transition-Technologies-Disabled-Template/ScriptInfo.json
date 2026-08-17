@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure IPv6 Transition Technologies Disabled Template",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Template remediation that detects and disables common IPv6 transition technologies where tunnel mechanisms are not required.",
+  "Tags": [
+    "Networking",
+    "IPv6 Transition",
+    "Business Premium",
+    "Template"
+  ]
+}
+

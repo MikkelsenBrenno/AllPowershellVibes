@@ -1,0 +1,19 @@
+{
+  "Name": "Check USB Storage Policy",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the USB mass storage driver startup value matches your policy. By default, the check expects `USBSTOR` startup value `4`, which is commonly used to block USB storage devices.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

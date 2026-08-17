@@ -1,0 +1,20 @@
+{
+  "Name": "Check DNS Cache Health",
+  "Workload": "Custom Compliance",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers DNS Cache Health state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Networking",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

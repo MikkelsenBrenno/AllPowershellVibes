@@ -1,0 +1,21 @@
+{
+  "Name": "Export Office Update Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Microsoft 365 Apps update policy values for channel, update path, and automatic update troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Microsoft 365 Apps",
+    "Business Premium"
+  ]
+}
+

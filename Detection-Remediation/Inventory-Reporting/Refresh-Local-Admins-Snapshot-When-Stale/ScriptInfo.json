@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh Local Admins Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for local account cmdlets",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Administrators group membership snapshot when it is missing or stale.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Local Admins",
+    "Business Premium"
+  ]
+}
+

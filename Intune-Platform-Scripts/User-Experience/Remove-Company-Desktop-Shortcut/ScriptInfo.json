@@ -1,0 +1,20 @@
+{
+  "Name": "Remove Company Desktop Shortcut",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This platform script removes a configurable shortcut from a configurable desktop folder.",
+  "Tags": [
+    "User-Experience",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

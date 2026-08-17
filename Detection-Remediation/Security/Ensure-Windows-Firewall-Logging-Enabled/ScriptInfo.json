@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Windows Firewall Logging Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether Windows Firewall profile logging matches expected settings and can configure log settings. This is useful when technicians need local packet logging for endpoint firewall troubleshooting or audit readiness.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

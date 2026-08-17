@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure DNS Client Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the DNS Client service is not running, which can break name resolution and Intune connectivity troubleshooting.",
+  "Tags": [
+    "Networking",
+    "DNS",
+    "Service",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Export Remote Desktop Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Remote Desktop policy and terminal server values for support and hardening checks.",
+  "Tags": [
+    "Device Configuration",
+    "Remote Desktop",
+    "Business Premium"
+  ]
+}
+

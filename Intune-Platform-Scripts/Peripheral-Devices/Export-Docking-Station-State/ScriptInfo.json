@@ -1,0 +1,20 @@
+{
+  "Name": "Export Docking Station State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Peripheral-Devices",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Docking Station state for technician troubleshooting and reporting in the Peripheral-Devices category.",
+  "Tags": [
+    "Peripheral-Devices",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

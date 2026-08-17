@@ -1,0 +1,20 @@
+{
+  "Name": "Clear Browser Cache Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and optionally clears old Microsoft Edge and Google Chrome cache files under local user profiles. This is useful when technicians need a safe, easy-to-customize remediation for disk cleanup or browser troubleshooting.",
+  "Tags": [
+    "User-Experience",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

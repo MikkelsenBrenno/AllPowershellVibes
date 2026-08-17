@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP WLAN Report Folder Folder Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local WLAN Report Folder folder usage troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Networking",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Export SMB Client Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports SMB client policy values such as insecure guest authentication state.",
+  "Tags": [
+    "Security",
+    "SMB",
+    "Business Premium"
+  ]
+}
+

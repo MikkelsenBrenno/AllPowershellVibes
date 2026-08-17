@@ -1,0 +1,19 @@
+{
+  "Name": "Check Proxy Configuration",
+  "Workload": "Custom Compliance",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks configurable user proxy, PAC URL, proxy server, and WinHTTP proxy expectations.",
+  "Tags": [
+    "Networking",
+    "Custom-Compliance"
+  ]
+}

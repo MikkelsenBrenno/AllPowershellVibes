@@ -1,0 +1,21 @@
+{
+  "Name": "Export Windows Update Cache State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Update cache folder size details without deleting content.",
+  "Tags": [
+    "Maintenance",
+    "Windows Updates",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Export Bluetooth Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Bluetooth-related service state for peripheral and pairing troubleshooting.",
+  "Tags": [
+    "Device Configuration",
+    "Bluetooth",
+    "Business Premium"
+  ]
+}
+

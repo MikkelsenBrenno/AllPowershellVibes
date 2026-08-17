@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh IME Log Folder Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Intune Management Extension log folder usage snapshot when it is missing or stale.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune",
+    "Business Premium"
+  ]
+}
+

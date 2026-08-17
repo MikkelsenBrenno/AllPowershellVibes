@@ -1,0 +1,24 @@
+name: Validate PowerShell Repository
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate scripts, metadata, and catalog
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run repository validation
+        shell: pwsh
+        run: .\tools\Test-Repository.ps1
+
+      - name: Verify generated catalog is current
+        shell: pwsh
+        run: .\tools\Update-ScriptCatalog.ps1 -Check

@@ -1,0 +1,20 @@
+{
+  "Name": "Export Service Startup Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports Windows service startup details to a local JSON file. This helps technicians compare service state, start mode, service account, and executable path during endpoint health troubleshooting.",
+  "Tags": [
+    "Endpoint-Health",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

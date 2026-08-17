@@ -1,0 +1,20 @@
+{
+  "Name": "Disk Detect Predictive Failure",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "Yes",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects predictive failure signals for the disk where Windows is installed. The detection script resolves the Windows/system drive, normally `C:`, to its backing physical disk and checks only that disk. It checks SMART predictive failure data from `MSStorageDriver_FailurePredictStatus` and can optionally use Windows disk health as a fallback. The remediation script does not try to repair hardware. It logs the finding, optionally sends a Teams alert, and keeps Intune reporting the issue until an admin takes action.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

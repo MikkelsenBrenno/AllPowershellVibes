@@ -1,0 +1,20 @@
+{
+  "Name": "Export Remote Logon State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Identity-Access",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Remote Logon state for technician troubleshooting and reporting in the Identity-Access category.",
+  "Tags": [
+    "Identity-Access",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

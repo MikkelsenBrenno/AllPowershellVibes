@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Guest Account Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device security state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and optionally disables the built-in local Guest account. The scripts locate the account by SID suffix `-501`, so they work even when the account name is localized or renamed.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

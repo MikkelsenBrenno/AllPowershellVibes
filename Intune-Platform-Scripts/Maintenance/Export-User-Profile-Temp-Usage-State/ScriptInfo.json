@@ -1,0 +1,21 @@
+{
+  "Name": "Export User Profile Temp Usage State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports current user temp and cache folder usage for support sessions that run in user context.",
+  "Tags": [
+    "Maintenance",
+    "User Profile",
+    "Business Premium"
+  ]
+}
+

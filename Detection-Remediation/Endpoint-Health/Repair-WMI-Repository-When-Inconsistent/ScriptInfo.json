@@ -1,0 +1,22 @@
+{
+  "Name": "Repair WMI Repository When Inconsistent",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Required for native Windows management tooling",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device health state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects inconsistent WMI repository state and can run a controlled salvage or reset action for devices where inventory and Intune scripts fail because WMI is unhealthy.",
+  "Tags": [
+    "Endpoint Health",
+    "WMI",
+    "Troubleshooting",
+    "Business Premium"
+  ]
+}
+

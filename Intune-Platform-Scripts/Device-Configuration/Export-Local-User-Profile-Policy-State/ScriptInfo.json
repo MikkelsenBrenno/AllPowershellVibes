@@ -1,0 +1,21 @@
+{
+  "Name": "Export Local User Profile Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports profile management policy values that affect local user profile cleanup and behavior.",
+  "Tags": [
+    "Device Configuration",
+    "Profiles",
+    "Business Premium"
+  ]
+}
+

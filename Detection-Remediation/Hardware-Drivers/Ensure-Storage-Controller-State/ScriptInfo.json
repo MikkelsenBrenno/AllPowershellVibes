@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Storage Controller State",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Hardware-Drivers",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData managed state marker files",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Storage Controller state for technician gap scenarios in the Hardware-Drivers category.",
+  "Tags": [
+    "Hardware-Drivers",
+    "Detection-Remediation",
+    "Technician-Gap-Expansion"
+  ]
+}

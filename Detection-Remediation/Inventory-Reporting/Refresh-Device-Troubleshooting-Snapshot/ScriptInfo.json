@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh Device Troubleshooting Snapshot",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects whether a local troubleshooting snapshot is missing or stale, then refreshes it with common device, disk, service, update, and recent event information.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

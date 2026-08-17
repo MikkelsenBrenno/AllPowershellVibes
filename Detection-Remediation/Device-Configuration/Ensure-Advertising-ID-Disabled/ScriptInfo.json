@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Advertising ID Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows AdvertisingInfo policy so advertising ID is disabled by group policy.",
+  "Tags": [
+    "Device Configuration",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

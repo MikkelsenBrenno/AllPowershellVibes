@@ -1,0 +1,22 @@
+{
+  "Name": "Export Windows LAPS Policy State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows LAPS policy registry values and local service availability for environments using Intune account protection policy.",
+  "Tags": [
+    "Security",
+    "LAPS",
+    "Account Protection",
+    "Business Premium"
+  ]
+}
+

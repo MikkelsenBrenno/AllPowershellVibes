@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh Lid Action Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Power-Battery",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData managed state marker files",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Lid Action state for technician gap scenarios in the Power-Battery category.",
+  "Tags": [
+    "Power-Battery",
+    "Detection-Remediation",
+    "Technician-Gap-Expansion"
+  ]
+}

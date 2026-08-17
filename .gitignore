@@ -1,0 +1,46 @@
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# PowerShell
+*.ps1xml
+*.pssc
+*.psrc
+*.psd1.backup
+*.psm1.backup
+
+# Logs and local output
+*.log
+*.tmp
+*.bak
+*.old
+output/
+logs/
+transcripts/
+
+# Intune packaging artifacts
+*.intunewin
+IntuneWinAppUtil.exe
+IntuneWinPackage/
+PackageOutput/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS and shell history
+.DS_Store
+ConsoleHost_history.txt
+
+# Secrets and local configuration
+*.secret
+*.secrets
+*.key
+*.pfx
+*.cer
+*.env
+*.local.ps1
+local.settings.json

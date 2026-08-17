@@ -1,0 +1,22 @@
+{
+  "Name": "Defender Enable Email Scanning",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Defender preference",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and remediates Microsoft Defender email scanning by keeping `DisableEmailScanning` set to `$false`.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Business Premium",
+    "Remediation"
+  ]
+}
+

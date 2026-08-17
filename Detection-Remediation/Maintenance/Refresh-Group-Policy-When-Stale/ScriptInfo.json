@@ -1,0 +1,20 @@
+{
+  "Name": "Refresh Group Policy When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects stale machine Group Policy refresh data and runs `gpupdate` when the threshold is exceeded. This follows a common Intune remediation pattern for reducing configuration drift on hybrid devices.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

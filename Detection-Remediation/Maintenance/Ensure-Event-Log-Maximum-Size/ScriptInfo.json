@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Event Log Maximum Size",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows event logs that are smaller than the configured maximum size. This helps technicians keep enough Application and System history for troubleshooting after incidents.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

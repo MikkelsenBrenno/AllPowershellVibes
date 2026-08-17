@@ -1,0 +1,20 @@
+{
+  "Name": "Export Defender Security Snapshot",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script writes a local JSON snapshot with Microsoft Defender status, signature, tamper protection, and selected preference values.",
+  "Tags": [
+    "Security",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

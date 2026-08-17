@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Windows Temp Folder State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Windows Temp folder usage troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Maintenance",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

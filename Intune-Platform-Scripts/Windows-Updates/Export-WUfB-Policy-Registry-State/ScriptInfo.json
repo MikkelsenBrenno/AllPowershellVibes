@@ -1,0 +1,22 @@
+{
+  "Name": "Export WUfB Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Update for Business policy registry values, including deferral, pause, active hours, and target release settings.",
+  "Tags": [
+    "Windows Updates",
+    "WUfB",
+    "Policy",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,19 @@
+{
+  "Name": "Check Windows Update Last Scan Age",
+  "Workload": "Custom Compliance",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether Windows Update has completed a successful scan within the configured number of days.",
+  "Tags": [
+    "Windows-Updates",
+    "Custom-Compliance"
+  ]
+}

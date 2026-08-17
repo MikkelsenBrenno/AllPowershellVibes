@@ -1,0 +1,20 @@
+{
+  "Name": "Local Administrators Audit Unauthorized",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device security state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package audits the local Administrators group and can optionally remove members that are not in the allowed list. Removal is disabled by default. Enable removal only after pilot testing.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

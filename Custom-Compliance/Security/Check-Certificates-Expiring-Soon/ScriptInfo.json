@@ -1,0 +1,19 @@
+{
+  "Name": "Check Certificates Expiring Soon",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks a certificate store for certificates that expire within a configurable number of days.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

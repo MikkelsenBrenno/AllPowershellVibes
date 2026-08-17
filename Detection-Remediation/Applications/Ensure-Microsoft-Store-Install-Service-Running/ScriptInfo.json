@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure Microsoft Store Install Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the Microsoft Store Install Service is stopped, which can block Store and Company Portal app install flows.",
+  "Tags": [
+    "Applications",
+    "Store",
+    "Company Portal",
+    "Business Premium"
+  ]
+}
+

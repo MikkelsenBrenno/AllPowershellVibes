@@ -1,0 +1,21 @@
+{
+  "Name": "Export Delivery Optimization Status",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Delivery Optimization service, policy, and cache status for Windows Update for Business troubleshooting.",
+  "Tags": [
+    "Windows Updates",
+    "Delivery Optimization",
+    "Business Premium"
+  ]
+}
+

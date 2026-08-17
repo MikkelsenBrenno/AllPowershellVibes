@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Certificate Propagation Service Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Certificate Propagation service state troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Security",
+    "Services",
+    "Business Premium"
+  ]
+}
+

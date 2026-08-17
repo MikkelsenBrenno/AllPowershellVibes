@@ -1,0 +1,20 @@
+{
+  "Name": "Check PKCS Certificate State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Certificates-PKI",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers PKCS Certificate state for Intune custom compliance evaluation in the Certificates-PKI category.",
+  "Tags": [
+    "Certificates-PKI",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

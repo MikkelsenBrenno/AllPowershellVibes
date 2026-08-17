@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Firewall Domain Logging Policy LogFileSize Registry Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Firewall Domain Logging Policy LogFileSize registry policy troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Security",
+    "Registry",
+    "Business Premium"
+  ]
+}
+

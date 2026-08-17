@@ -1,0 +1,20 @@
+{
+  "Name": "Install TimeSync Service State Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Packages TimeSync Service State configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Endpoint-Health",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

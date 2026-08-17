@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "RequiredAppInstalled",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/apps/apps-add",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Required application is not installed. Current value: {ActualValue}.",
+          "Description": "Review application assignment, install status, detection rules, and local uninstall registry entries."
+        }
+      ]
+    }
+  ]
+}

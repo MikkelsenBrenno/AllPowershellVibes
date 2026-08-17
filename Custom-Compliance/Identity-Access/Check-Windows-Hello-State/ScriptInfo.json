@@ -1,0 +1,20 @@
+{
+  "Name": "Check Windows Hello State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Identity-Access",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Discovers Windows Hello state for Intune custom compliance evaluation in the Identity-Access category.",
+  "Tags": [
+    "Identity-Access",
+    "Custom-Compliance",
+    "Technician-Gap-Expansion"
+  ]
+}

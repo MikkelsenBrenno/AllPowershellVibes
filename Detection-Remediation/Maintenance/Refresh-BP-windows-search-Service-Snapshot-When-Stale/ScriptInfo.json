@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Windows Search Service Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Windows Search service state troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Maintenance",
+    "Services",
+    "Business Premium"
+  ]
+}
+

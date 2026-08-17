@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Live Kernel Reports Folder Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Live Kernel Reports folder usage troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Endpoint-Health",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

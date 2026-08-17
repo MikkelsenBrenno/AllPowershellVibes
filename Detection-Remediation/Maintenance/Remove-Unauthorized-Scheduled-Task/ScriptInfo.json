@@ -1,0 +1,20 @@
+{
+  "Name": "Remove Unauthorized Scheduled Task",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device security state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package detects a configured unauthorized scheduled task and can remove it after an explicit safety switch is enabled.",
+  "Tags": [
+    "Maintenance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

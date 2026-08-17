@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "LocalAdministratorCountCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/identity-protection/access-control/local-accounts",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The local Administrators group has too many members. Current value: {ActualValue}.",
+          "Description": "Review local administrator membership and remove unauthorized users or groups."
+        }
+      ]
+    },
+    {
+      "SettingName": "LocalAdministratorCount",
+      "Operator": "LessEquals",
+      "DataType": "Int64",
+      "Operand": 2,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/security/identity-protection/access-control/local-accounts",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The local administrator count is above policy. Current value: {ActualValue}.",
+          "Description": "Compare the detected local administrators with the approved local administrator baseline."
+        }
+      ]
+    }
+  ]
+}

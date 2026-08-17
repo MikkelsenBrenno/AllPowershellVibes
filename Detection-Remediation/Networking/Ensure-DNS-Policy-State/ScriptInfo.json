@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure DNS Policy State",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates DNS Policy State state for Intune-managed Windows devices.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

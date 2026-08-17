@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Base Filtering Engine Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Base Filtering Engine is stopped, which can break Windows Firewall and IPsec behavior.",
+  "Tags": [
+    "Security",
+    "Firewall",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Network Location Awareness Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Network Location Awareness is stopped, helping firewall profile and domain network detection.",
+  "Tags": [
+    "Networking",
+    "Firewall",
+    "Business Premium"
+  ]
+}
+

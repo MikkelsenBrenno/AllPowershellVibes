@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "PowerShellV2FeatureCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/powershell/scripting/windows-powershell/install/installing-windows-powershell",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "PowerShell 2.0 optional feature state is not compliant. Current value: {ActualValue}.",
+          "Description": "Disable PowerShell 2.0 unless the device has an approved legacy application exception."
+        }
+      ]
+    },
+    {
+      "SettingName": "FeatureState",
+      "Operator": "IsEquals",
+      "DataType": "String",
+      "Operand": "Disabled",
+      "MoreInfoUrl": "https://learn.microsoft.com/powershell/scripting/windows-powershell/install/installing-windows-powershell",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "PowerShell 2.0 feature state does not match policy. Current value: {ActualValue}.",
+          "Description": "Review the optional feature state and disable it after compatibility testing."
+        }
+      ]
+    }
+  ]
+}

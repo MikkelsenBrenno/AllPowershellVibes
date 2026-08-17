@@ -1,0 +1,21 @@
+{
+  "Name": "Export BitLocker Protector Details",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports BitLocker volume and key protector details without exposing recovery passwords, useful for Business Premium compliance troubleshooting.",
+  "Tags": [
+    "Compliance",
+    "BitLocker",
+    "Business Premium"
+  ]
+}
+

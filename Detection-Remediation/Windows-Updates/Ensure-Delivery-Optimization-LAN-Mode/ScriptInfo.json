@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Delivery Optimization LAN Mode",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Delivery Optimization policy so Windows Update content sharing is limited to LAN peers.",
+  "Tags": [
+    "Windows Updates",
+    "Delivery Optimization",
+    "Business Premium"
+  ]
+}
+

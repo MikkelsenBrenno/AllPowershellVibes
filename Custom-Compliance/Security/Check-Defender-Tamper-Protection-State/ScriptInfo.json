@@ -1,0 +1,19 @@
+{
+  "Name": "Check Defender Tamper Protection State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether Microsoft Defender tamper protection appears enabled according to `Get-MpComputerStatus`. The script also reports whether the tamper protection property is available on the target device.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

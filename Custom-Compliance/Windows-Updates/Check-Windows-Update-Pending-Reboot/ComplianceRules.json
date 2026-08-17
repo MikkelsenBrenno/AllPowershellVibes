@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "SettingName": "NoWindowsUpdatePendingReboot",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/"
+    }
+  ]
+}

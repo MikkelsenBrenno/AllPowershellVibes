@@ -1,0 +1,20 @@
+{
+  "Name": "Reset Windows Update Components Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects stale Windows Update scan state and optionally resets selected local Windows Update components. The remediation starts in report-only mode because cache reset actions should be piloted carefully.",
+  "Tags": [
+    "Windows-Updates",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

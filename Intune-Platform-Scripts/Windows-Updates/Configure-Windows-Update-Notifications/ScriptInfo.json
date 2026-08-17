@@ -1,0 +1,20 @@
+{
+  "Name": "Configure Windows Update Notifications",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This platform script configures Windows Update notification display policy values. The default restores Windows default notifications by removing the policy values.",
+  "Tags": [
+    "Windows-Updates",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "SettingName": "ComputerNamePrefixCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/enrollment/windows-enrollment-status"
+    }
+  ]
+}

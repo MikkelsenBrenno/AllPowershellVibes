@@ -1,0 +1,21 @@
+{
+  "Name": "Export Windows Servicing Event Summary",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports recent servicing events from the Setup log for feature update and repair troubleshooting.",
+  "Tags": [
+    "Windows Updates",
+    "Servicing",
+    "Business Premium"
+  ]
+}
+

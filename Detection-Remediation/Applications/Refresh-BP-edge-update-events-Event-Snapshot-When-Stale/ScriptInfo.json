@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh BP Edge Update Events Event Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Edge Update Events event log troubleshooting snapshot when it is missing or stale.",
+  "Tags": [
+    "Applications",
+    "Events",
+    "Business Premium"
+  ]
+}
+

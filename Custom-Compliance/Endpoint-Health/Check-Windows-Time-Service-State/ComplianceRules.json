@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WindowsTimeServiceCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/windows-time-service/windows-time-service-tools-and-settings",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Time service state is not compliant. Current value: {ActualValue}.",
+          "Description": "Verify Windows Time service startup mode, service state, and configured time source."
+        }
+      ]
+    },
+    {
+      "SettingName": "LocalCmosClockDetected",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": false,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/windows-time-service/windows-time-service-tools-and-settings",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Time is using Local CMOS Clock. Current value: {ActualValue}.",
+          "Description": "Resync Windows Time or review the configured NTP/domain time source."
+        }
+      ]
+    }
+  ]
+}

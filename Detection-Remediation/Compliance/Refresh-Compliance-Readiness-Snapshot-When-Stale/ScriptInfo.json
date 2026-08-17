@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh Compliance Readiness Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local compliance readiness snapshot covering OS, TPM, Secure Boot, and BitLocker signals.",
+  "Tags": [
+    "Compliance",
+    "Readiness",
+    "Business Premium"
+  ]
+}
+

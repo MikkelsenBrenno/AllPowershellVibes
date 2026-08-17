@@ -1,0 +1,19 @@
+{
+  "Name": "Check Certificate By Thumbprint",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether a specific certificate thumbprint exists in one of the configured certificate stores.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "RemoteAssistanceDisabled",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/policy-csp-remoteassistance",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Remote Assistance is not disabled. Current value: {ActualValue}.",
+          "Description": "Disable Remote Assistance or confirm the device has an approved exception."
+        }
+      ]
+    },
+    {
+      "SettingName": "AllowHelpValue",
+      "Operator": "IsEquals",
+      "DataType": "Int64",
+      "Operand": 0,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/client-management/mdm/policy-csp-remoteassistance",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Remote Assistance registry value does not match policy. Current value: {ActualValue}.",
+          "Description": "Set fAllowToGetHelp to 0 to disable Remote Assistance invitations."
+        }
+      ]
+    }
+  ]
+}

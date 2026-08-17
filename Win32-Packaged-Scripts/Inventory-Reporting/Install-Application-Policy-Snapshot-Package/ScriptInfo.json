@@ -1,0 +1,20 @@
+{
+  "Name": "Install Application Policy Snapshot Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Packages Application Policy Snapshot configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

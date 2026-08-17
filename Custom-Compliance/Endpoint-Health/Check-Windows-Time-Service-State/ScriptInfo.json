@@ -1,0 +1,19 @@
+{
+  "Name": "Check Windows Time Service State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports Windows Time service startup mode, service state, and time source. This helps technicians identify devices that may have authentication, certificate, VPN, or update issues caused by incorrect time sync.",
+  "Tags": [
+    "Endpoint-Health",
+    "Custom-Compliance"
+  ]
+}

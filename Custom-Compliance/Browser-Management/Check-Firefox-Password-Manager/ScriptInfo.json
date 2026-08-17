@@ -1,0 +1,20 @@
+{
+  "Name": "Check Firefox Password Manager",
+  "Workload": "Custom Compliance",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Discovers Firefox Password Manager state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Browser-Management",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

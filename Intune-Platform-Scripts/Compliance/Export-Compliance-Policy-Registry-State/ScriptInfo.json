@@ -1,0 +1,21 @@
+{
+  "Name": "Export Compliance Policy Registry State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports local policy values commonly referenced by Business Premium compliance troubleshooting.",
+  "Tags": [
+    "Compliance",
+    "Policy",
+    "Business Premium"
+  ]
+}
+

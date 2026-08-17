@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh DNS Client Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local DNS Client policy snapshot when it is missing or stale.",
+  "Tags": [
+    "Networking",
+    "DNS",
+    "Business Premium"
+  ]
+}
+

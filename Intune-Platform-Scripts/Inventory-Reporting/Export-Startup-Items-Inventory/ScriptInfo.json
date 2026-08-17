@@ -1,0 +1,20 @@
+{
+  "Name": "Export Startup Items Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports machine-wide startup registry entries and all-users Startup folder items to JSON. This helps technicians inspect launch-at-logon behavior during malware triage, app troubleshooting, or performance investigations.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

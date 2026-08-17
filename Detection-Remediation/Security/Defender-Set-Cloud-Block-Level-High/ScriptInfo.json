@@ -1,0 +1,22 @@
+{
+  "Name": "Defender Set Cloud Block Level High",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Defender preference",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects and remediates Microsoft Defender cloud block level so cloud-delivered protection uses the configured sensitivity.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Business Premium",
+    "Cloud Protection"
+  ]
+}
+

@@ -1,0 +1,10 @@
+{
+  "Package": "Install-Local-Support-Tool-Bundle",
+  "Version": "1.0.0",
+  "Description": "Replace this sample payload with approved local support tools before packaging.",
+  "Owner": "IT",
+  "Notes": [
+    "Keep tools signed or approved according to your organization policy.",
+    "Update ExpectedFileRelativePaths in the scripts when payload contents change."
+  ]
+}

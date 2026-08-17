@@ -1,0 +1,21 @@
+{
+  "Name": "Export WindowsUpdate Operational Summary",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports recent Windows Update Client operational events for update troubleshooting without collecting full WindowsUpdate.log output.",
+  "Tags": [
+    "Windows Updates",
+    "Events",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "Name": "Check Defender Baseline Marker",
+  "Workload": "Custom Compliance",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Discovers Defender Baseline Marker state for Intune custom compliance evaluation.",
+  "Tags": [
+    "Compliance",
+    "Custom-Compliance",
+    "Business Premium"
+  ]
+}

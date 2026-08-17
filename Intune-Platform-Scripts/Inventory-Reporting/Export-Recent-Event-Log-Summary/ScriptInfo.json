@@ -1,0 +1,20 @@
+{
+  "Name": "Export Recent Event Log Summary",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports recent critical and error events from configurable Windows event logs to JSON. The output gives technicians a quick support artifact for troubleshooting without manually opening Event Viewer on the device.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

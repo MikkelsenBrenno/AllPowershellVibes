@@ -1,0 +1,19 @@
+{
+  "Name": "Install VPN Profile Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This Win32 packaged script installs, detects, and removes a configurable Windows VPN profile. It is intended as a starting point for teams that need more control than a simple profile example.",
+  "Tags": [
+    "Networking",
+    "Win32-Packaged-Scripts"
+  ]
+}

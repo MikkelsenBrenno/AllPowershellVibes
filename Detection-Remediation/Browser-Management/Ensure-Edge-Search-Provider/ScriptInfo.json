@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Edge Search Provider",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Edge Search Provider state for Intune-managed Windows devices.",
+  "Tags": [
+    "Browser-Management",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure AutoRun Disabled All Drives",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Explorer policy so AutoRun is disabled for all drive types.",
+  "Tags": [
+    "Security",
+    "AutoRun",
+    "Business Premium"
+  ]
+}
+

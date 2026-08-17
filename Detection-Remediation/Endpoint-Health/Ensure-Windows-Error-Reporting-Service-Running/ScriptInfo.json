@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Windows Error Reporting Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where Windows Error Reporting is stopped, helping technicians retain crash and reliability evidence.",
+  "Tags": [
+    "Endpoint Health",
+    "Reliability",
+    "Business Premium"
+  ]
+}
+

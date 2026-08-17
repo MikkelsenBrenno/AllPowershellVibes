@@ -1,0 +1,19 @@
+{
+  "Name": "Check Delivery Optimization Service State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the Delivery Optimization service exists and is not disabled. This helps technicians find devices where Windows Update or Microsoft Store content delivery may be impaired.",
+  "Tags": [
+    "Windows-Updates",
+    "Custom-Compliance"
+  ]
+}

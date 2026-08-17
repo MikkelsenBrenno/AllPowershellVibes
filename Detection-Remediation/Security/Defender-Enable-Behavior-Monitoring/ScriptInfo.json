@@ -1,0 +1,20 @@
+{
+  "Name": "Defender Enable Behavior Monitoring",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Defender preference",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package checks whether Microsoft Defender behavior monitoring is enabled and enables it when needed. The script checks the inverted Defender preference `DisableBehaviorMonitoring`. A value of `$false` means behavior monitoring is enabled.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

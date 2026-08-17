@@ -1,0 +1,19 @@
+{
+  "Name": "Install Compliance Baseline Marker",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs, detects, and removes a local registry marker for a baseline, migration, or compliance rollout state.",
+  "Tags": [
+    "Compliance",
+    "Win32-Packaged-Scripts"
+  ]
+}

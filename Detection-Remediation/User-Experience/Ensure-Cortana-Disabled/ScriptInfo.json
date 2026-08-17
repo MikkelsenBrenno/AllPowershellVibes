@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Cortana Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Windows Search policy so Cortana is disabled on managed business endpoints.",
+  "Tags": [
+    "User Experience",
+    "Search",
+    "Business Premium"
+  ]
+}
+

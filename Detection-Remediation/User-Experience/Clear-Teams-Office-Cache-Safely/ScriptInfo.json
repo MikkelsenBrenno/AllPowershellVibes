@@ -1,0 +1,20 @@
+{
+  "Name": "Clear Teams Office Cache Safely",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package detects old Teams and Office cache files across local user profiles. Remediation is reporting-only by default and deletes files only after `$DeleteCacheItems` is enabled.",
+  "Tags": [
+    "User-Experience",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

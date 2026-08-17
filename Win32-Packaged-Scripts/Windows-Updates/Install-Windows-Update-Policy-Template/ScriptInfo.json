@@ -1,0 +1,19 @@
+{
+  "Name": "Install Windows Update Policy Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs, detects, and removes configurable Windows Update target release policy registry values.",
+  "Tags": [
+    "Windows-Updates",
+    "Win32-Packaged-Scripts"
+  ]
+}

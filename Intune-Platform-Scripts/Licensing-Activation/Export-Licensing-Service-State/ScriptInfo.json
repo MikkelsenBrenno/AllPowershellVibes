@@ -1,0 +1,20 @@
+{
+  "Name": "Export Licensing Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Licensing-Activation",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Licensing Service state for technician troubleshooting and reporting in the Licensing-Activation category.",
+  "Tags": [
+    "Licensing-Activation",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

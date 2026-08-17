@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Cloud Clipboard Sync Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates cross-device clipboard sync policy on managed Windows endpoints.",
+  "Tags": [
+    "User Experience",
+    "Privacy",
+    "Business Premium"
+  ]
+}
+

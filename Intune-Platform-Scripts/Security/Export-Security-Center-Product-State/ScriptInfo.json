@@ -1,0 +1,22 @@
+{
+  "Name": "Export Security Center Product State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Windows Security Center antivirus and firewall product state for quick third-party security product troubleshooting.",
+  "Tags": [
+    "Security",
+    "Security Center",
+    "Inventory",
+    "Business Premium"
+  ]
+}
+

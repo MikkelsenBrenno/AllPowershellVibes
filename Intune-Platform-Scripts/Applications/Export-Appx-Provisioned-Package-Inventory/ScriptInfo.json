@@ -1,0 +1,20 @@
+{
+  "Name": "Export Appx Provisioned Package Inventory",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Exports provisioned AppX package inventory and optional installed package counts to JSON for Business Premium app cleanup and troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "Name": "Install Endpoint Log Collector Tool",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs a small helper script that collects common endpoint troubleshooting logs into a timestamped zip file. This gives technicians a copy-and-customize Win32 package for local support bundles.",
+  "Tags": [
+    "Maintenance",
+    "Win32-Packaged-Scripts"
+  ]
+}

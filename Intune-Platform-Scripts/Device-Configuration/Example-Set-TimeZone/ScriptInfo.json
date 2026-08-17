@@ -1,0 +1,20 @@
+{
+  "Name": "Example Set TimeZone",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This platform script sets the Windows time zone to a configurable Windows time zone ID. The default example uses `UTC`. The script uses `tzutil.exe` for Windows PowerShell 5.1 compatibility and validates the final state before exiting successfully.",
+  "Tags": [
+    "Device-Configuration",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

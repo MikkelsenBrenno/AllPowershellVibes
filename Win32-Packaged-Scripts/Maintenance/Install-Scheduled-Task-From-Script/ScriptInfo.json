@@ -1,0 +1,19 @@
+{
+  "Name": "Install Scheduled Task From Script",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device security state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Installs a PowerShell payload as a Windows scheduled task using an Intune Win32 app package. The default payload only writes a last-run marker, making this a safe template for technicians to customize into recurring maintenance or reporting tasks.",
+  "Tags": [
+    "Maintenance",
+    "Win32-Packaged-Scripts"
+  ]
+}

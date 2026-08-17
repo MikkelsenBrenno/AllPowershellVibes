@@ -1,0 +1,20 @@
+{
+  "Name": "Export Printer Queue State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Printing",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData JSON report",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports Printer Queue state for technician troubleshooting and reporting in the Printing category.",
+  "Tags": [
+    "Printing",
+    "Intune-Platform-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

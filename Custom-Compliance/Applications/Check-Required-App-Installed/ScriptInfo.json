@@ -1,0 +1,19 @@
+{
+  "Name": "Check Required App Installed",
+  "Workload": "Custom Compliance",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "This custom compliance package checks whether a required application is installed by searching common machine-wide uninstall registry locations.",
+  "Tags": [
+    "Applications",
+    "Custom-Compliance"
+  ]
+}

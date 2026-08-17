@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure BitLocker Recovery State",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates BitLocker Recovery State state for Intune-managed Windows devices.",
+  "Tags": [
+    "Compliance",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Local Time Zone",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "This remediation package detects and can set the local Windows time zone ID.",
+  "Tags": [
+    "Device-Configuration",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

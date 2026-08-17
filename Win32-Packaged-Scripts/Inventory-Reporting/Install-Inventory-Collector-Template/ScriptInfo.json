@@ -1,0 +1,19 @@
+{
+  "Name": "Install Inventory Collector Template",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs, detects, and removes a local PowerShell inventory collector helper that writes a JSON inventory snapshot on demand.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Win32-Packaged-Scripts"
+  ]
+}

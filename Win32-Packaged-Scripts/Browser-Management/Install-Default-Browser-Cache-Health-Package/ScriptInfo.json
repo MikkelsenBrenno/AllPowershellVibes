@@ -1,0 +1,20 @@
+{
+  "Name": "Install Default Browser Cache Health Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Browser-Management",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Packages Default Browser Cache Health configuration as a reusable Win32 script deployment.",
+  "Tags": [
+    "Browser-Management",
+    "Win32-Packaged-Scripts",
+    "Business Premium"
+  ]
+}

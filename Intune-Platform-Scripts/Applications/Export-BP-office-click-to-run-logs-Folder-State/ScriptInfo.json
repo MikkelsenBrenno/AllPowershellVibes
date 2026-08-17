@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Office Click To Run Logs Folder State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Office Click To Run Logs folder usage troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Applications",
+    "Folders",
+    "Business Premium"
+  ]
+}
+

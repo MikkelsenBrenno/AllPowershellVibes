@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure OneDrive Files On Demand Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates OneDrive policy that enables Files On-Demand for managed Business Premium devices.",
+  "Tags": [
+    "User Experience",
+    "OneDrive",
+    "Business Premium"
+  ]
+}
+

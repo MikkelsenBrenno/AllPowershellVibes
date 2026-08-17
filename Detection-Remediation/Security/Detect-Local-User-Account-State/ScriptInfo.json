@@ -1,0 +1,20 @@
+{
+  "Name": "Detect Local User Account State",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Local device security state",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package detects whether a local user account exists and whether it is enabled or disabled. Remediation can optionally disable the account.",
+  "Tags": [
+    "Security",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

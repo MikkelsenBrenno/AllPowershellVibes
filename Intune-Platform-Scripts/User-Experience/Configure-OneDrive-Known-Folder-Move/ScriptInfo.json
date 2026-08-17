@@ -1,0 +1,20 @@
+{
+  "Name": "Configure OneDrive Known Folder Move",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This platform script configures OneDrive Known Folder Move policy values for prompting users or silently moving known folders.",
+  "Tags": [
+    "User-Experience",
+    "Intune-Platform-Scripts",
+    "Business Premium"
+  ]
+}

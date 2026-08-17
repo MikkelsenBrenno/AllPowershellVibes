@@ -1,0 +1,19 @@
+{
+  "Name": "Check Local Administrator Count",
+  "Workload": "Custom Compliance",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the built-in local Administrators group contains more members than your policy allows. The discovery output includes both the count and the member names to help technicians identify what changed.",
+  "Tags": [
+    "Security",
+    "Custom-Compliance"
+  ]
+}

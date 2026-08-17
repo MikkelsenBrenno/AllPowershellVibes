@@ -1,0 +1,21 @@
+{
+  "Name": "Export BP Device Guard Tasks Task State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports a local Device Guard Tasks scheduled task troubleshooting snapshot for technician troubleshooting.",
+  "Tags": [
+    "Security",
+    "Scheduled Tasks",
+    "Business Premium"
+  ]
+}
+

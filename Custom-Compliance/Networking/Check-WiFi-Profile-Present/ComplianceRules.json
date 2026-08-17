@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "WiFiProfilePresent",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/technologies/netsh/netsh-wlan",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Required Wi-Fi profile is missing. Current value: {ActualValue}.",
+          "Description": "Review Wi-Fi profile deployment, profile name, assignment scope, and WLAN AutoConfig health."
+        }
+      ]
+    }
+  ]
+}

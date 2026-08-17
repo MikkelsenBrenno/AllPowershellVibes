@@ -1,0 +1,22 @@
+{
+  "Name": "Clear Delivery Optimization Cache When Large",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects large Delivery Optimization cache usage and clears it through the supported PowerShell cmdlet when enabled.",
+  "Tags": [
+    "Windows Updates",
+    "Delivery Optimization",
+    "Cache",
+    "Business Premium"
+  ]
+}
+

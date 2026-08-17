@@ -1,0 +1,21 @@
+{
+  "Name": "Export Pending Reboot Signals",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports common Windows pending reboot registry signals for technicians troubleshooting stuck installs, updates, and compliance drift.",
+  "Tags": [
+    "Endpoint Health",
+    "Pending Reboot",
+    "Business Premium"
+  ]
+}
+

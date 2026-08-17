@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Local Firewall Rule",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Firewall policy",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This remediation package detects a local Windows Firewall rule and can create or update it after an explicit safety switch is enabled.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

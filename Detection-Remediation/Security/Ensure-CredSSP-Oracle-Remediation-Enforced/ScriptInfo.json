@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure CredSSP Oracle Remediation Enforced",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates CredSSP encryption oracle remediation policy so vulnerable CredSSP connections are blocked.",
+  "Tags": [
+    "Security",
+    "CredSSP",
+    "Business Premium"
+  ]
+}
+

@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "IsCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/mem/intune/protect/compliance-custom-script",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "File Recovery is not compliant. Current value: {ActualValue}.",
+          "Description": "Review the package README, update the configurable values, and deploy a remediation or policy that makes File Recovery compliant."
+        }
+      ]
+    }
+  ]
+}

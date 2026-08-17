@@ -1,0 +1,19 @@
+{
+  "Name": "Check Intune Management Extension Service State",
+  "Workload": "Custom Compliance",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "No",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "JSON output only",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Reports whether the Intune Management Extension service exists, uses the expected startup mode, and is running. This is useful for finding devices that may fail Win32 app installs, remediations, or PowerShell script delivery.",
+  "Tags": [
+    "Endpoint-Health",
+    "Custom-Compliance"
+  ]
+}

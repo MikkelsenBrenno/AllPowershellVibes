@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure WinHTTP Proxy Configured",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and optionally configures WinHTTP proxy settings. The remediation starts in report-only mode so administrators can confirm direct access, proxy server, and bypass list values before enforcement.",
+  "Tags": [
+    "Networking",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "Name": "Clear Recycle Bin When Large",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "Example",
+  "Context": "System recommended",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "Detects large Recycle Bin usage across fixed drives and optionally clears it after an admin enables the safety toggle.",
+  "Tags": [
+    "Maintenance",
+    "Disk Cleanup",
+    "Recycle Bin",
+    "Template",
+    "Business Premium"
+  ]
+}

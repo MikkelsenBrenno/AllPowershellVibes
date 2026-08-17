@@ -1,0 +1,19 @@
+{
+  "Name": "Install Desktop URL Shortcut",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "User-Experience",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system or local configuration removal",
+  "Reboot": "No",
+  "Risk": "High",
+  "Summary": "This Win32 packaged script installs, detects, and removes an all-users desktop URL shortcut with a version marker.",
+  "Tags": [
+    "User-Experience",
+    "Win32-Packaged-Scripts"
+  ]
+}

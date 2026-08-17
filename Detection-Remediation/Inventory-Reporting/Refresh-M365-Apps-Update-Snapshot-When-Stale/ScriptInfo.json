@@ -1,0 +1,21 @@
+{
+  "Name": "Refresh M365 Apps Update Snapshot When Stale",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Inventory-Reporting",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for native HKLM paths",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Refreshes a local Microsoft 365 Apps update policy and Click-to-Run snapshot when it is missing or stale.",
+  "Tags": [
+    "Inventory-Reporting",
+    "Microsoft 365 Apps",
+    "Business Premium"
+  ]
+}
+

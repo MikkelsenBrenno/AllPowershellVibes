@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "SettingName": "DnsSuffixSearchListCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/windows-server/networking/dns/deploy/dns-suffix-search-list"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "Rules": [
+    {
+      "SettingName": "IntuneManagementExtensionServiceCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/intune/intune-service/apps/intune-management-extension",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Intune Management Extension service state is not compliant. Current value: {ActualValue}.",
+          "Description": "Verify the Intune Management Extension service exists, is set to automatic startup, and is running."
+        }
+      ]
+    },
+    {
+      "SettingName": "ServiceExists",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/intune/intune-service/apps/intune-management-extension",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Intune Management Extension service was not found. Current value: {ActualValue}.",
+          "Description": "Confirm the device is managed by Intune and has received the Intune Management Extension."
+        }
+      ]
+    }
+  ]
+}

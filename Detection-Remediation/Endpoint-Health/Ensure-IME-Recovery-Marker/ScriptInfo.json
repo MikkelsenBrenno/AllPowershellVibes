@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure IME Recovery Marker",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData marker and logs",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Detects and remediates IME Recovery Marker state for Intune-managed Windows devices.",
+  "Tags": [
+    "Endpoint-Health",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

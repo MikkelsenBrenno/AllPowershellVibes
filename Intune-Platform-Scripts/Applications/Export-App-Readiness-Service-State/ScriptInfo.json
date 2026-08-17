@@ -1,0 +1,21 @@
+{
+  "Name": "Export App Readiness Service State",
+  "Workload": "Intune Platform Scripts",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "N/A",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "File system",
+  "Reboot": "No",
+  "Risk": "Low",
+  "Summary": "Exports App Readiness service state for packaged app and first sign-in troubleshooting.",
+  "Tags": [
+    "Applications",
+    "AppX",
+    "Business Premium"
+  ]
+}
+

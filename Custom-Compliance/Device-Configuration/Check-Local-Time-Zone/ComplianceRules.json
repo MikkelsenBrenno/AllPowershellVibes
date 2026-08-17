@@ -1,0 +1,18 @@
+{
+  "Rules": [
+    {
+      "SettingName": "TimeZoneCompliant",
+      "Operator": "IsEquals",
+      "DataType": "Boolean",
+      "Operand": true,
+      "MoreInfoUrl": "https://learn.microsoft.com/powershell/module/microsoft.powershell.management/get-timezone",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "The device time zone does not match the expected value. Current value: {ActualValue}.",
+          "Description": "Set the device time zone to the expected Windows time zone ID."
+        }
+      ]
+    }
+  ]
+}

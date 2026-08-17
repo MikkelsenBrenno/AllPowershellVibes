@@ -1,0 +1,21 @@
+{
+  "Name": "Ensure Diagnostic Policy Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Endpoint-Health",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the Diagnostic Policy Service is stopped, reducing troubleshooting signal for network and Windows diagnostics.",
+  "Tags": [
+    "Endpoint Health",
+    "Diagnostics",
+    "Business Premium"
+  ]
+}
+

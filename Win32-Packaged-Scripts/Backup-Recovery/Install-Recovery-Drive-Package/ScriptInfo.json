@@ -1,0 +1,20 @@
+{
+  "Name": "Install Recovery Drive Package",
+  "Workload": "Win32 Packaged Scripts",
+  "Purpose": "Backup-Recovery",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "HasRemediation": "N/A",
+  "HasUninstall": "Yes",
+  "TeamsAlertReady": "No",
+  "WritesTo": "ProgramData package marker files",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Packages Recovery Drive configuration or evidence as a reusable Win32 script deployment.",
+  "Tags": [
+    "Backup-Recovery",
+    "Win32-Packaged-Scripts",
+    "Technician-Gap-Expansion"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "Name": "Ensure Power Registry Marker",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry and logs",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates Power Registry Marker state for Intune-managed Windows devices.",
+  "Tags": [
+    "Device-Configuration",
+    "Detection-Remediation",
+    "Business Premium"
+  ]
+}

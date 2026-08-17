@@ -1,0 +1,22 @@
+{
+  "Name": "Ensure AppX Deployment Service Running",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "Example",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Service control",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "Summary": "Detects and remediates devices where the AppX Deployment Service is stopped, helping Store, Company Portal, and packaged app troubleshooting.",
+  "Tags": [
+    "Applications",
+    "AppX",
+    "Company Portal",
+    "Business Premium"
+  ]
+}
+
