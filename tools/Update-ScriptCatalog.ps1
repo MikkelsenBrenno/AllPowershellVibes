@@ -28,6 +28,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+# Keep catalog ordering identical across maintainer and CI locales.
+$catalogSortCulture = 'en-US'
 
 $workloadDisplayNames = @{
     'Detection-Remediation' = 'Detection and Remediation'
@@ -296,10 +298,10 @@ function Get-ScriptFolders {
             continue
         }
 
-        $purposeFolders = Get-ChildItem -LiteralPath $workloadPath -Directory | Sort-Object -Property Name
+        $purposeFolders = Get-ChildItem -LiteralPath $workloadPath -Directory | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property Name
 
         foreach ($purposeFolder in $purposeFolders) {
-            $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Property Name
+            $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property Name
 
             foreach ($scriptFolder in $scriptFolders) {
                 [pscustomobject]@{
@@ -334,7 +336,7 @@ $scriptItems = foreach ($scriptFolderInfo in Get-ScriptFolders) {
     }
 }
 
-$orderedItems = $scriptItems | Sort-Object -Property @{ Expression = { $_.Info.Workload } }, @{ Expression = { $_.Info.Purpose } }, @{ Expression = { $_.Info.Name } }
+$orderedItems = $scriptItems | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property @{ Expression = { $_.Info.Workload } }, @{ Expression = { $_.Info.Purpose } }, @{ Expression = { $_.Info.Name } }
 
 $lines = New-Object System.Collections.Generic.List[string]
 $lines.Add('# Script Catalog')
