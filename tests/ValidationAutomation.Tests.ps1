@@ -378,3 +378,61 @@ Describe 'Existing validator integration with temporary packages' {
         $detail.TimedOut | Should -BeTrue
     }
 }
+
+Describe 'Registry remediation audit' {
+    It 'locks the tracked audit to all 100 current registry candidates' {
+        $resultPath = Join-Path $script:FixtureRoot 'registry-audit-current-result.json'
+        & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-RegistryRemediationAudit.ps1') -RepositoryRoot $script:RepositoryRoot -SummaryOnly -ResultPath $resultPath
+        $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+        $LASTEXITCODE | Should -Be 0 -Because ($result.Results.Message -join '; ')
+        $result.CandidateCount | Should -Be 100
+        $result.EntryCount | Should -Be 100
+        $result.Counts.Failure | Should -Be 0
+    }
+
+    It 'blocks PilotReady registry scripts that do not verify the value type' {
+        $relativePackage = 'Detection-Remediation/Security/Fixture-Registry-Type'
+        $package = Join-Path $script:FixtureRoot ($relativePackage.Replace('/', '\'))
+        $auditPath = Join-Path $script:FixtureRoot 'registry-audit-type-gate.json'
+        $resultPath = Join-Path $script:FixtureRoot 'registry-audit-type-gate-result.json'
+        try {
+            Write-TestFile -Path (Join-Path $package 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Detection and Remediation' -Status PilotReady -HasRemediation Yes -EvidenceSource Registry)
+            $scriptBody = @'
+# CONFIGURATION
+$RegistryValues = @(
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Fixture'; Name = 'Enabled'; Type = 'DWord'; Value = 1 }
+)
+# LOGGING
+# MAIN
+$state = Get-ItemProperty -LiteralPath $RegistryValues[0].Path -ErrorAction SilentlyContinue
+if ($state) { exit 0 }
+exit 1
+'@
+            Write-TestFile -Path (Join-Path $package 'Detect.ps1') -Content $scriptBody
+            Write-TestFile -Path (Join-Path $package 'Remediate.ps1') -Content $scriptBody
+            Write-TestFile -Path $auditPath -Content (@{
+                SchemaVersion = '1.0'
+                ReviewedOn = '2026-08-18'
+                CandidateDefinition = 'Fixture registry readers.'
+                Packages = @(@{
+                    Path = $relativePackage
+                    Disposition = 'PilotReady'
+                    Batch = 1
+                    Reason = 'Fixture must validate type.'
+                    MicrosoftReferences = @('https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations')
+                })
+            } | ConvertTo-Json -Depth 8)
+
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-RegistryRemediationAudit.ps1') -RepositoryRoot $script:FixtureRoot -AuditPath $auditPath -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            @($result.Results.RuleId) | Should -Contain 'RegistryAudit.ValueType'
+        }
+        finally {
+            if (Test-Path -LiteralPath $package) { Remove-Item -LiteralPath $package -Recurse -Force }
+            foreach ($path in @($auditPath, $resultPath)) {
+                if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path -Force }
+            }
+        }
+    }
+}

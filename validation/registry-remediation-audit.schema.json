@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MikkelsenBrenno/AllPowershellVibes/validation/registry-remediation-audit.schema.json",
+  "title": "Registry remediation audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "SchemaVersion",
+    "ReviewedOn",
+    "CandidateDefinition",
+    "Packages"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "SchemaVersion": {
+      "const": "1.0"
+    },
+    "ReviewedOn": {
+      "type": "string",
+      "format": "date"
+    },
+    "CandidateDefinition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Packages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/package"
+      }
+    }
+  },
+  "$defs": {
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Path",
+        "Disposition",
+        "Batch",
+        "Reason",
+        "MicrosoftReferences"
+      ],
+      "properties": {
+        "Path": {
+          "type": "string",
+          "pattern": "^Detection-Remediation/[^/]+/[^/]+$"
+        },
+        "Disposition": {
+          "enum": [
+            "PilotReady",
+            "NeedsSourceVerification",
+            "NeedsRedesign",
+            "NeedsCustomization",
+            "InvalidPlaceholder",
+            "MarkerOnly",
+            "Duplicate",
+            "PreferNativeManagement",
+            "OutOfScope"
+          ]
+        },
+        "Batch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "Reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "MicrosoftReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^https://learn\\.microsoft\\.com/"
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
     Context:     System recommended
 
@@ -86,26 +86,36 @@ function Get-ConfiguredRegistryState {
     )
 
     foreach ($item in $Values) {
-        $exists = Test-Path -LiteralPath $item.Path
+        $keyExists = Test-Path -LiteralPath $item.Path
+        $valueExists = $false
         $currentValue = $null
-        $matchesDesired = $false
+        $currentType = $null
 
-        if ($exists) {
-            $property = Get-ItemProperty -LiteralPath $item.Path -Name $item.Name -ErrorAction SilentlyContinue
-            if ($null -ne $property) {
-                $currentValue = $property.($item.Name)
-                $matchesDesired = ([string]$currentValue -eq [string]$item.Value)
+        if ($keyExists) {
+            $key = Get-Item -LiteralPath $item.Path -ErrorAction Stop
+            $matchingName = @($key.GetValueNames() | Where-Object { $_ -ieq [string]$item.Name } | Select-Object -First 1)
+            if ($matchingName.Count -eq 1) {
+                $valueExists = $true
+                $currentType = $key.GetValueKind([string]$matchingName[0]).ToString()
+                $currentValue = $key.GetValue([string]$matchingName[0], $null, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
             }
         }
+
+        $typeMatches = $valueExists -and ([string]$currentType -ceq [string]$item.Type)
+        $valueMatches = $valueExists -and [object]::Equals($currentValue, $item.Value)
 
         [pscustomobject]@{
             Path = $item.Path
             Name = $item.Name
+            DesiredType = $item.Type
             DesiredValue = $item.Value
-            Type = $item.Type
-            Exists = $exists
             CurrentValue = $currentValue
-            Compliant = $matchesDesired
+            CurrentType = $currentType
+            KeyExists = $keyExists
+            ValueExists = $valueExists
+            TypeMatches = $typeMatches
+            ValueMatches = $valueMatches
+            Compliant = ($typeMatches -and $valueMatches)
         }
     }
 }
@@ -130,6 +140,9 @@ try {
 
     Start-Sleep -Seconds $ValidationDelaySeconds
     $state = @(Get-ConfiguredRegistryState -Values $RegistryValues)
+    foreach ($item in $state) {
+        Write-Log -Message "Validation state Path='$($item.Path)' Name='$($item.Name)' CurrentType='$($item.CurrentType)' DesiredType='$($item.DesiredType)' Current='$($item.CurrentValue)' Desired='$($item.DesiredValue)' Compliant='$($item.Compliant)'."
+    }
     $nonCompliant = @($state | Where-Object { -not $_.Compliant })
 
     if ($nonCompliant.Count -eq 0) {

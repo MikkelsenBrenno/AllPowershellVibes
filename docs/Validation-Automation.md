@@ -63,6 +63,8 @@ The static validators accept the following common options while retaining their 
 
 `Update-ScriptCatalog.ps1 -Check` is always global. A changed package may add, remove, rename, or change metadata that affects the generated catalog.
 
+`Test-RegistryRemediationAudit.ps1` also performs a global coverage check. It discovers registry-reading Detection and Remediation packages, requires exactly one decision per candidate in `validation/registry-remediation-audit.json`, and applies strict source/configuration/type gates to packages marked `PilotReady` or `Validated`. Package selection limits detailed package findings but never disables the global coverage check.
+
 ## Reports
 
 The output folder contains:
@@ -123,6 +125,8 @@ The validator rejects unknown properties, duplicate package paths, nonexistent p
 5. Regenerate `SCRIPT-CATALOG.md` when metadata or package paths change.
 6. Run changed validation against the intended base ref.
 7. Promote to `PilotReady` or `Validated` only when strict workload, evidence, portability, and runtime expectations are satisfied.
+
+For registry-based Remediations, also follow `docs/Registry-Remediation-Audit.md`. A new candidate needs an audit entry, and a `PilotReady` entry needs Microsoft Learn references plus exact registry type/data checks in both detection and post-remediation validation.
 
 ## CI Schedule
 

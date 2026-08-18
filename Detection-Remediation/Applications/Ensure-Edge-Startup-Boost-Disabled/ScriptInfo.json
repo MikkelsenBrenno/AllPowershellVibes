@@ -2,7 +2,7 @@
   "Name": "Ensure Edge Startup Boost Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Applications",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
   "Requires64BitPowerShell": "Required for native HKLM policy paths",
   "HasRemediation": "Yes",

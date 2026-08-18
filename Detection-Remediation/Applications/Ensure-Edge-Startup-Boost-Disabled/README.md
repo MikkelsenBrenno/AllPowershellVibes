@@ -2,33 +2,35 @@
 
 ## Summary
 
-Detects and remediates Microsoft Edge Startup Boost policy for devices where background browser startup should be disabled.
+Detects and remediates the documented Microsoft Edge Startup Boost policy for organizations that choose to prevent Edge processes from starting at Windows sign-in.
+
+**Repository status:** `PilotReady`. The policy name, path, type, and data are verified against Microsoft Learn, and both scripts validate exact registry type and data. This is an organizational performance policy choice, not a universal Microsoft security recommendation, and it still requires a controlled pilot.
 
 ## Files
 
-- `Detect.ps1` - Checks the current state.
-- `Remediate.ps1` - Fixes the issue when detection exits `1`.
+- `Detect.ps1` checks the policy without changing the device.
+- `Remediate.ps1` writes the policy only after detection exits `1`, then verifies the final type and data.
 
-## What To Change First
+## Configuration Contract
 
-Open both scripts and review the `CONFIGURATION` section before changing anything else.
+Keep `$RegistryValues` identical in both scripts.
 
-| Setting | Description | Default |
-| --- | --- | --- |
-| `$RegistryValues` | Registry values to validate and enforce. | Package-specific |
-| `$ValidationDelaySeconds` | Wait time before remediation validation. | `2` |
+| Path | Name | Type | Required data | Effect |
+| --- | --- | --- | --- | --- |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Edge` | `StartupBoostEnabled` | `DWord` | `0` | Disables Microsoft Edge Startup Boost. |
 
-## Prerequisites
-
-- Windows device enrolled in Microsoft Intune.
-- Intune Remediations licensing and permissions.
-- PowerShell 5.1.
-- System context required for native HKLM policy paths.
-- 64-bit PowerShell recommended for native Windows registry and service state.
+`$ValidationDelaySeconds` defaults to `2`. Do not replace the documented policy name with a friendly label.
 
 ## Customization
 
-Update the `CONFIGURATION` section in both scripts before deployment. Keep service names, registry paths, expected values, safety toggles, and validation timing near the top so technicians can customize quickly.
+The default registry contract is the verified package purpose. Keep `$RegistryValues` identical in both scripts. Adjust only documented timing or logging configuration; use a separately named and reviewed policy when the intended state is to enable Startup Boost.
+
+## Prerequisites
+
+- Windows device enrolled in Microsoft Intune, using Windows PowerShell 5.1 in 64-bit System context.
+- Microsoft Edge 88 or later on Windows, as documented for this policy.
+- A pilot that measures sign-in resource use and perceived Edge launch time; disabling Startup Boost can make the first browser launch slower.
+- No Settings Catalog, Administrative Templates, GPO, or other tool intentionally managing the same value to a different state.
 
 ## Intune Settings
 
@@ -37,34 +39,44 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 | Script type | Remediation |
 | Detection script | `Detect.ps1` |
 | Remediation script | `Remediate.ps1` |
-| Run this script using the logged-on credentials | No |
+| Run using logged-on credentials | No |
 | Enforce script signature check | Tenant policy |
 | Run script in 64-bit PowerShell | Yes |
 
-## Intune Deployment
-
-1. Go to Intune admin center.
-2. Open **Devices > Manage devices > Scripts and remediations**.
-3. Create a script package.
-4. Upload `Detect.ps1` as the detection script.
-5. Upload `Remediate.ps1` as the remediation script.
-6. Choose the settings above.
-7. Assign to a small pilot group before broad deployment.
+Assign to a small nonproduction pilot group. Prefer a native Edge Settings Catalog or Administrative Templates policy when it provides the same control and reporting needed by the tenant; do not create competing policy owners.
 
 ## Expected Results
 
-- Detection exits `0` when all configured registry values match.
-- Detection exits `1` when one or more values are missing or different.
-- Remediation creates missing keys, writes the configured values, and validates the final state.
+- Detection exits `0` only when `StartupBoostEnabled` exists as `REG_DWORD` with data `0`.
+- A missing key, missing value, different data, or wrong registry type exits `1`.
+- Remediation writes `REG_DWORD 0`, reads it back, and exits `0` only when both type and data match.
+- Logs are written under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Edge-Startup-Boost-Disabled`.
+
+## Pilot Validation
+
+Use a disposable or nonproduction Windows client in the same System/64-bit context configured in Intune.
+
+1. Record the original key/value existence, type, and data, plus representative Edge launch timing.
+2. Verify missing value, wrong type, and wrong DWORD data each make detection exit `1`.
+3. Set the exact baseline (`REG_DWORD 0`) and verify detection exits `0`.
+4. On the pilot device only, run remediation from a noncompliant state; it must exit `0` only after exact final verification.
+5. Run detection again and open `edge://policy` to confirm `StartupBoostEnabled` is loaded without an error.
+6. Restart Edge as needed, confirm the user experience is acceptable, review logs, and restore the original registry state.
+
+Do not change this package to `Validated` until pilot evidence is recorded using `docs/Trusted-Remediation-Pilot.md`.
+
+## Rollback
+
+Restore the recorded original type and data. If the value was originally absent, remove `StartupBoostEnabled`. Remove the Edge policy key only if the pilot created it and it is empty.
 
 ## Troubleshooting
 
-- Review logs in `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Edge-Startup-Boost-Disabled`.
-- Confirm the setting is available on the target Windows version.
-- Confirm another Intune policy, security baseline, GPO, or third-party agent is not changing the state back.
-- Review Intune Management Extension logs in `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs`.
+- Confirm System context and 64-bit PowerShell.
+- Check `edge://policy` for the active value, errors, and policy source.
+- Look for competing Settings Catalog, Administrative Templates, GPO, or third-party policy.
+- Review the package and Intune Management Extension logs.
 
-## Source Inspiration
+## Microsoft References
 
-Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
-
+- [StartupBoostEnabled Microsoft Edge policy](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/StartupBoostEnabled) defines the registry path, DWORD type, data values, supported Edge versions, and policy behavior.
+- [Use Remediations to detect and fix support issues](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations) defines the Intune execution model.
