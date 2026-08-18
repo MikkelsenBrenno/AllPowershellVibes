@@ -7,7 +7,7 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
     Context:     System recommended
 
@@ -101,10 +101,10 @@ try {
 
     if ($service.State -ne $ExpectedState) {
         if (-not $StartService) {
-            $message = "Report-only mode. Set `$StartService to `$true to start service '$ServiceName'."
+            $message = "Remediation not applied. Set `$StartService to `$true to start service '$ServiceName'."
             Write-Log -Message $message -Level 'WARN'
             Write-Output $message
-            exit 0
+            exit 1
         }
 
         Write-Log -Message "Starting service '$ServiceName'."

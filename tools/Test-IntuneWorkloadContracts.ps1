@@ -227,6 +227,33 @@ function Test-ReadyReviewMetadata {
     }
 }
 
+function Test-ReadyDocumentation {
+    param(
+        [Parameter(Mandatory = $true)][string]$PackagePath,
+        [Parameter(Mandatory = $true)][object]$ScriptInfo,
+        [Parameter(Mandatory = $true)][string]$RelativePackagePath
+    )
+
+    $readmePath = Join-Path -Path $PackagePath -ChildPath 'README.md'
+    if (-not (Test-Path -LiteralPath $readmePath -PathType Leaf)) {
+        Add-Failure -Message "$RelativePackagePath is promoted as '$($ScriptInfo.Status)' but README.md is missing."
+        return
+    }
+
+    $readmeContent = Get-Content -LiteralPath $readmePath -Raw
+    if ($readmeContent -notmatch '(?im)^##\s+Pilot Validation\s*$') {
+        Add-Failure -Message "$RelativePackagePath is promoted as '$($ScriptInfo.Status)' but README.md has no 'Pilot Validation' section."
+    }
+
+    if ($readmeContent -notmatch '(?i)https://learn\.microsoft\.com/') {
+        Add-Failure -Message "$RelativePackagePath is promoted as '$($ScriptInfo.Status)' but README.md has no Microsoft Learn reference."
+    }
+
+    if ($ScriptInfo.Status -eq 'Validated' -and $readmeContent -notmatch '(?im)^##\s+Validation Evidence\s*$') {
+        Add-Failure -Message "$RelativePackagePath is promoted as 'Validated' but README.md has no 'Validation Evidence' section."
+    }
+}
+
 function Test-CustomComplianceRules {
     param(
         [Parameter(Mandatory = $true)][string]$RulesPath,
@@ -388,6 +415,7 @@ foreach ($workload in $workloads) {
             Test-UnfinishedLogic -PackagePath $packageFolder.FullName -RelativePackagePath $relativePackagePath -IsReady $isReady
             if ($isReady) {
                 Test-ReadyReviewMetadata -ScriptInfo $scriptInfo -RelativePackagePath $relativePackagePath -Contract $workload.Contract
+                Test-ReadyDocumentation -PackagePath $packageFolder.FullName -ScriptInfo $scriptInfo -RelativePackagePath $relativePackagePath
             }
 
             switch ($workload.Contract) {

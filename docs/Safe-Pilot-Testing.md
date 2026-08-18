@@ -51,3 +51,5 @@ For each pilot, capture:
 - Intune Management Extension log excerpt.
 - Before and after state.
 - Any user-facing impact.
+
+For Remediation packages, use the detailed technician workflow and non-sensitive evidence record in `docs/Trusted-Remediation-Pilot.md`.

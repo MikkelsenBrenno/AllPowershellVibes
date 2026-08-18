@@ -634,7 +634,7 @@ function Write-ValidationSummary {
     else {
         foreach ($item in $top) {
             $location = if ([string]::IsNullOrWhiteSpace([string]$item.PackagePath)) { '' } else { " [$($item.PackagePath)]" }
-            $lines.Add("- **$($item.Severity)** ``$($item.RuleId)``$location — $($item.Message)")
+            $lines.Add("- **$($item.Severity)** ``$($item.RuleId)``$location - $($item.Message)")
         }
     }
 

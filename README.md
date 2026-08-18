@@ -179,6 +179,7 @@ Each script sets `$ScriptPackageName` to the folder name and `$ScriptName` to th
 - `docs/Teams-Failure-Alerting.md`
 - `docs/Script-Quality-Checklist.md`
 - `docs/Safe-Pilot-Testing.md`
+- `docs/Trusted-Remediation-Pilot.md`
 - `docs/Detection-Smoke-Testing.md`
 - `docs/Detection-Evidence-Audit.md`
 - `docs/Script-Portability-Audit.md`

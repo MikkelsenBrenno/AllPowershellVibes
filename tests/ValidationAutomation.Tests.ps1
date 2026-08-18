@@ -51,12 +51,25 @@ BeforeAll {
     function New-MiniRepository {
         param([Parameter(Mandatory = $true)][string]$Root)
 
+        $pilotReadme = @'
+# Fixture package
+
+## Pilot Validation
+
+Run the fixture in an isolated test repository.
+
+## Microsoft References
+
+- https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations
+'@
+
         foreach ($workload in @('Detection-Remediation', 'Custom-Compliance', 'Intune-Platform-Scripts', 'Win32-Packaged-Scripts')) {
             New-Item -Path (Join-Path $Root "$workload\Security") -ItemType Directory -Force | Out-Null
         }
 
         $remediation = Join-Path $Root 'Detection-Remediation\Security\Fixture-Remediation'
         Write-TestFile -Path (Join-Path $remediation 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Detection and Remediation' -Status PilotReady -HasRemediation Yes)
+        Write-TestFile -Path (Join-Path $remediation 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $remediation 'Detect.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Remediation'
@@ -68,9 +81,13 @@ $RetryCount = 3
 $OptionalValue = $null
 # LOGGING
 function Write-ScriptMetadata {}
+# =========================
 # MAIN
+# =========================
 $service = Get-Service -Name $ExpectedService -ErrorAction SilentlyContinue
-if ($null -ne $service) { exit 0 }
+if ($null -ne $service) {
+    exit 0
+}
 exit 1
 '@
         Write-TestFile -Path (Join-Path $remediation 'Remediate.ps1') -Content @'
@@ -79,13 +96,18 @@ $ScriptPackageName = 'Fixture-Remediation'
 $ScriptName = 'Remediate'
 # LOGGING
 function Write-ScriptMetadata {}
+# =========================
 # MAIN
-if ($false) { exit 1 }
+# =========================
+if ($false) {
+    exit 1
+}
 exit 0
 '@
 
         $compliance = Join-Path $Root 'Custom-Compliance\Security\Fixture-Compliance'
         Write-TestFile -Path (Join-Path $compliance 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Custom Compliance' -Status PilotReady -HasRemediation No)
+        Write-TestFile -Path (Join-Path $compliance 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $compliance 'Discover.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Compliance'
@@ -100,6 +122,7 @@ exit 0
 
         $platform = Join-Path $Root 'Intune-Platform-Scripts\Security\Fixture-Platform'
         Write-TestFile -Path (Join-Path $platform 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Intune Platform Scripts' -Status PilotReady -HasRemediation 'N/A' -EvidenceType 'N/A' -EvidenceSource 'No detection script for this workload' -EvidenceReview NotApplicable)
+        Write-TestFile -Path (Join-Path $platform 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $platform 'Run.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Platform'
@@ -113,6 +136,7 @@ exit 0
 
         $win32 = Join-Path $Root 'Win32-Packaged-Scripts\Security\Fixture-Win32'
         Write-TestFile -Path (Join-Path $win32 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Win32 Packaged Scripts' -Status PilotReady -HasRemediation 'N/A' -HasUninstall Yes -EvidenceType PackageMarker -EvidenceSource 'Win32 package install/version marker')
+        Write-TestFile -Path (Join-Path $win32 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $win32 'Install.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Install'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nexit 0"
         Write-TestFile -Path (Join-Path $win32 'Detect.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Detect'`n`$PackageVersion='1.0'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nif (`$PackageVersion) { Write-Output 'Detected'; exit 0 }`nexit 1"
         Write-TestFile -Path (Join-Path $win32 'Uninstall.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Uninstall'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nexit 0"
@@ -244,6 +268,47 @@ Describe 'Custom Compliance runtime contract' {
 }
 
 Describe 'Existing validator integration with temporary packages' {
+    It 'accepts PilotReady documentation with pilot steps and a Microsoft Learn reference' {
+        $resultPath = Join-Path $script:FixtureRoot 'pilot-documentation-result.json'
+        & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+        $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+        $LASTEXITCODE | Should -Be 0 -Because ($result.Results.Message -join '; ')
+    }
+
+    It 'blocks promotion when Pilot Validation documentation is missing' {
+        $readmePath = Join-Path $script:FixtureRoot 'Detection-Remediation\Security\Fixture-Remediation\README.md'
+        $originalReadme = [System.IO.File]::ReadAllText($readmePath)
+        $resultPath = Join-Path $script:FixtureRoot 'missing-pilot-documentation-result.json'
+        try {
+            Write-TestFile -Path $readmePath -Content "# Fixture package`n`nhttps://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            ($result.Results.Message -join ' ') | Should -Match "no 'Pilot Validation' section"
+        }
+        finally {
+            Write-TestFile -Path $readmePath -Content $originalReadme
+        }
+    }
+
+    It 'requires non-sensitive evidence documentation for Validated status' {
+        $scriptInfoPath = Join-Path $script:FixtureRoot 'Detection-Remediation\Security\Fixture-Remediation\ScriptInfo.json'
+        $originalScriptInfo = [System.IO.File]::ReadAllText($scriptInfoPath)
+        $resultPath = Join-Path $script:FixtureRoot 'missing-validation-evidence-result.json'
+        try {
+            $scriptInfo = $originalScriptInfo | ConvertFrom-Json
+            $scriptInfo.Status = 'Validated'
+            Write-TestFile -Path $scriptInfoPath -Content ($scriptInfo | ConvertTo-Json -Depth 8)
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            ($result.Results.Message -join ' ') | Should -Match "no 'Validation Evidence' section"
+        }
+        finally {
+            Write-TestFile -Path $scriptInfoPath -Content $originalScriptInfo
+        }
+    }
+
     It 'keeps a normal one-package summary below 200 console lines' {
         $resultPath = Join-Path $script:FixtureRoot 'one-package-repository-result.json'
         $console = @(& $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-Repository.ps1') -RepositoryRoot $script:RepositoryRoot -PackagePath 'Detection-Remediation/Applications/Clear-Microsoft-Store-Cache-Safely' -SummaryOnly -ResultPath $resultPath)
