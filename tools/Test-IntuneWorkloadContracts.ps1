@@ -26,10 +26,20 @@ param(
     [string]$RepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path,
 
     [ValidateRange(0, 500)]
-    [int]$MaximumDetails = 40
+    [int]$MaximumDetails = 40,
+
+    [string[]]$PackagePath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
+
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
+$selectedPackagePaths = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
 
 $failures = New-Object System.Collections.Generic.List[string]
 $warnings = New-Object System.Collections.Generic.List[string]
@@ -64,6 +74,11 @@ $workloads = @(
         Folder = 'Intune-Platform-Scripts'
         DisplayName = 'Intune Platform Scripts'
         Contract = 'Platform'
+    },
+    [pscustomobject]@{
+        Folder = 'Win32-Packaged-Scripts'
+        DisplayName = 'Win32 Packaged Scripts'
+        Contract = 'Win32'
     }
 )
 
@@ -86,6 +101,14 @@ function Get-RelativePath {
     $baseUri = New-Object System.Uri(($BasePath.TrimEnd('\') + '\'))
     $pathUri = New-Object System.Uri($Path)
     return [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($pathUri).ToString()).Replace('/', '\')
+}
+
+function Get-PackagePathFromMessage {
+    param([Parameter(Mandatory = $true)][string]$Message)
+
+    $match = [regex]::Match($Message, '(?<Path>(Detection-Remediation|Custom-Compliance|Intune-Platform-Scripts|Win32-Packaged-Scripts)[\\/][^\\/\s]+[\\/][^\\/\s]+)')
+    if (-not $match.Success) { return '' }
+    return ConvertTo-ValidationPath -Path $match.Groups['Path'].Value
 }
 
 function Test-RequiredFile {
@@ -325,8 +348,12 @@ foreach ($workload in $workloads) {
 
     foreach ($categoryFolder in @(Get-ChildItem -LiteralPath $workloadRoot -Directory)) {
         foreach ($packageFolder in @(Get-ChildItem -LiteralPath $categoryFolder.FullName -Directory)) {
-            $packageCount++
             $relativePackagePath = Get-RelativePath -BasePath $RepositoryRoot -Path $packageFolder.FullName
+            if (-not (Test-ValidationPackageSelected -CandidatePath $relativePackagePath -PackagePath $selectedPackagePaths)) {
+                continue
+            }
+
+            $packageCount++
             $scriptInfoPath = Join-Path -Path $packageFolder.FullName -ChildPath 'ScriptInfo.json'
 
             if (-not (Test-Path -LiteralPath $scriptInfoPath -PathType Leaf)) {
@@ -437,9 +464,49 @@ foreach ($workload in $workloads) {
                         Add-Failure -Message "$relativePackagePath is a Platform script and must use DetectionReviewStatus 'NotApplicable'."
                     }
                 }
+
+                'Win32' {
+                    $detectPath = Join-Path -Path $packageFolder.FullName -ChildPath 'Detect.ps1'
+                    [void](Test-RequiredFile -PackagePath $packageFolder.FullName -FileName 'Install.ps1' -RelativePackagePath $relativePackagePath)
+                    [void](Test-RequiredFile -PackagePath $packageFolder.FullName -FileName 'Detect.ps1' -RelativePackagePath $relativePackagePath)
+                    foreach ($forbiddenFile in @('Remediate.ps1', 'Discover.ps1', 'ComplianceRules.json')) {
+                        Test-ForbiddenFile -PackagePath $packageFolder.FullName -FileName $forbiddenFile -RelativePackagePath $relativePackagePath
+                    }
+                    Test-ExitCodePath -Path $detectPath -RelativePackagePath $relativePackagePath -FileName 'Detect.ps1'
+                    Test-ReadOnlyMain -ScriptPath $detectPath -RelativePackagePath $relativePackagePath -Role 'Detect.ps1' -IsReady $isReady
+
+                    if ($scriptInfo.HasRemediation -ne 'N/A') {
+                        Add-Failure -Message "$relativePackagePath must set HasRemediation to 'N/A'."
+                    }
+                    if ($scriptInfo.HasUninstall -eq 'Yes') {
+                        [void](Test-RequiredFile -PackagePath $packageFolder.FullName -FileName 'Uninstall.ps1' -RelativePackagePath $relativePackagePath)
+                    }
+                }
             }
         }
     }
+}
+
+if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+    $ruleResults = New-Object System.Collections.Generic.List[object]
+    foreach ($message in @($warnings)) {
+        $package = Get-PackagePathFromMessage -Message $message
+        $ruleResults.Add((New-ValidationRuleResult -RuleId 'WorkloadContract.Warning' -Severity Warning -Message $message -PackagePath $package))
+    }
+    foreach ($message in @($failures)) {
+        $package = Get-PackagePathFromMessage -Message $message
+        $ruleResults.Add((New-ValidationRuleResult -RuleId 'WorkloadContract.Failure' -Severity Failure -Message $message -PackagePath $package))
+    }
+    if ($ruleResults.Count -eq 0) {
+        $ruleResults.Add((New-ValidationRuleResult -RuleId 'WorkloadContract.Valid' -Severity Pass -Message "All $packageCount selected packages satisfy their static workload contract."))
+    }
+    $structured = [ordered]@{
+        Validator = 'IntuneWorkloadContracts'
+        PackageCount = $packageCount
+        Counts = [ordered]@{ Pass = $(if ($failures.Count -eq 0) { 1 } else { 0 }); Warning = $warnings.Count; Failure = $failures.Count }
+        Results = @($ruleResults.ToArray())
+    }
+    Write-ValidationResultFile -Path $ResultPath -InputObject $structured
 }
 
 Write-Output 'Intune workload contract validation summary'
@@ -448,14 +515,14 @@ Write-Output "PilotReady or Validated: $readyCount"
 Write-Output "Warnings: $($warnings.Count)"
 Write-Output "Failures: $($failures.Count)"
 
-if ($warnings.Count -gt 0 -and $MaximumDetails -gt 0) {
+if ($warnings.Count -gt 0 -and $MaximumDetails -gt 0 -and -not $SummaryOnly) {
     Write-Output ''
     Write-Output "Warnings (first $([Math]::Min($MaximumDetails, $warnings.Count))):"
     $warnings | Select-Object -First $MaximumDetails | ForEach-Object { Write-Output "WARN: $_" }
 }
 
 if ($failures.Count -gt 0) {
-    if ($MaximumDetails -gt 0) {
+    if ($MaximumDetails -gt 0 -and -not $SummaryOnly) {
         Write-Output ''
         Write-Output "Failures (first $([Math]::Min($MaximumDetails, $failures.Count))):"
         $failures | Select-Object -First $MaximumDetails | ForEach-Object { Write-Output "FAIL: $_" }

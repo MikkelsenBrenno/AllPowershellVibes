@@ -37,10 +37,19 @@ param(
 
     [switch]$UpdateBaseline,
 
-    [switch]$Check
+    [switch]$Check,
+
+    [string[]]$PackagePath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
+$selectedPackagePaths = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
 
 $workloadDisplayNames = @{
     'Detection-Remediation' = 'Detection and Remediation'
@@ -296,6 +305,10 @@ function Get-ScriptFolders {
         foreach ($purposeFolder in $purposeFolders) {
             $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Property Name
             foreach ($scriptFolder in $scriptFolders) {
+                $relativePackagePath = Get-RelativePath -BasePath $RepositoryRoot -Path $scriptFolder.FullName
+                if (-not (Test-ValidationPackageSelected -CandidatePath $relativePackagePath -PackagePath $selectedPackagePaths)) {
+                    continue
+                }
                 [pscustomobject]@{
                     WorkloadFolderName = $workloadFolderName
                     Workload = $workloadDisplayNames[$workloadFolderName]
@@ -330,7 +343,7 @@ function Get-ScriptEntries {
         }
     }
 
-    if ($Scope -eq 'All' -or $Scope -eq 'Templates') {
+    if (($Scope -eq 'All' -or $Scope -eq 'Templates') -and $selectedPackagePaths.Count -eq 0) {
         $templatePath = Join-Path -Path $RepositoryRoot -ChildPath 'templates'
         if (Test-Path -LiteralPath $templatePath -PathType Container) {
             $templateFiles = Get-ChildItem -LiteralPath $templatePath -Filter '*.ps1' -File | Sort-Object -Property FullName
@@ -892,6 +905,7 @@ function Read-Baseline {
 function Write-Baseline {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Findings,
 
         [Parameter(Mandatory = $true)]
@@ -926,6 +940,7 @@ function Write-Baseline {
 function Test-Baseline {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Findings,
 
         [Parameter(Mandatory = $true)]
@@ -950,6 +965,7 @@ function Test-Baseline {
 function New-FindingCsvRows {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Findings
     )
 
@@ -993,9 +1009,11 @@ function Add-MarkdownCountTable {
 function Write-SummaryReport {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Findings,
 
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$PackageResults,
 
         [Parameter(Mandatory = $true)]
@@ -1190,8 +1208,40 @@ Write-SummaryReport -Findings $findingArray -PackageResults $packageResults -Bas
 $staleMetadataCount = @($packageResults | Where-Object { -not $_.MetadataCurrent }).Count
 $needsReviewCount = @($packageResults | Where-Object { $_.PortabilityReviewStatus -eq 'NeedsReview' }).Count
 
-Write-Output "Script portability audit report written to '$summaryReportPath'."
+if (-not $SummaryOnly) {
+    Write-Output "Script portability audit report written to '$summaryReportPath'."
+}
 Write-Output "Scripts: $($scriptEntries.Count); Packages: $($packageResults.Count); Findings: $($findingArray.Count); NeedsReview: $needsReviewCount; MetadataNotCurrent: $staleMetadataCount; NewBlockingFindings: $($baselineResult.NewBlockingFindings.Count)."
+
+if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+    $ruleResults = New-Object System.Collections.Generic.List[object]
+    $newBlockingIds = @($baselineResult.NewBlockingFindings | ForEach-Object { $_.FindingId })
+    foreach ($finding in $findingArray) {
+        $severity = if ($Check -and $finding.FindingId -in $newBlockingIds) { 'Failure' } else { 'Warning' }
+        $ruleResults.Add((New-ValidationRuleResult -RuleId ("Portability." + $finding.RuleId) -Severity $severity -Message $finding.Message -PackagePath $finding.PackagePath -File $finding.ScriptPath))
+    }
+    foreach ($packageResult in $packageResults) {
+        if (-not $packageResult.MetadataCurrent) {
+            $severity = if ($Check) { 'Failure' } else { 'Warning' }
+            $ruleResults.Add((New-ValidationRuleResult -RuleId 'Portability.MetadataCurrent' -Severity $severity -Message 'Portability metadata does not match the current static findings.' -PackagePath $packageResult.PackagePath -File $packageResult.ScriptInfoPath))
+        }
+        if ($packageResult.PortabilityReviewStatus -eq 'NeedsReview') {
+            $ruleResults.Add((New-ValidationRuleResult -RuleId 'Portability.NeedsReview' -Severity Warning -Message 'Package portability review status is NeedsReview.' -PackagePath $packageResult.PackagePath -File $packageResult.ScriptInfoPath))
+        }
+    }
+    if ($ruleResults.Count -eq 0) {
+        $ruleResults.Add((New-ValidationRuleResult -RuleId 'Portability.Current' -Severity Pass -Message "Portability metadata is current for $($packageResults.Count) selected packages."))
+    }
+    $structuredFailures = @($ruleResults | Where-Object Severity -eq 'Failure').Count
+    $structuredWarnings = @($ruleResults | Where-Object Severity -eq 'Warning').Count
+    $structured = [ordered]@{
+        Validator = 'ScriptPortability'
+        PackageCount = $packageResults.Count
+        Counts = [ordered]@{ Pass = $(if ($structuredFailures -eq 0) { 1 } else { 0 }); Warning = $structuredWarnings; Failure = $structuredFailures }
+        Results = @($ruleResults.ToArray())
+    }
+    Write-ValidationResultFile -Path $ResultPath -InputObject $structured
+}
 
 if ($Check -and -not (Test-Path -LiteralPath $BaselinePath -PathType Leaf)) {
     Write-Output "Script portability baseline '$BaselinePath' does not exist. Run tools\Test-ScriptPortability.ps1 -UpdateBaseline and commit the result."

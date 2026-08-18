@@ -169,6 +169,7 @@ Each script sets `$ScriptPackageName` to the folder name and `$ScriptName` to th
 - `SCRIPT-CATALOG.md`
 - `docs/Copy-And-Customize-Workflow.md`
 - `docs/Intune-Workload-Contracts.md`
+- `docs/Validation-Automation.md`
 - `docs/Repository-Structure.md`
 - `docs/Naming-Conventions.md`
 - `docs/Intune-Execution-Context.md`
@@ -195,8 +196,8 @@ Use the files in `templates/` when adding new scripts. Each template includes th
 Run the repository validation script before publishing changes:
 
 ```powershell
-.\tools\Test-Repository.ps1
-.\tools\Test-IntuneWorkloadContracts.ps1
+.\tools\Invoke-Validation.ps1 -Scope Changed -BaseRef origin/main -HeadRef HEAD
+.\tools\Invoke-Validation.ps1 -Scope Full
 ```
 
 Update the generated catalog after adding or editing script metadata:

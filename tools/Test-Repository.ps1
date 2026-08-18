@@ -19,11 +19,22 @@
 
 [CmdletBinding()]
 param(
-    [string]$RepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path
+    [string]$RepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path,
+
+    [string[]]$PackagePath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
 $failed = $false
+$validationResults = New-Object System.Collections.Generic.List[object]
+$validationCounts = @{ PASS = 0; WARN = 0; FAIL = 0 }
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
+$selectedPackagePaths = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
 
 function Write-Result {
     param(
@@ -34,7 +45,14 @@ function Write-Result {
         [string]$Status
     )
 
-    Write-Output "[$Status] $Message"
+    $validationCounts[$Status]++
+    if (-not $SummaryOnly -or $Status -ne 'PASS') {
+        Write-Output "[$Status] $Message"
+    }
+    if ($Status -ne 'PASS') {
+        $severity = if ($Status -eq 'FAIL') { 'Failure' } else { 'Warning' }
+        $validationResults.Add((New-ValidationRuleResult -RuleId "Repository.$Status" -Severity $severity -Message $Message))
+    }
 }
 
 function Add-Failure {
@@ -234,7 +252,17 @@ foreach ($folder in $requiredFolders) {
     }
 }
 
-$powershellFiles = Get-ChildItem -Path $RepositoryRoot -Recurse -Filter '*.ps1' -File
+$powershellFiles = if ($selectedPackagePaths.Count -eq 0) {
+    @(Get-ChildItem -Path $RepositoryRoot -Recurse -Filter '*.ps1' -File)
+}
+else {
+    @($selectedPackagePaths | ForEach-Object {
+            $selectedPath = Join-Path -Path $RepositoryRoot -ChildPath ($_.Replace('/', '\'))
+            if (Test-Path -LiteralPath $selectedPath -PathType Container) {
+                Get-ChildItem -LiteralPath $selectedPath -Recurse -Filter '*.ps1' -File
+            }
+        })
+}
 
 foreach ($file in $powershellFiles) {
     $tokens = $null
@@ -258,7 +286,17 @@ foreach ($file in $powershellFiles) {
     }
 }
 
-$jsonFiles = Get-ChildItem -Path $RepositoryRoot -Recurse -Filter '*.json' -File
+$jsonFiles = if ($selectedPackagePaths.Count -eq 0) {
+    @(Get-ChildItem -Path $RepositoryRoot -Recurse -Filter '*.json' -File)
+}
+else {
+    @($selectedPackagePaths | ForEach-Object {
+            $selectedPath = Join-Path -Path $RepositoryRoot -ChildPath ($_.Replace('/', '\'))
+            if (Test-Path -LiteralPath $selectedPath -PathType Container) {
+                Get-ChildItem -LiteralPath $selectedPath -Recurse -Filter '*.json' -File
+            }
+        })
+}
 
 foreach ($file in $jsonFiles) {
     try {
@@ -304,6 +342,11 @@ foreach ($category in $categoryFolders) {
         $scriptFolders = Get-ChildItem -LiteralPath $scriptCategoryPath -Directory
 
         foreach ($scriptFolder in $scriptFolders) {
+            $relativePackagePath = Get-RelativePath -BasePath $RepositoryRoot -Path $scriptFolder.FullName
+            if (-not (Test-ValidationPackageSelected -CandidatePath $relativePackagePath -PackagePath $selectedPackagePaths)) {
+                continue
+            }
+
             $readme = Join-Path -Path $scriptFolder.FullName -ChildPath 'README.md'
 
             if (Test-Path -LiteralPath $readme -PathType Leaf) {
@@ -475,6 +518,21 @@ foreach ($category in $categoryFolders) {
         }
     }
 }
+
+if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+    if ($validationResults.Count -eq 0) {
+        $validationResults.Add((New-ValidationRuleResult -RuleId 'Repository.Valid' -Severity Pass -Message 'Repository structure, selected package syntax, metadata, and documentation are valid.'))
+    }
+    $structured = [ordered]@{
+        Validator = 'Repository'
+        PackageCount = $(if ($selectedPackagePaths.Count -gt 0) { $selectedPackagePaths.Count } else { (Get-ValidationPackageInventory -RepositoryRoot $RepositoryRoot).Count })
+        Counts = [ordered]@{ Pass = $validationCounts.PASS; Warning = $validationCounts.WARN; Failure = $validationCounts.FAIL }
+        Results = @($validationResults.ToArray())
+    }
+    Write-ValidationResultFile -Path $ResultPath -InputObject $structured
+}
+
+Write-Output "Repository validation totals: Passed=$($validationCounts.PASS); Warnings=$($validationCounts.WARN); Failures=$($validationCounts.FAIL)."
 
 if ($failed) {
     Write-Output 'Repository validation failed.'

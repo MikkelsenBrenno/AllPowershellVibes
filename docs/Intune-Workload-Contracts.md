@@ -80,6 +80,21 @@ Microsoft references:
 - [Create Custom Compliance JSON files](https://learn.microsoft.com/en-us/intune/device-security/compliance/create-custom-json)
 - [Use custom compliance settings](https://learn.microsoft.com/en-us/intune/device-security/compliance/custom-settings)
 
+## Win32 Packaged Script Contract
+
+Use this workload when the PowerShell content is delivered as an Intune Win32 app and needs application-style install, detection, and optional uninstall behavior.
+
+Required behavior:
+
+- `Install.ps1` performs the installation/configuration and validates the final installed state before exiting `0`.
+- `Detect.ps1` is read-only and checks the installed state owned by the package.
+- Script-based Win32 detection exits `0` and writes STDOUT when detected; it exits `1` when not detected.
+- If `HasUninstall` is `Yes`, `Uninstall.ps1` removes the package-owned state and reports failure honestly.
+- The package does not contain Remediation or Custom Compliance role files.
+- Install/uninstall commands, return codes, context, and 32-bit/64-bit behavior are documented in the package README and configured consistently in Intune.
+
+Microsoft reference: [Add and assign Win32 apps in Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/add-win32).
+
 ## Companion Packages
 
 One scenario can have more than one workload package only when every package has an independent, honest role.
