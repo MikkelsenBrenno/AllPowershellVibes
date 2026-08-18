@@ -19,7 +19,8 @@ Edit the CONFIGURATION section near the top of each script:
 - `$MaximumSignatureAgeDays`: Maximum allowed signature age before remediation is triggered.
 - `$UpdateSource`: Optional source passed to `Update-MpSignature`.
 - `$ApplyUpdate`: Set to `$true` in `Remediate.ps1` after pilot testing.
-- `$ExitZeroInReportingOnlyMode`: Set to `$true` only when report-only remediation should appear successful.
+- `$ValidationAttempts`: Number of direct status readbacks after the update command.
+- `$ValidationDelaySeconds`: Delay between direct status readbacks.
 
 ## Intune Settings
 
@@ -43,3 +44,18 @@ Edit the CONFIGURATION section near the top of each script:
 - If updates fail, confirm proxy, firewall, Delivery Optimization, and Microsoft Defender update source settings.
 - If signature age remains stale after a successful update command, review Defender platform health and Windows Update logs.
 - Review script logs and Intune Management Extension logs together.
+
+## Pilot Validation
+
+1. Confirm the tenant's Defender security-intelligence source order and network path on a small pilot group.
+2. Deploy with `$ApplyUpdate = $false`; stale or unavailable status must cause remediation to exit `1` without requesting an update.
+3. Set `$ApplyUpdate = $true` and leave `$UpdateSource` empty unless the tenant intentionally requires one of the documented sources.
+4. Compare `AntivirusSignatureLastUpdated` before and after remediation and verify the final timestamp is not in the future and is within `$MaximumSignatureAgeDays`.
+5. Verify a fresh device exits `0` on the next detection run and review the package log for the final direct-state readback.
+
+Microsoft references:
+
+- [`Update-MpSignature`](https://learn.microsoft.com/en-us/powershell/module/defender/update-mpsignature?view=windowsserver2025-ps)
+- [`Get-MpComputerStatus`](https://learn.microsoft.com/en-us/powershell/module/defender/get-mpcomputerstatus?view=windowsserver2025-ps)
+- [Manage Microsoft Defender Antivirus protection updates](https://learn.microsoft.com/en-us/defender-endpoint/manage-protection-updates-microsoft-defender-antivirus)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

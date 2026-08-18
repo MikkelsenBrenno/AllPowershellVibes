@@ -70,3 +70,16 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 
 Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
 
+## Pilot Validation
+
+1. Deploy with `$StartService = $false`; a stopped service must remain unchanged and remediation must exit `1`.
+2. Do not deliberately stop Task Scheduler on a production device. Use an affected lab device or disposable VM snapshot for the noncompliant path.
+3. Set `$StartService = $true`, verify the final service state is `Running`, and run a harmless one-time test task.
+4. Confirm the test task completes, then rerun detection and verify exit `0`.
+
+Microsoft references:
+
+- [Microsoft system-service guidance: Task Scheduler](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#task-scheduler)
+- [Troubleshoot Task Scheduler service startup failures](https://learn.microsoft.com/en-us/troubleshoot/windows-client/system-management-components/task-scheduler-service-not-start)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+

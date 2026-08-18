@@ -70,3 +70,15 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 
 Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
 
+## Pilot Validation
+
+1. Deploy with `$StartService = $false`; a stopped service must remain unchanged and remediation must exit `1`.
+2. Do not deliberately stop Event Log on a production device. Validate the noncompliant path only on an affected lab device or a disposable VM snapshot.
+3. Set `$StartService = $true`, verify remediation reads back `Running`, and confirm new System and Application events can be queried.
+4. Rerun detection and verify exit `0`; review both the package log and Intune Management Extension log.
+
+Microsoft references:
+
+- [Microsoft system-service guidance: Windows Event Log](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#windows-event-log)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+

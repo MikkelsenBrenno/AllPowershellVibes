@@ -463,3 +463,70 @@ Describe 'Defender remediation audit' {
         }
     }
 }
+
+Describe 'Direct security and health remediation audit' {
+    BeforeAll {
+        $script:DirectAuditPath = Join-Path $script:RepositoryRoot 'validation\direct-security-health-remediation-audit.json'
+        $script:DirectAudit = [System.IO.File]::ReadAllText($script:DirectAuditPath) | ConvertFrom-Json
+    }
+
+    It 'records all reviewed packages with an honest disposition' {
+        $entries = @($script:DirectAudit.Packages)
+        $paths = @($entries.Path | Sort-Object -Unique)
+
+        $entries.Count | Should -Be 15
+        $paths.Count | Should -Be 15
+        @($entries | Where-Object Disposition -EQ 'PilotReady').Count | Should -Be 8
+        @($entries | Where-Object Disposition -EQ 'RetainExample').Count | Should -Be 6
+        @($entries | Where-Object Disposition -EQ 'NeedsReview').Count | Should -Be 1
+
+        foreach ($entry in $entries) {
+            @($entry.MicrosoftReferences).Count | Should -BeGreaterOrEqual 2
+            $package = Join-Path $script:RepositoryRoot ($entry.Path.Replace('/', '\'))
+            Test-Path -LiteralPath $package -PathType Container | Should -BeTrue
+            $metadata = [System.IO.File]::ReadAllText((Join-Path $package 'ScriptInfo.json')) | ConvertFrom-Json
+
+            switch ($entry.Disposition) {
+                'PilotReady' { $metadata.Status | Should -Be 'PilotReady' }
+                'RetainExample' { $metadata.Status | Should -Be 'Example' }
+                'NeedsReview' { $metadata.Status | Should -Be 'NeedsReview' }
+            }
+
+            if ($entry.Disposition -eq 'PilotReady') {
+                $metadata.Context | Should -Be 'System'
+                $metadata.DetectionEvidenceType | Should -Be 'DirectEvidence'
+                $metadata.DetectionReviewStatus | Should -Be 'Reviewed'
+            }
+        }
+    }
+
+    It 'prevents report-only service remediation from reporting false success' {
+        $servicePackages = @(
+            'Detection-Remediation/Security/Ensure-Base-Filtering-Engine-Service-Running',
+            'Detection-Remediation/Security/Ensure-Security-Center-Service-Running',
+            'Detection-Remediation/Endpoint-Health/Ensure-Windows-Event-Log-Service-Running',
+            'Detection-Remediation/Maintenance/Ensure-Task-Scheduler-Service-Running',
+            'Detection-Remediation/Windows-Updates/Ensure-Cryptographic-Service-Running'
+        )
+
+        foreach ($relativePath in $servicePackages) {
+            $remediationPath = Join-Path $script:RepositoryRoot (($relativePath + '/Remediate.ps1').Replace('/', '\'))
+            $content = [System.IO.File]::ReadAllText($remediationPath)
+            $block = [regex]::Match($content, 'if \(-not \$StartService\) \{(?s:.*?)\r?\n\s*\}')
+
+            $block.Success | Should -BeTrue -Because $relativePath
+            $block.Value | Should -Match 'exit 1' -Because $relativePath
+            $block.Value | Should -Not -Match 'exit 0' -Because $relativePath
+        }
+    }
+
+    It 'keeps account and Defender report-only paths noncompliant' {
+        $guest = [System.IO.File]::ReadAllText((Join-Path $script:RepositoryRoot 'Detection-Remediation\Security\Ensure-Guest-Account-Disabled\Remediate.ps1'))
+        $signature = [System.IO.File]::ReadAllText((Join-Path $script:RepositoryRoot 'Detection-Remediation\Security\Update-Defender-Signatures\Remediate.ps1'))
+
+        $guest | Should -Not -Match 'ExitZeroInReportingOnlyMode'
+        $signature | Should -Not -Match 'ExitZeroInReportingOnlyMode'
+        $signature | Should -Match 'ValidationAttempts'
+        $signature | Should -Match 'allowedUpdateSources'
+    }
+}

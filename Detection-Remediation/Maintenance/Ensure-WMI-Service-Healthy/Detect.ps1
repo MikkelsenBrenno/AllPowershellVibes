@@ -39,7 +39,7 @@ $ScriptName = 'Detect'
 
 $ServiceName = 'Winmgmt'
 $RequireRunning = $true
-$AllowedStartModes = @('Auto', 'Manual')
+$AllowedStartModes = @('Auto')
 
 # =========================
 # LOGGING

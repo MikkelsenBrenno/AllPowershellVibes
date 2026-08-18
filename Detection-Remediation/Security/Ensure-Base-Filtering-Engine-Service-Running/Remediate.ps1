@@ -104,7 +104,7 @@ try {
             $message = "Report-only mode. Set `$StartService to `$true to start service '$ServiceName'."
             Write-Log -Message $message -Level 'WARN'
             Write-Output $message
-            exit 0
+            exit 1
         }
 
         Write-Log -Message "Starting service '$ServiceName'."

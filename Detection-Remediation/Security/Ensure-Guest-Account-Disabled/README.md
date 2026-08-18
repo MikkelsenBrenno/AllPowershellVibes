@@ -18,7 +18,6 @@ Edit the CONFIGURATION section near the top of each script:
 - `$GuestSidSuffix`: SID suffix used to locate the built-in Guest account.
 - `$ExpectedGuestEnabledState`: Expected detection state. Default `$false` means disabled.
 - `$ApplyPolicy`: Set to `$true` in `Remediate.ps1` after pilot testing.
-- `$ExitZeroInReportingOnlyMode`: Set to `$true` only when report-only remediation should appear successful.
 
 ## Intune Settings
 
@@ -42,3 +41,15 @@ Edit the CONFIGURATION section near the top of each script:
 - If remediation keeps reporting only, verify `$ApplyPolicy` is set to `$true`.
 - If the account re-enables, check GPO, Settings Catalog, or security baseline assignments.
 - Review script logs and Intune Management Extension logs together.
+
+## Pilot Validation
+
+1. Confirm the device is not a domain controller and has no approved Guest-account exception.
+2. Deploy with `$ApplyPolicy = $false`; an enabled built-in Guest account must remain unchanged and remediation must exit `1`.
+3. On a disposable pilot device, enable the built-in Guest account, set `$ApplyPolicy = $true`, and verify remediation disables the SID ending in `-501`.
+4. Rerun detection and verify exit `0`, then confirm the account remains disabled after restart and policy sync.
+
+Microsoft references:
+
+- [Active Directory default accounts and Guest security considerations](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-default-user-accounts)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

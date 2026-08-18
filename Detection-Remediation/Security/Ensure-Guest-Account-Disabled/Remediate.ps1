@@ -40,7 +40,6 @@ $ScriptName = 'Remediate'
 
 $GuestSidSuffix = '-501'
 $ApplyPolicy = $false
-$ExitZeroInReportingOnlyMode = $false
 
 # =========================
 # LOGGING
@@ -81,7 +80,6 @@ try {
 
     if (-not $ApplyPolicy) {
         Write-Output "Guest account '$($guestAccount.Name)' would be disabled, but ApplyPolicy is disabled."
-        if ($ExitZeroInReportingOnlyMode) { exit 0 }
         exit 1
     }
 
