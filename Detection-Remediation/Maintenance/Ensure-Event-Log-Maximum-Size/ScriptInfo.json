@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Event log",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "Low",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "Detects and remediates Windows event logs that are smaller than the configured maximum size. This helps technicians keep enough Application and System history for troubleshooting after incidents.",
   "Tags": [
     "Maintenance",

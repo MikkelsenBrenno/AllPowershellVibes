@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Network configuration",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 3 portability finding(s): CommandParsing.",
   "Summary": "This Win32 packaged script installs, detects, and removes a Wi-Fi profile from an XML payload using `netsh wlan`.",
   "Tags": [
     "Networking",

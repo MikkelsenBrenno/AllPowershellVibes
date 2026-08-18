@@ -11,6 +11,13 @@
   "WritesTo": "Service control",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "CIM/WMI; Service",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates devices where the DHCP Client service is stopped, which can break IP addressing and network access.",
   "Tags": [
     "Networking",
@@ -18,4 +25,3 @@
     "Business Premium"
   ]
 }
-

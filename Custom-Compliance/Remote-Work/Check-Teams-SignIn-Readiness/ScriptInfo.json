@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "MarkerOnly",
+  "DetectionEvidenceSource": "Managed state marker file only",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Discovers Teams SignIn Readiness state for Intune custom compliance evaluation.",
   "Tags": [
     "Remote-Work",

@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports Office add-in registration keys for common Microsoft 365 Apps so technicians can troubleshoot slow startup and unstable add-ins.",
   "Tags": [
     "Applications",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

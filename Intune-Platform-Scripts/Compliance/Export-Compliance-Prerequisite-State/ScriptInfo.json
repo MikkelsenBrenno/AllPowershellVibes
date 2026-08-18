@@ -11,6 +11,13 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports key local signals often used by Intune compliance policies: TPM, Secure Boot, BitLocker, OS build, and activation state.",
   "Tags": [
     "Compliance",
@@ -20,4 +27,3 @@
     "Business Premium"
   ]
 }
-

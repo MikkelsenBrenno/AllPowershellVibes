@@ -11,6 +11,13 @@
   "WritesTo": "Local device health state",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "NeedsReview",
+  "DetectionEvidenceSource": "No recognized direct evidence source",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects inconsistent WMI repository state and can run a controlled salvage or reset action for devices where inventory and Intune scripts fail because WMI is unhealthy.",
   "Tags": [
     "Endpoint Health",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

@@ -11,6 +11,13 @@
   "WritesTo": "Defender preference",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Defender",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package checks whether Microsoft Defender potentially unwanted application protection is enabled and enables it when needed. The default desired state is `Enabled`.",
   "Tags": [
     "Security",

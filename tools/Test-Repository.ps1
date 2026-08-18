@@ -163,7 +163,51 @@ $requiredScriptInfoFields = @(
     'WritesTo',
     'Reboot',
     'Risk',
+    'DetectionEvidenceType',
+    'DetectionEvidenceSource',
+    'DetectionReviewStatus',
+    'PortabilityReviewStatus',
+    'PortabilityRiskLevel',
+    'PortabilityRiskAreas',
+    'PortabilityNotes',
     'Summary'
+)
+
+$validDetectionEvidenceTypes = @(
+    'DirectEvidence',
+    'MarkerOnly',
+    'PackageMarker',
+    'SnapshotFreshness',
+    'NeedsReview',
+    'N/A'
+)
+
+$validDetectionReviewStatuses = @(
+    'Reviewed',
+    'NeedsReview',
+    'NotApplicable'
+)
+
+$validPortabilityReviewStatuses = @(
+    'Reviewed',
+    'NeedsReview',
+    'NotApplicable'
+)
+
+$validPortabilityRiskLevels = @(
+    'None',
+    'Low',
+    'Medium',
+    'High'
+)
+
+$validPortabilityRiskAreas = @(
+    'Localization',
+    'OsVersion',
+    'CommandParsing',
+    'Scalability',
+    'RegistryView',
+    'PathAssumption'
 )
 
 Write-Result -Message "Repository root: $RepositoryRoot" -Status 'PASS'
@@ -302,6 +346,11 @@ foreach ($category in $categoryFolders) {
                             continue
                         }
 
+                        if ($requiredScriptInfoField -eq 'PortabilityRiskAreas') {
+                            Write-Result -Message "ScriptInfo field '$requiredScriptInfoField' present in '$scriptInfoPath'." -Status 'PASS'
+                            continue
+                        }
+
                         if ([string]::IsNullOrWhiteSpace([string]$scriptInfo.$requiredScriptInfoField)) {
                             Add-Failure -Message "ScriptInfo field '$requiredScriptInfoField' is empty in '$scriptInfoPath'."
                         }
@@ -312,6 +361,30 @@ foreach ($category in $categoryFolders) {
 
                     if ($scriptInfo.Purpose -ne $scriptCategory) {
                         Add-Failure -Message "ScriptInfo Purpose mismatch in '$scriptInfoPath'. Expected '$scriptCategory' but found '$($scriptInfo.Purpose)'."
+                    }
+
+                    if ($scriptInfo.PSObject.Properties.Name.Contains('DetectionEvidenceType') -and $scriptInfo.DetectionEvidenceType -notin $validDetectionEvidenceTypes) {
+                        Add-Failure -Message "ScriptInfo DetectionEvidenceType '$($scriptInfo.DetectionEvidenceType)' is not valid in '$scriptInfoPath'."
+                    }
+
+                    if ($scriptInfo.PSObject.Properties.Name.Contains('DetectionReviewStatus') -and $scriptInfo.DetectionReviewStatus -notin $validDetectionReviewStatuses) {
+                        Add-Failure -Message "ScriptInfo DetectionReviewStatus '$($scriptInfo.DetectionReviewStatus)' is not valid in '$scriptInfoPath'."
+                    }
+
+                    if ($scriptInfo.PSObject.Properties.Name.Contains('PortabilityReviewStatus') -and $scriptInfo.PortabilityReviewStatus -notin $validPortabilityReviewStatuses) {
+                        Add-Failure -Message "ScriptInfo PortabilityReviewStatus '$($scriptInfo.PortabilityReviewStatus)' is not valid in '$scriptInfoPath'."
+                    }
+
+                    if ($scriptInfo.PSObject.Properties.Name.Contains('PortabilityRiskLevel') -and $scriptInfo.PortabilityRiskLevel -notin $validPortabilityRiskLevels) {
+                        Add-Failure -Message "ScriptInfo PortabilityRiskLevel '$($scriptInfo.PortabilityRiskLevel)' is not valid in '$scriptInfoPath'."
+                    }
+
+                    if ($scriptInfo.PSObject.Properties.Name.Contains('PortabilityRiskAreas')) {
+                        foreach ($portabilityRiskArea in @($scriptInfo.PortabilityRiskAreas)) {
+                            if ($portabilityRiskArea -notin $validPortabilityRiskAreas) {
+                                Add-Failure -Message "ScriptInfo PortabilityRiskAreas value '$portabilityRiskArea' is not valid in '$scriptInfoPath'."
+                            }
+                        }
                     }
                 }
                 catch {

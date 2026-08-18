@@ -60,7 +60,7 @@ All examples are self-contained, use PowerShell 5.1-compatible syntax, avoid ten
 ## Quick Start
 
 1. Clone or download this repository.
-2. Choose the workload that matches your Intune deployment method.
+2. Read `docs/Intune-Workload-Contracts.md` and choose the workload by how Intune must execute it.
 3. Choose the purpose category that matches the script, such as `Security`, `Maintenance`, or `Device-Configuration`.
 4. Copy an example folder or start from a template.
 5. Open each script and edit only the values in the `CONFIGURATION` section first.
@@ -80,6 +80,8 @@ Every deployable script is written so technicians can customize it without hunti
 - Review the script README for Intune settings, expected results, common failures, and log paths.
 
 ## Categories
+
+The workload names below describe different Intune execution contracts. They are not interchangeable with topical purpose categories. See `docs/Intune-Workload-Contracts.md` for the required files, output, exit codes, run behavior, and promotion checks.
 
 ### Detection and Remediation
 
@@ -166,6 +168,7 @@ Each script sets `$ScriptPackageName` to the folder name and `$ScriptName` to th
 
 - `SCRIPT-CATALOG.md`
 - `docs/Copy-And-Customize-Workflow.md`
+- `docs/Intune-Workload-Contracts.md`
 - `docs/Repository-Structure.md`
 - `docs/Naming-Conventions.md`
 - `docs/Intune-Execution-Context.md`
@@ -176,6 +179,8 @@ Each script sets `$ScriptPackageName` to the folder name and `$ScriptName` to th
 - `docs/Script-Quality-Checklist.md`
 - `docs/Safe-Pilot-Testing.md`
 - `docs/Detection-Smoke-Testing.md`
+- `docs/Detection-Evidence-Audit.md`
+- `docs/Script-Portability-Audit.md`
 - `docs/Script-Metadata-And-Catalog.md`
 - `docs/Defender-Secure-Score-Remediation-Pattern.md`
 - `docs/Open-Source-Inspiration-And-Credits.md`
@@ -191,6 +196,7 @@ Run the repository validation script before publishing changes:
 
 ```powershell
 .\tools\Test-Repository.ps1
+.\tools\Test-IntuneWorkloadContracts.ps1
 ```
 
 Update the generated catalog after adding or editing script metadata:
@@ -205,6 +211,22 @@ Smoke-test detection scripts locally before publishing a large batch:
 .\tools\Test-DetectionSmoke.ps1 -ListOnly
 .\tools\Test-DetectionSmoke.ps1 -MaxScripts 10
 .\tools\Test-DetectionSmoke.ps1
+```
+
+Audit whether detection scripts use real evidence or marker-only checks:
+
+```powershell
+.\tools\Test-DetectionEvidence.ps1
+.\tools\Test-DetectionEvidence.ps1 -UpdateScriptInfo
+.\tools\Test-DetectionEvidence.ps1 -Check
+```
+
+Audit scripts for language, OS-version, registry-view, path, command-parsing, and scalability risks:
+
+```powershell
+.\tools\Test-ScriptPortability.ps1
+.\tools\Test-ScriptPortability.ps1 -UpdateScriptInfo -UpdateBaseline
+.\tools\Test-ScriptPortability.ps1 -Check
 ```
 
 Create a starter folder from repository conventions:
@@ -238,6 +260,8 @@ Useful generator options:
 - `-Requires64Bit` fills 64-bit PowerShell guidance.
 - `-WritesTo`, `-Risk`, and `-Reboot` prefill `ScriptInfo.json`.
 - `-IncludeTeamsAlertBlock` adds optional alerting to supported action scripts.
+
+New packages are generated with `Status` set to `Template` and workload-specific starter logic. Replace every `IMPLEMENT WORKLOAD LOGIC` section, complete the evidence and portability reviews, and pass `tools\Test-IntuneWorkloadContracts.ps1` before promotion to `PilotReady`.
 
 ## Microsoft References
 

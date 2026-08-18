@@ -40,7 +40,7 @@ $ScriptName = 'Detect'
 
 $FolderPath = Join-Path -Path $env:ProgramData -ChildPath 'IntuneScriptLibrary\ExampleManagedFolder'
 $ValidateAclEntry = $false
-$AclIdentity = 'BUILTIN\Users'
+$AclIdentitySid = 'S-1-5-32-545'
 $AclRight = 'ReadAndExecute'
 
 # =========================
@@ -61,6 +61,20 @@ function Write-ScriptMetadata {
     Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
 }
 
+function ConvertTo-SidValue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Security.Principal.IdentityReference]$IdentityReference
+    )
+
+    try {
+        return $IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+    }
+    catch {
+        return $IdentityReference.Value
+    }
+}
+
 # =========================
 # MAIN
 # =========================
@@ -78,13 +92,13 @@ try {
     if ($ValidateAclEntry) {
         $acl = Get-Acl -LiteralPath $FolderPath
         $matchingRule = @($acl.Access | Where-Object {
-            $_.IdentityReference.Value -eq $AclIdentity -and
+            (ConvertTo-SidValue -IdentityReference $_.IdentityReference) -eq $AclIdentitySid -and
             $_.FileSystemRights.ToString() -like "*$AclRight*" -and
             $_.AccessControlType -eq 'Allow'
         })
 
         if ($matchingRule.Count -eq 0) {
-            Write-Output "Not compliant. Folder '$FolderPath' is missing ACL '$AclIdentity' '$AclRight'."
+            Write-Output "Not compliant. Folder '$FolderPath' is missing ACL SID '$AclIdentitySid' '$AclRight'."
             exit 1
         }
     }

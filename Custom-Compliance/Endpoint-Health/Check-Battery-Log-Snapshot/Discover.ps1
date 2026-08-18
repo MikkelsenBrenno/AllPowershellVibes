@@ -1,9 +1,11 @@
 <#
 .SYNOPSIS
-    Discovers Battery Log Snapshot compliance state.
+    Discovers whether battery telemetry can be read.
 
 .DESCRIPTION
-    Discovers Battery Log Snapshot state for Intune custom compliance evaluation.
+    Intune custom compliance discovery script. The script reads Win32_Battery
+    telemetry without generating reports or changing device configuration, then
+    returns one compressed JSON object.
 
 .NOTES
     Name:        Discover.ps1
@@ -34,10 +36,8 @@ $ErrorActionPreference = 'Stop'
 $ScriptPackageName = 'Check-Battery-Log-Snapshot'
 $ScriptName = 'Discover'
 
-$ManagedItemName = 'Battery Log Snapshot'
-$MarkerRoot = Join-Path -Path $env:ProgramData -ChildPath 'IntuneScriptLibrary\ManagedState\Endpoint-Health'
-$MarkerFileName = 'battery-log-snapshot.state'
-$ExpectedMarkerValue = 'Configured'
+$ManagedItemName = 'Battery Telemetry Snapshot'
+$TreatNoBatteryAsCompliant = $true
 
 # =========================
 # LOGGING
@@ -92,33 +92,38 @@ function Write-ScriptMetadata {
 # =========================
 
 $result = [ordered]@{
-    IsCompliant = $false
+    BatteryLogSnapshotCompliant = $false
     ManagedItemName = $ManagedItemName
-    ExpectedValue = $ExpectedMarkerValue
+    BatteryCount = 0
+    BatteryStatusCodes = ''
+    EstimatedChargeRemainingPercent = ''
+    TreatNoBatteryAsCompliant = $TreatNoBatteryAsCompliant
     ActualValue = ''
-    EvidencePath = ''
 }
 
 try {
     Initialize-Log
     Write-ScriptMetadata
 
-    $markerPath = Join-Path -Path $MarkerRoot -ChildPath $MarkerFileName
-    $result.EvidencePath = $markerPath
+    $batteries = @(Get-CimInstance -ClassName Win32_Battery -ErrorAction Stop)
+    $result.BatteryCount = $batteries.Count
+    $result.BatteryStatusCodes = [string](($batteries | ForEach-Object { [string]$_.BatteryStatus }) -join ',')
+    $result.EstimatedChargeRemainingPercent = [string](($batteries | ForEach-Object { [string]$_.EstimatedChargeRemaining }) -join ',')
 
-    if (Test-Path -LiteralPath $markerPath -PathType Leaf) {
-        $result.ActualValue = (Get-Content -LiteralPath $markerPath -Raw -ErrorAction Stop).Trim()
-        $result.IsCompliant = ($result.ActualValue -eq $ExpectedMarkerValue)
+    if ($batteries.Count -eq 0) {
+        $result.BatteryLogSnapshotCompliant = [bool]$TreatNoBatteryAsCompliant
+        $result.ActualValue = if ($TreatNoBatteryAsCompliant) { 'NoBatteryAllowed' } else { 'NoBatteryDetected' }
     }
     else {
-        $result.ActualValue = 'Missing'
+        $result.BatteryLogSnapshotCompliant = $true
+        $result.ActualValue = 'BatteryTelemetryAvailable'
     }
 
-    Write-Log -Message "Discovery completed. ManagedItemName='$ManagedItemName'; IsCompliant='$($result.IsCompliant)'; ActualValue='$($result.ActualValue)'."
+    Write-Log -Message "Discovery completed. BatteryCount='$($result.BatteryCount)'; StatusCodes='$($result.BatteryStatusCodes)'; EstimatedCharge='$($result.EstimatedChargeRemainingPercent)'; Compliant='$($result.BatteryLogSnapshotCompliant)'."
 }
 catch {
     try { Write-Log -Message "Discovery failed. Returning noncompliant defaults. $($_.Exception.Message)" -Level 'ERROR' } catch {}
-    $result.IsCompliant = $false
+    $result.BatteryLogSnapshotCompliant = $false
     $result.ActualValue = 'Error'
 }
 

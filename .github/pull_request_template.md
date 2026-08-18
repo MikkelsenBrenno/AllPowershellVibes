@@ -33,6 +33,8 @@ Describe what changed and why.
 - [ ] Customization values are in a `CONFIGURATION` section.
 - [ ] Scripts include logging and error handling.
 - [ ] Exit codes match the Intune workload.
+- [ ] Detection/discovery evidence type is reviewed and `ScriptInfo.json` is current.
+- [ ] Portability review status is current and scripts avoid language, OS display-name, and unbounded scan assumptions.
 - [ ] README includes prerequisites, customization, deployment, expected results, and troubleshooting.
 - [ ] No tenant-specific IDs, secrets, device names, or internal URLs are included.
 - [ ] `tools\Test-Repository.ps1` passes locally.

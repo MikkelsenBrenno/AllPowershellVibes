@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "PackageMarker",
+  "DetectionEvidenceSource": "Win32 package install/version marker",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Installs a small helper script that collects common endpoint troubleshooting logs into a timestamped zip file. This gives technicians a copy-and-customize Win32 package for local support bundles.",
   "Tags": [
     "Maintenance",

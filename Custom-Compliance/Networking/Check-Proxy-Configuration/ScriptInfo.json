@@ -11,6 +11,15 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry; Network configuration",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "This custom compliance package checks configurable user proxy, PAC URL, proxy server, and WinHTTP proxy expectations.",
   "Tags": [
     "Networking",

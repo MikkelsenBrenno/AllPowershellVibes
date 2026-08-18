@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData package marker files",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "PackageMarker",
+  "DetectionEvidenceSource": "Win32 package install/version marker",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Packages Expiring Certificates configuration or evidence as a reusable Win32 script deployment.",
   "Tags": [
     "Certificates-PKI",

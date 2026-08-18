@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "MarkerOnly",
+  "DetectionEvidenceSource": "Managed state marker file only",
+  "DetectionReviewStatus": "NeedsReview",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports whether the PowerShell 2.0 optional feature is disabled. This gives technicians a clear security-hardening signal while still exposing the raw optional feature state.",
   "Tags": [
     "Security",

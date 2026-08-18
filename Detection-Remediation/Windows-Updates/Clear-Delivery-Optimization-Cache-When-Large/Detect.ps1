@@ -39,6 +39,7 @@ $ScriptPackageName = 'Clear-Delivery-Optimization-Cache-When-Large'
 $ScriptName = 'Detect'
 
 $MaximumCacheSizeMB = 5120
+$MaximumCacheItemsToScan = 10000
 
 # =========================
 # LOGGING
@@ -77,19 +78,27 @@ function Get-DeliveryOptimizationCachePath {
     return Join-Path -Path $env:SystemRoot -ChildPath 'ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache'
 }
 
-function Get-DeliveryOptimizationCacheSizeBytes {
+function Get-DeliveryOptimizationCacheState {
+    if ($MaximumCacheItemsToScan -lt 1) {
+        throw 'MaximumCacheItemsToScan must be 1 or greater.'
+    }
+
     $cachePath = Get-DeliveryOptimizationCachePath
     if (-not (Test-Path -LiteralPath $cachePath)) {
-        return [int64]0
+        return [pscustomobject]@{ TotalBytes = [int64]0; ScannedItemCount = 0; ScanLimitExceeded = $false }
     }
 
-    $totalBytes = [int64]0
-    $items = Get-ChildItem -LiteralPath $cachePath -Recurse -Force -File -ErrorAction SilentlyContinue
-    foreach ($item in $items) {
-        $totalBytes += [int64]$item.Length
-    }
+    $items = @(Get-ChildItem -LiteralPath $cachePath -Recurse -Force -File -ErrorAction SilentlyContinue |
+        Select-Object -First ($MaximumCacheItemsToScan + 1))
+    $scanLimitExceeded = ($items.Count -gt $MaximumCacheItemsToScan)
+    $measuredItems = @($items | Select-Object -First $MaximumCacheItemsToScan)
+    $measure = $measuredItems | Measure-Object -Property Length -Sum
 
-    return $totalBytes
+    return [pscustomobject]@{
+        TotalBytes = [int64]$measure.Sum
+        ScannedItemCount = $measuredItems.Count
+        ScanLimitExceeded = $scanLimitExceeded
+    }
 }
 
 function Convert-BytesToMB {
@@ -108,19 +117,20 @@ function Convert-BytesToMB {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Detection started. MaximumCacheSizeMB='$MaximumCacheSizeMB'."
+    Write-Log -Message "Detection started. MaximumCacheSizeMB='$MaximumCacheSizeMB'; MaximumItemsToScan='$MaximumCacheItemsToScan'."
 
-    $sizeMB = Convert-BytesToMB -Bytes (Get-DeliveryOptimizationCacheSizeBytes)
-    Write-Log -Message "Delivery Optimization cache estimated size is '$sizeMB' MB."
+    $state = Get-DeliveryOptimizationCacheState
+    $sizeMB = Convert-BytesToMB -Bytes $state.TotalBytes
+    Write-Log -Message "Delivery Optimization cache estimated size is '$sizeMB' MB; ScannedItems='$($state.ScannedItemCount)'; ScanLimitExceeded='$($state.ScanLimitExceeded)'."
 
-    if ($sizeMB -le $MaximumCacheSizeMB) {
+    if (-not $state.ScanLimitExceeded -and $sizeMB -le $MaximumCacheSizeMB) {
         $message = "Compliant. Delivery Optimization cache size is $sizeMB MB."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Not compliant. Delivery Optimization cache size is $sizeMB MB. Threshold is $MaximumCacheSizeMB MB."
+    $message = "Not compliant. Delivery Optimization cache size is at least $sizeMB MB. Threshold is $MaximumCacheSizeMB MB; ScanLimitExceeded='$($state.ScanLimitExceeded)'."
     Write-Log -Message $message -Level 'WARN'
     Write-Output $message
     exit 1

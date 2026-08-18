@@ -11,6 +11,13 @@
   "WritesTo": "Certificate store",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports local machine certificate inventory to JSON and marks certificates that are expired or expiring soon. This gives support teams a quick view of certificate state without exposing private key material.",
   "Tags": [
     "Security",

@@ -42,12 +42,13 @@ $PackagesRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Packages'
 $StorePackageFolderPattern = 'Microsoft.WindowsStore_*'
 $CacheFolderRelativePaths = @('LocalCache', 'AC')
 $MaximumCacheSizeMB = 500
+$MaximumCacheItemsToScan = 10000
 
 # =========================
 # LOGGING
 # =========================
 
-$BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
+$BaseLogRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
@@ -55,15 +56,40 @@ function Initialize-Log { if (-not (Test-Path -LiteralPath $LogRoot)) { New-Item
 function Write-Log { param([Parameter(Mandatory = $true)][string]$Message, [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'); Add-Content -Path $LogPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Level] $Message" -Encoding UTF8 }
 function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name; Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'." }
 
-function Get-FolderSizeBytes {
-    param([Parameter(Mandatory = $true)][string]$Path)
-
-    if (-not (Test-Path -LiteralPath $Path -PathType Container)) {
-        return 0
+function Get-StoreCacheState {
+    if ($MaximumCacheItemsToScan -lt 1) {
+        throw 'MaximumCacheItemsToScan must be 1 or greater.'
     }
 
-    $measure = Get-ChildItem -LiteralPath $Path -Recurse -Force -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum
-    return [int64]($measure.Sum)
+    $cachePaths = @()
+    if (Test-Path -LiteralPath $PackagesRoot -PathType Container) {
+        $storeFolders = @(Get-ChildItem -LiteralPath $PackagesRoot -Directory -Filter $StorePackageFolderPattern -ErrorAction SilentlyContinue)
+        foreach ($storeFolder in $storeFolders) {
+            foreach ($relativePath in $CacheFolderRelativePaths) {
+                $cachePath = Join-Path -Path $storeFolder.FullName -ChildPath $relativePath
+                if (Test-Path -LiteralPath $cachePath -PathType Container) {
+                    $cachePaths += $cachePath
+                }
+            }
+        }
+    }
+
+    $items = @()
+    if ($cachePaths.Count -gt 0) {
+        $items = @(Get-ChildItem -LiteralPath $cachePaths -Recurse -Force -File -ErrorAction SilentlyContinue |
+            Select-Object -First ($MaximumCacheItemsToScan + 1))
+    }
+
+    $scanLimitExceeded = ($items.Count -gt $MaximumCacheItemsToScan)
+    $measuredItems = @($items | Select-Object -First $MaximumCacheItemsToScan)
+    $measure = $measuredItems | Measure-Object -Property Length -Sum
+
+    return [pscustomobject]@{
+        CachePaths = $cachePaths
+        TotalBytes = [int64]$measure.Sum
+        ScannedItemCount = $measuredItems.Count
+        ScanLimitExceeded = $scanLimitExceeded
+    }
 }
 
 # =========================
@@ -74,30 +100,18 @@ try {
     Initialize-Log
     Write-ScriptMetadata
 
-    if (-not (Test-Path -LiteralPath $PackagesRoot -PathType Container)) {
-        Write-Output "Compliant. Packages root '$PackagesRoot' was not found."
-        exit 0
-    }
+    $state = Get-StoreCacheState
+    $totalMB = [math]::Round(($state.TotalBytes / 1MB), 2)
+    Write-Log -Message "Detection completed. CachePaths='$($state.CachePaths.Count)'; ScannedItems='$($state.ScannedItemCount)'; ScanLimitExceeded='$($state.ScanLimitExceeded)'; TotalMB='$totalMB'."
 
-    $storeFolders = @(Get-ChildItem -LiteralPath $PackagesRoot -Directory -Filter $StorePackageFolderPattern -ErrorAction SilentlyContinue)
-    $totalBytes = 0
-
-    foreach ($storeFolder in $storeFolders) {
-        foreach ($relativePath in $CacheFolderRelativePaths) {
-            $cachePath = Join-Path -Path $storeFolder.FullName -ChildPath $relativePath
-            $totalBytes += Get-FolderSizeBytes -Path $cachePath
-        }
-    }
-
-    $totalMB = [math]::Round(($totalBytes / 1MB), 2)
-    if ($totalMB -le $MaximumCacheSizeMB) {
+    if (-not $state.ScanLimitExceeded -and $totalMB -le $MaximumCacheSizeMB) {
         $message = "Compliant. Microsoft Store cache is '$totalMB' MB."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Not compliant. Microsoft Store cache is '$totalMB' MB; Threshold='$MaximumCacheSizeMB' MB."
+    $message = "Not compliant. Microsoft Store cache is at least '$totalMB' MB; Threshold='$MaximumCacheSizeMB' MB; ScanLimitExceeded='$($state.ScanLimitExceeded)'."
     Write-Log -Message $message -Level 'WARN'
     Write-Output $message
     exit 1

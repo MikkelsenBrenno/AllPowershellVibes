@@ -39,6 +39,7 @@ $ScriptName = 'Remediate'
 
 $CacheRoot = Join-Path -Path $env:SystemRoot -ChildPath 'SoftwareDistribution\Download'
 $MinimumCacheItemAgeDays = 14
+$MaximumCacheItemsToScan = 10000
 $ClearCacheItems = $false
 $StopUpdateServicesBeforeClearing = $false
 $UpdateServiceNames = @('wuauserv', 'bits')
@@ -70,7 +71,9 @@ try {
     }
 
     $cutoff = (Get-Date).AddDays(-[math]::Abs($MinimumCacheItemAgeDays))
-    $candidates = @(Get-ChildItem -LiteralPath $CacheRoot -File -Recurse -Force -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -lt $cutoff })
+    $candidates = @(Get-ChildItem -LiteralPath $CacheRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
+        Where-Object { $_.LastWriteTime -lt $cutoff } |
+        Select-Object -First $MaximumCacheItemsToScan)
 
     if ($candidates.Count -eq 0) {
         Write-Output 'No old Windows Update download cache files found.'
@@ -83,34 +86,50 @@ try {
         exit 1
     }
 
-    if ($StopUpdateServicesBeforeClearing) {
-        foreach ($serviceName in $UpdateServiceNames) {
-            Stop-Service -Name $serviceName -Force -ErrorAction SilentlyContinue
-        }
-    }
-
     $removedCount = 0
     $failedCount = 0
+    $servicesStoppedByScript = @()
 
-    foreach ($candidate in $candidates) {
-        try {
-            Remove-Item -LiteralPath $candidate.FullName -Force -ErrorAction Stop
-            $removedCount++
+    try {
+        if ($StopUpdateServicesBeforeClearing) {
+            foreach ($serviceName in $UpdateServiceNames) {
+                $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
+                if ($null -ne $service -and $service.Status -ne 'Stopped') {
+                    Stop-Service -Name $serviceName -Force -ErrorAction Stop
+                    $servicesStoppedByScript += $serviceName
+                }
+            }
         }
-        catch {
-            $failedCount++
-            Write-Log -Message "Could not remove '$($candidate.FullName)'. $($_.Exception.Message)" -Level 'WARN'
+
+        foreach ($candidate in $candidates) {
+            try {
+                Remove-Item -LiteralPath $candidate.FullName -Force -ErrorAction Stop
+                $removedCount++
+            }
+            catch {
+                $failedCount++
+                Write-Log -Message "Could not remove '$($candidate.FullName)'. $($_.Exception.Message)" -Level 'WARN'
+            }
+        }
+    }
+    finally {
+        foreach ($serviceName in $servicesStoppedByScript) {
+            try {
+                Start-Service -Name $serviceName -ErrorAction Stop
+            }
+            catch {
+                $failedCount++
+                Write-Log -Message "Could not restart update service '$serviceName'. $($_.Exception.Message)" -Level 'ERROR'
+            }
         }
     }
 
-    if ($StopUpdateServicesBeforeClearing) {
-        foreach ($serviceName in $UpdateServiceNames) {
-            Start-Service -Name $serviceName -ErrorAction SilentlyContinue
-        }
-    }
+    $remainingCandidates = @(Get-ChildItem -LiteralPath $CacheRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
+        Where-Object { $_.LastWriteTime -lt $cutoff } |
+        Select-Object -First 1)
 
-    Write-Output "Removed $removedCount old Windows Update cache file(s). Failed removals: $failedCount."
-    if ($failedCount -eq 0) { exit 0 }
+    Write-Output "Removed $removedCount old Windows Update cache file(s). Failures: $failedCount. Remaining matches: $($remainingCandidates.Count)."
+    if ($failedCount -eq 0 -and $remainingCandidates.Count -eq 0) { exit 0 }
     exit 1
 }
 catch {

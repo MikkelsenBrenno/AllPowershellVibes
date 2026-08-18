@@ -13,7 +13,6 @@ This remediation package detects old Teams and Office cache files across local u
 
 | Setting | Description | Default |
 | --- | --- | --- |
-| `$UserProfileRoot` | Root folder for local user profiles. | `C:\Users` |
 | `$ExcludedProfileNames` | Profiles skipped during scanning. | Public and default profiles |
 | `$MinimumCacheItemAgeDays` | Only target cache files older than this many days. | `7` |
 | `$CacheRelativePaths` | Cache paths under each profile. | Teams and Office cache paths |
@@ -29,6 +28,8 @@ This remediation package detects old Teams and Office cache files across local u
 ## Customization
 
 Add or remove cache paths in `$CacheRelativePaths`. Keep `$DeleteCacheItems` as `$false` until the detection output confirms the scope is correct.
+
+Local user profiles are discovered through `Win32_UserProfile`, with the system drive's `Users` folder used as a fallback.
 
 ## Intune Settings
 
@@ -48,7 +49,7 @@ Deploy in reporting-only mode first. Enable `$DeleteCacheItems` only after confi
 
 - Detection `0` - No matching old cache files found.
 - Detection `1` - Matching old cache files found.
-- Remediation `0` - Files are absent, deleted, or reporting-only success is enabled.
+- Remediation `0` - Files are absent, or deletion completes and the final rescan finds no matching files.
 - Remediation `1` - Matching files remain or deletion failed.
 
 ## Expected Results
@@ -64,5 +65,5 @@ Old cache files are reported first and removed only when the explicit deletion s
 ## Common Failures
 
 - Cache files are locked by a running application.
-- A custom profile root or redirected profile path is not represented in `$UserProfileRoot`.
+- A redirected or non-local profile is not returned by `Win32_UserProfile` and is not present under the fallback profile root.
 - `$DeleteCacheItems` is still disabled.

@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData JSON report",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports Subscription State state for technician troubleshooting and reporting in the Licensing-Activation category.",
   "Tags": [
     "Licensing-Activation",

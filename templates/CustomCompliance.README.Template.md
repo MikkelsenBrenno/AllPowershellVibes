@@ -4,6 +4,15 @@
 
 Describe the custom compliance setting discovered by the PowerShell script and evaluated by the JSON rule file.
 
+## Workload Contract
+
+- `Discover.ps1` discovers real device values without changing managed state. Local diagnostic logging is allowed.
+- Return one compressed JSON object and no other standard output.
+- Prefer returning observed values; keep compliant thresholds in `ComplianceRules.json`.
+- Every case-sensitive `SettingName` must exactly match a returned property.
+- Every rule needs `SettingName`, `Operator`, `DataType`, `Operand`, `MoreInfoUrl`, and an `en_US` remediation string.
+- Review `docs/Intune-Workload-Contracts.md` before changing this scaffold's `Status` from `Template`.
+
 ## Files
 
 - `Discover.ps1` - Returns compressed JSON to Intune.
@@ -44,6 +53,8 @@ Discovery scripts should return one compressed JSON object, for example:
 
 Avoid writing extra text to STDOUT because Intune evaluates the script output as JSON.
 
+Microsoft currently limits a Windows discovery script and its output to 1 MB each, execution to 10 minutes, a rules file to 100 KB, and a policy to 100 rules. Recheck the linked Microsoft documentation before relying on these limits.
+
 ## Intune Settings
 
 | Setting | Recommended value |
@@ -75,6 +86,7 @@ Describe the compliant and noncompliant states.
 - STDOUT contains one compressed JSON object only.
 - Each JSON property has the data type expected by `ComplianceRules.json`.
 - Compliance policy reports show the expected setting values.
+- `tools\Test-IntuneWorkloadContracts.ps1` passes before the package is promoted to `PilotReady`.
 
 ## Troubleshooting
 

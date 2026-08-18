@@ -11,6 +11,15 @@
   "WritesTo": "Network configuration",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Network configuration",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 2 portability finding(s): CommandParsing.",
   "Summary": "Detects saved Wi-Fi profiles that are not in an allowed list and optionally removes them after an admin enables the safety toggle.",
   "Tags": [
     "Networking",

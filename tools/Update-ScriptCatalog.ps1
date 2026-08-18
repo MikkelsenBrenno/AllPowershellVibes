@@ -28,6 +28,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+# Keep catalog ordering identical across maintainer and CI locales.
+$catalogSortCulture = 'en-US'
 
 $workloadDisplayNames = @{
     'Detection-Remediation' = 'Detection and Remediation'
@@ -49,6 +51,13 @@ $requiredFields = @(
     'WritesTo',
     'Reboot',
     'Risk',
+    'DetectionEvidenceType',
+    'DetectionEvidenceSource',
+    'DetectionReviewStatus',
+    'PortabilityReviewStatus',
+    'PortabilityRiskLevel',
+    'PortabilityRiskAreas',
+    'PortabilityNotes',
     'Summary'
 )
 
@@ -192,6 +201,29 @@ function New-InferredScriptInfo {
     $requires64Bit = if ($content -match 'HKLM:|System32|Program Files|Get-LocalUser') { 'Recommended for native Windows paths' } else { 'Recommended' }
     $reboot = if ($ScriptFolder.Name -match 'Pending-Reboot') { 'Yes to remediate' } else { 'No' }
 
+    if ($WorkloadFolderName -eq 'Intune-Platform-Scripts') {
+        $detectionEvidenceType = 'N/A'
+        $detectionEvidenceSource = 'No detection script for this workload'
+        $detectionReviewStatus = 'NotApplicable'
+    }
+    else {
+        $detectionEvidenceType = 'NeedsReview'
+        $detectionEvidenceSource = 'Generated package has not been evidence-audited'
+        $detectionReviewStatus = 'NeedsReview'
+    }
+
+    $portabilityReviewStatus = 'NeedsReview'
+    $portabilityRiskLevel = 'Medium'
+    $portabilityRiskAreas = @(
+        'Localization',
+        'OsVersion',
+        'CommandParsing',
+        'Scalability',
+        'RegistryView',
+        'PathAssumption'
+    )
+    $portabilityNotes = 'Generated package has not been portability-audited'
+
     return [ordered]@{
         Name = ConvertTo-DisplayName -FolderName $ScriptFolder.Name
         Workload = $workloadDisplayNames[$WorkloadFolderName]
@@ -205,6 +237,13 @@ function New-InferredScriptInfo {
         WritesTo = $writesTo
         Reboot = $reboot
         Risk = $risk
+        DetectionEvidenceType = $detectionEvidenceType
+        DetectionEvidenceSource = $detectionEvidenceSource
+        DetectionReviewStatus = $detectionReviewStatus
+        PortabilityReviewStatus = $portabilityReviewStatus
+        PortabilityRiskLevel = $portabilityRiskLevel
+        PortabilityRiskAreas = $portabilityRiskAreas
+        PortabilityNotes = $portabilityNotes
         Summary = $summary
         Tags = @($Purpose, $WorkloadFolderName)
     }
@@ -224,6 +263,10 @@ function Test-ScriptInfo {
             throw "ScriptInfo field '$field' is missing in '$Path'."
         }
 
+        if ($field -eq 'PortabilityRiskAreas') {
+            continue
+        }
+
         if ([string]::IsNullOrWhiteSpace([string]$ScriptInfo.$field)) {
             throw "ScriptInfo field '$field' is empty in '$Path'."
         }
@@ -240,6 +283,10 @@ function Format-MarkdownCell {
         return ''
     }
 
+    if ($Value -is [System.Array]) {
+        return ((@($Value) | ForEach-Object { [string]$_ }) -join ', ').Replace('|', '\|').Replace("`r", ' ').Replace("`n", ' ').Trim()
+    }
+
     return ([string]$Value).Replace('|', '\|').Replace("`r", ' ').Replace("`n", ' ').Trim()
 }
 
@@ -251,10 +298,10 @@ function Get-ScriptFolders {
             continue
         }
 
-        $purposeFolders = Get-ChildItem -LiteralPath $workloadPath -Directory | Sort-Object -Property Name
+        $purposeFolders = Get-ChildItem -LiteralPath $workloadPath -Directory | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property Name
 
         foreach ($purposeFolder in $purposeFolders) {
-            $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Property Name
+            $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property Name
 
             foreach ($scriptFolder in $scriptFolders) {
                 [pscustomobject]@{
@@ -289,7 +336,7 @@ $scriptItems = foreach ($scriptFolderInfo in Get-ScriptFolders) {
     }
 }
 
-$orderedItems = $scriptItems | Sort-Object -Property @{ Expression = { $_.Info.Workload } }, @{ Expression = { $_.Info.Purpose } }, @{ Expression = { $_.Info.Name } }
+$orderedItems = $scriptItems | Sort-Object -Culture $catalogSortCulture -CaseSensitive -Property @{ Expression = { $_.Info.Workload } }, @{ Expression = { $_.Info.Purpose } }, @{ Expression = { $_.Info.Name } }
 
 $lines = New-Object System.Collections.Generic.List[string]
 $lines.Add('# Script Catalog')
@@ -318,14 +365,33 @@ $lines.Add('| Low | Read-only, reporting, or simple additive change |')
 $lines.Add('| Medium | Changes device/user configuration and should be piloted |')
 $lines.Add('| High | Changes security state, deletes data, changes trust, or can remove access |')
 $lines.Add('')
+$lines.Add('## Detection Evidence Legend')
+$lines.Add('')
+$lines.Add('| Evidence Type | Meaning |')
+$lines.Add('| --- | --- |')
+$lines.Add('| DirectEvidence | Detection reads a recognized device evidence source directly |')
+$lines.Add('| SnapshotFreshness | Detection validates that a snapshot file exists and is current |')
+$lines.Add('| PackageMarker | Win32 detection uses a package-owned install/version marker |')
+$lines.Add('| MarkerOnly | Detection only reads repository-managed marker state and needs review before being treated as real device-state compliance |')
+$lines.Add('| NeedsReview | The audit could not identify a strong evidence source |')
+$lines.Add('| N/A | The workload does not use a detection script contract |')
+$lines.Add('')
+$lines.Add('## Portability Legend')
+$lines.Add('')
+$lines.Add('| Field | Meaning |')
+$lines.Add('| --- | --- |')
+$lines.Add('| Portability Risk | Highest static audit risk: None, Low, Medium, or High |')
+$lines.Add('| Portability Review | Reviewed, NeedsReview, or NotApplicable |')
+$lines.Add('| Portability Areas | Localization, OsVersion, CommandParsing, Scalability, RegistryView, or PathAssumption findings |')
+$lines.Add('')
 $lines.Add('## Catalog')
 $lines.Add('')
-$lines.Add('| Name | Workload | Purpose | Status | Context | 64-bit PowerShell | Has Remediation | Has Uninstall | Teams Alert Ready | Writes To | Reboot | Risk | Summary | Path |')
-$lines.Add('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
+$lines.Add('| Name | Workload | Purpose | Status | Context | 64-bit PowerShell | Has Remediation | Has Uninstall | Teams Alert Ready | Writes To | Reboot | Risk | Evidence Type | Evidence Review | Evidence Source | Portability Risk | Portability Review | Portability Areas | Portability Notes | Summary | Path |')
+$lines.Add('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
 
 foreach ($item in $orderedItems) {
     $info = $item.Info
-    $lines.Add(('| {0} | {1} | {2} | {3} | {4} | {5} | {6} | {7} | {8} | {9} | {10} | {11} | {12} | `{13}` |' -f
+    $lines.Add(('| {0} | {1} | {2} | {3} | {4} | {5} | {6} | {7} | {8} | {9} | {10} | {11} | {12} | {13} | {14} | {15} | {16} | {17} | {18} | {19} | `{20}` |' -f
         (Format-MarkdownCell $info.Name),
         (Format-MarkdownCell $info.Workload),
         (Format-MarkdownCell $info.Purpose),
@@ -338,6 +404,13 @@ foreach ($item in $orderedItems) {
         (Format-MarkdownCell $info.WritesTo),
         (Format-MarkdownCell $info.Reboot),
         (Format-MarkdownCell $info.Risk),
+        (Format-MarkdownCell $info.DetectionEvidenceType),
+        (Format-MarkdownCell $info.DetectionReviewStatus),
+        (Format-MarkdownCell $info.DetectionEvidenceSource),
+        (Format-MarkdownCell $info.PortabilityRiskLevel),
+        (Format-MarkdownCell $info.PortabilityReviewStatus),
+        (Format-MarkdownCell $info.PortabilityRiskAreas),
+        (Format-MarkdownCell $info.PortabilityNotes),
         (Format-MarkdownCell $info.Summary),
         (Format-MarkdownCell $item.Path)))
 }
@@ -366,7 +439,9 @@ $lines.Add('4. Keep the script self-contained.')
 $lines.Add('5. Put all editable values in the `CONFIGURATION` section.')
 $lines.Add('6. Update `ScriptInfo.json` and `README.md`.')
 $lines.Add('7. Run `tools\Update-ScriptCatalog.ps1`.')
-$lines.Add('8. Run `tools\Test-Repository.ps1` before publishing.')
+$lines.Add('8. Run `tools\Test-DetectionEvidence.ps1 -UpdateScriptInfo` when detection logic changes.')
+$lines.Add('9. Run `tools\Test-ScriptPortability.ps1 -UpdateScriptInfo` when script logic changes.')
+$lines.Add('10. Run `tools\Test-Repository.ps1` before publishing.')
 $lines.Add('')
 $lines.Add('## Generator Example')
 $lines.Add('')

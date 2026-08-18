@@ -11,6 +11,15 @@
   "WritesTo": "Network configuration",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Network configuration",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 2 portability finding(s): CommandParsing.",
   "Summary": "Detects WinHTTP proxy settings that are not direct access and optionally resets them for environments that do not require device-level proxy configuration.",
   "Tags": [
     "Networking",
@@ -19,4 +28,3 @@
     "Business Premium"
   ]
 }
-

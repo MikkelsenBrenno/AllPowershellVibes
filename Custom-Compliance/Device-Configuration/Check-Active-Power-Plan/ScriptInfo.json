@@ -11,6 +11,15 @@
   "WritesTo": "JSON output only",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "powercfg",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "This custom compliance package checks whether the active Windows power plan GUID matches the configured expected value.",
   "Tags": [
     "Device-Configuration",

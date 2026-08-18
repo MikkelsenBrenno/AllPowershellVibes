@@ -11,6 +11,13 @@
   "WritesTo": "Defender preference",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Defender",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package checks whether Microsoft Defender Network Protection is enabled and enables it when needed. Network Protection helps reduce exposure to malicious or suspicious network destinations. The default desired state is `Enabled`.",
   "Tags": [
     "Security",

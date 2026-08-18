@@ -54,8 +54,10 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep tenan
 ## Expected Results
 
 - Detection exits `0` when Delivery Optimization cache size is under the configured threshold.
+- Detection exits `1` when the scan limit prevents a trustworthy size result.
 - Remediation clears the cache with `Delete-DeliveryOptimizationCache` when available.
-- Validation confirms cache size is under the threshold.
+- Report-only execution remains noncompliant by default.
+- Final validation confirms cache size is under the threshold and the scan was complete.
 
 ## Troubleshooting
 

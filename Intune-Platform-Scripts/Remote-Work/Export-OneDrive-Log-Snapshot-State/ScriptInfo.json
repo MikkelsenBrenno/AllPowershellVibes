@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData inventory snapshot and logs",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "N/A",
+  "DetectionEvidenceSource": "No detection script for this workload",
+  "DetectionReviewStatus": "NotApplicable",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Exports OneDrive Log Snapshot state to a local JSON troubleshooting snapshot.",
   "Tags": [
     "Remote-Work",

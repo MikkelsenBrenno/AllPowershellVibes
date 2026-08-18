@@ -11,6 +11,13 @@
   "WritesTo": "Defender preference",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Defender",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package checks Microsoft Defender cloud protection settings and remediates them when needed. The default configuration sets `MAPSReporting` to `Advanced` and `SubmitSamplesConsent` to `SendSafeSamples`. Review your organization's privacy requirements before changing sample submission to `SendAllSamples`.",
   "Tags": [
     "Security",

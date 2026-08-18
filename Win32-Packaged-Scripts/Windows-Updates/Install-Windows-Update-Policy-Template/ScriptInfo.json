@@ -11,6 +11,15 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "Low",
+  "PortabilityRiskAreas": [
+    "OsVersion"
+  ],
+  "PortabilityNotes": "Static audit found 2 portability finding(s): OsVersion.",
   "Summary": "This Win32 packaged script installs, detects, and removes configurable Windows Update target release policy registry values.",
   "Tags": [
     "Windows-Updates",

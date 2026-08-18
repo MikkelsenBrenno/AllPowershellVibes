@@ -4,6 +4,15 @@
 
 Describe what the script configures on Windows devices.
 
+## Workload Contract
+
+- This is one standalone action, not a detection/remediation pair and not a compliance discovery script.
+- The script should validate its result before exit `0` when practical.
+- A successful Platform script normally does not run again unless its script or policy changes; failures are retried during the next three consecutive Intune Management Extension check-ins.
+- Use Remediations instead when recurring drift evaluation is required.
+- Do not describe a local report as centralized reporting unless a documented process collects it.
+- Review `docs/Intune-Workload-Contracts.md` before changing this scaffold's `Status` from `Template`.
+
 ## File
 
 - `<ScriptName>.ps1`
@@ -70,6 +79,7 @@ Describe what should change on the device.
 - The script exits `0`.
 - Logs show start, current state, attempted change, and validation result.
 - The configured state remains after policy refresh or restart when applicable.
+- `tools\Test-IntuneWorkloadContracts.ps1` passes before the package is promoted to `PilotReady`.
 
 ## Troubleshooting
 

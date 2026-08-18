@@ -11,6 +11,15 @@
   "WritesTo": "File system",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "SnapshotFreshness",
+  "DetectionEvidenceSource": "Snapshot file age/freshness",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "NeedsReview",
+  "PortabilityRiskLevel": "Medium",
+  "PortabilityRiskAreas": [
+    "CommandParsing"
+  ],
+  "PortabilityNotes": "Static audit found 1 portability finding(s): CommandParsing.",
   "Summary": "Refreshes a local proxy state snapshot when it is missing or stale.",
   "Tags": [
     "Inventory-Reporting",
@@ -18,4 +27,3 @@
     "Business Premium"
   ]
 }
-

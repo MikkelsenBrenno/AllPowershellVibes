@@ -35,6 +35,8 @@ Scripts live three levels deep:
 <Workload>/<Purpose-Category>/<Script-Folder>/
 ```
 
+`Workload` is the Intune execution model. `Purpose-Category` is only the script's topic. A purpose category named `Compliance` does not make a package Custom Compliance. Choose the workload using `docs/Intune-Workload-Contracts.md` before choosing the topical category.
+
 Example:
 
 ```text

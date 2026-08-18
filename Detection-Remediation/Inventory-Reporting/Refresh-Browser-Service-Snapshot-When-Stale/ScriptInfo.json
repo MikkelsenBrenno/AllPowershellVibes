@@ -11,6 +11,13 @@
   "WritesTo": "ProgramData snapshot and logs",
   "Reboot": "No",
   "Risk": "Low",
+  "DetectionEvidenceType": "SnapshotFreshness",
+  "DetectionEvidenceSource": "Snapshot file age/freshness",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates Browser Service Snapshot state for Intune-managed Windows devices.",
   "Tags": [
     "Inventory-Reporting",

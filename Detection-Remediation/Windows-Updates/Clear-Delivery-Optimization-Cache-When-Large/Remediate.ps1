@@ -39,7 +39,9 @@ $ScriptPackageName = 'Clear-Delivery-Optimization-Cache-When-Large'
 $ScriptName = 'Remediate'
 
 $MaximumCacheSizeMB = 5120
+$MaximumCacheItemsToScan = 10000
 $ClearDeliveryOptimizationCache = $true
+$ExitZeroInReportingOnlyMode = $false
 $ValidationDelaySeconds = 5
 
 # =========================
@@ -79,19 +81,27 @@ function Get-DeliveryOptimizationCachePath {
     return Join-Path -Path $env:SystemRoot -ChildPath 'ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache'
 }
 
-function Get-DeliveryOptimizationCacheSizeBytes {
+function Get-DeliveryOptimizationCacheState {
+    if ($MaximumCacheItemsToScan -lt 1) {
+        throw 'MaximumCacheItemsToScan must be 1 or greater.'
+    }
+
     $cachePath = Get-DeliveryOptimizationCachePath
     if (-not (Test-Path -LiteralPath $cachePath)) {
-        return [int64]0
+        return [pscustomobject]@{ TotalBytes = [int64]0; ScannedItemCount = 0; ScanLimitExceeded = $false }
     }
 
-    $totalBytes = [int64]0
-    $items = Get-ChildItem -LiteralPath $cachePath -Recurse -Force -File -ErrorAction SilentlyContinue
-    foreach ($item in $items) {
-        $totalBytes += [int64]$item.Length
-    }
+    $items = @(Get-ChildItem -LiteralPath $cachePath -Recurse -Force -File -ErrorAction SilentlyContinue |
+        Select-Object -First ($MaximumCacheItemsToScan + 1))
+    $scanLimitExceeded = ($items.Count -gt $MaximumCacheItemsToScan)
+    $measuredItems = @($items | Select-Object -First $MaximumCacheItemsToScan)
+    $measure = $measuredItems | Measure-Object -Property Length -Sum
 
-    return $totalBytes
+    return [pscustomobject]@{
+        TotalBytes = [int64]$measure.Sum
+        ScannedItemCount = $measuredItems.Count
+        ScanLimitExceeded = $scanLimitExceeded
+    }
 }
 
 function Convert-BytesToMB {
@@ -110,16 +120,23 @@ function Convert-BytesToMB {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Remediation started. ClearDeliveryOptimizationCache='$ClearDeliveryOptimizationCache'."
+    Write-Log -Message "Remediation started. ClearDeliveryOptimizationCache='$ClearDeliveryOptimizationCache'; MaximumItemsToScan='$MaximumCacheItemsToScan'."
 
-    $beforeMB = Convert-BytesToMB -Bytes (Get-DeliveryOptimizationCacheSizeBytes)
+    $beforeState = Get-DeliveryOptimizationCacheState
+    $beforeMB = Convert-BytesToMB -Bytes $beforeState.TotalBytes
     Write-Log -Message "Delivery Optimization cache before remediation is '$beforeMB' MB."
+
+    if (-not $beforeState.ScanLimitExceeded -and $beforeMB -le $MaximumCacheSizeMB) {
+        Write-Output "No change needed. Delivery Optimization cache size is $beforeMB MB."
+        exit 0
+    }
 
     if (-not $ClearDeliveryOptimizationCache) {
         $message = 'Report-only mode. Set $ClearDeliveryOptimizationCache to $true to clear Delivery Optimization cache.'
         Write-Log -Message $message -Level 'WARN'
         Write-Output $message
-        exit 0
+        if ($ExitZeroInReportingOnlyMode) { exit 0 }
+        exit 1
     }
 
     if (Get-Command -Name Delete-DeliveryOptimizationCache -ErrorAction SilentlyContinue) {
@@ -130,16 +147,17 @@ try {
     }
 
     Start-Sleep -Seconds $ValidationDelaySeconds
-    $afterMB = Convert-BytesToMB -Bytes (Get-DeliveryOptimizationCacheSizeBytes)
+    $afterState = Get-DeliveryOptimizationCacheState
+    $afterMB = Convert-BytesToMB -Bytes $afterState.TotalBytes
 
-    if ($afterMB -le $MaximumCacheSizeMB) {
+    if (-not $afterState.ScanLimitExceeded -and $afterMB -le $MaximumCacheSizeMB) {
         $message = "Remediation succeeded. Delivery Optimization cache size is $afterMB MB."
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Remediation failed. Delivery Optimization cache size is $afterMB MB."
+    $message = "Remediation failed. Delivery Optimization cache size is at least $afterMB MB; ScanLimitExceeded='$($afterState.ScanLimitExceeded)'."
     Write-Log -Message $message -Level 'ERROR'
     Write-Output $message
     exit 1

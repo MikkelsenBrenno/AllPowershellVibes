@@ -56,7 +56,15 @@ $SnapshotNote = 'Local Administrators group membership snapshot.'
 
 $CollectorScript = {
     if (Get-Command -Name Get-LocalGroupMember -ErrorAction SilentlyContinue) {
-        @(Get-LocalGroupMember -Group 'Administrators' -ErrorAction SilentlyContinue | Select-Object Name, ObjectClass, PrincipalSource, SID)
+        $administratorsSid = New-Object System.Security.Principal.SecurityIdentifier('S-1-5-32-544')
+        try {
+            $administratorsGroupName = ([string]$administratorsSid.Translate([System.Security.Principal.NTAccount]).Value -split '\\')[-1]
+        }
+        catch {
+            $administratorsGroupName = 'Administrators'
+        }
+
+        @(Get-LocalGroupMember -Group $administratorsGroupName -ErrorAction SilentlyContinue | Select-Object Name, ObjectClass, PrincipalSource, SID)
     }
     else {
         [pscustomobject]@{ LocalAccountsCmdletsAvailable = $false }
@@ -286,7 +294,14 @@ try {
         throw "Snapshot '$snapshotPath' was not created."
     }
 
-    $message = "Remediation succeeded. Snapshot refreshed at '$snapshotPath'."
+    $validatedPayload = Get-Content -LiteralPath $snapshotPath -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
+    if ([string]::IsNullOrWhiteSpace([string]$validatedPayload.ComputerName) -or
+        [string]::IsNullOrWhiteSpace([string]$validatedPayload.CapturedAt) -or
+        [string]::IsNullOrWhiteSpace([string]$validatedPayload.CollectionMode)) {
+        throw "Snapshot '$snapshotPath' is missing required payload fields after remediation."
+    }
+
+    $message = "Remediation succeeded. Snapshot refreshed and validated at '$snapshotPath'."
     Write-Log -Message $message
     Write-Output $message
     exit 0

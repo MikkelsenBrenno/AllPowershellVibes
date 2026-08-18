@@ -11,6 +11,13 @@
   "WritesTo": "Defender preference",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Defender",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects and remediates Microsoft Defender cloud block level so cloud-delivered protection uses the configured sensitivity.",
   "Tags": [
     "Security",
@@ -19,4 +26,3 @@
     "Cloud Protection"
   ]
 }
-

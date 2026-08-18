@@ -3,7 +3,7 @@
   "Workload": "Detection and Remediation",
   "Purpose": "Windows-Updates",
   "Status": "Example",
-  "Context": "System recommended",
+  "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
@@ -11,6 +11,13 @@
   "WritesTo": "File system or local configuration removal",
   "Reboot": "No",
   "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "File system cache",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Detects large Delivery Optimization cache usage and clears it through the supported PowerShell cmdlet when enabled.",
   "Tags": [
     "Windows Updates",
@@ -19,4 +26,3 @@
     "Business Premium"
   ]
 }
-

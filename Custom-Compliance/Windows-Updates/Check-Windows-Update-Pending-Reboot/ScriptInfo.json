@@ -11,6 +11,13 @@
   "WritesTo": "JSON output only",
   "Reboot": "Yes to remediate",
   "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "Reports whether common Windows Update and servicing locations show a pending reboot. This gives helpdesk teams a simple compliance signal for devices that need a restart before updates can continue.",
   "Tags": [
     "Windows-Updates",

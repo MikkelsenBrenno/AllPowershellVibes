@@ -39,7 +39,7 @@ $ScriptName = 'Remediate'
 
 $FolderPath = Join-Path -Path $env:ProgramData -ChildPath 'IntuneScriptLibrary\ExampleManagedFolder'
 $ConfigureAclEntry = $false
-$AclIdentity = 'BUILTIN\Users'
+$AclIdentitySid = 'S-1-5-32-545'
 $AclRight = 'ReadAndExecute'
 $InheritanceFlags = 'ContainerInherit,ObjectInherit'
 $PropagationFlags = 'None'
@@ -62,6 +62,20 @@ function Write-ScriptMetadata {
     Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
 }
 
+function ConvertTo-SidValue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Security.Principal.IdentityReference]$IdentityReference
+    )
+
+    try {
+        return $IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+    }
+    catch {
+        return $IdentityReference.Value
+    }
+}
+
 # =========================
 # MAIN
 # =========================
@@ -78,8 +92,9 @@ try {
 
     if ($ConfigureAclEntry) {
         $acl = Get-Acl -LiteralPath $FolderPath
+        $aclIdentity = New-Object System.Security.Principal.SecurityIdentifier($AclIdentitySid)
         $rule = New-Object System.Security.AccessControl.FileSystemAccessRule(
-            $AclIdentity,
+            $aclIdentity,
             $AclRight,
             $InheritanceFlags,
             $PropagationFlags,
@@ -87,14 +102,27 @@ try {
         )
         $acl.SetAccessRule($rule)
         Set-Acl -LiteralPath $FolderPath -AclObject $acl
-        Write-Log -Message "Configured ACL '$AclIdentity' '$AclRight'."
+        Write-Log -Message "Configured ACL SID '$AclIdentitySid' '$AclRight'."
     }
 
     if (-not (Test-Path -LiteralPath $FolderPath -PathType Container)) {
         throw "Folder '$FolderPath' does not exist after remediation."
     }
 
-    $message = "Remediation succeeded. Folder '$FolderPath' exists."
+    if ($ConfigureAclEntry) {
+        $finalAcl = Get-Acl -LiteralPath $FolderPath
+        $matchingRule = @($finalAcl.Access | Where-Object {
+            (ConvertTo-SidValue -IdentityReference $_.IdentityReference) -eq $AclIdentitySid -and
+            $_.FileSystemRights.ToString() -like "*$AclRight*" -and
+            $_.AccessControlType -eq 'Allow'
+        })
+
+        if ($matchingRule.Count -eq 0) {
+            throw "Folder '$FolderPath' is missing ACL SID '$AclIdentitySid' '$AclRight' after remediation."
+        }
+    }
+
+    $message = "Remediation succeeded. Folder '$FolderPath' and its configured ACL state are compliant."
     Write-Log -Message $message
     Write-Output $message
     exit 0

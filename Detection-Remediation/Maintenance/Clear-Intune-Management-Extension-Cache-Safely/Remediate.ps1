@@ -38,6 +38,7 @@ $ScriptPackageName = 'Clear-Intune-Management-Extension-Cache-Safely'
 $ScriptName = 'Remediate'
 
 $MinimumCacheItemAgeDays = 14
+$MaximumCacheItemsToScan = 10000
 $ClearCacheItems = $false
 $ExitZeroInReportingOnlyMode = $false
 $CachePaths = @(
@@ -60,14 +61,29 @@ function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsId
 
 function Get-CacheCandidate {
     $cutoff = (Get-Date).AddDays(-[math]::Abs($MinimumCacheItemAgeDays))
+    $emittedCount = 0
+
+    if ($MaximumCacheItemsToScan -le 0) {
+        return
+    }
 
     foreach ($cachePath in $CachePaths) {
         if (-not (Test-Path -LiteralPath $cachePath -PathType Container)) {
             continue
         }
 
+        $remaining = $MaximumCacheItemsToScan - $emittedCount
+        if ($remaining -le 0) {
+            return
+        }
+
         Get-ChildItem -LiteralPath $cachePath -File -Recurse -Force -ErrorAction SilentlyContinue |
-            Where-Object { $_.LastWriteTime -lt $cutoff }
+            Where-Object { $_.LastWriteTime -lt $cutoff } |
+            Select-Object -First $remaining |
+            ForEach-Object {
+                $emittedCount++
+                $_
+            }
     }
 }
 
@@ -106,8 +122,9 @@ try {
         }
     }
 
-    Write-Output "Removed $removedCount old IME cache file(s). Failed removals: $failedCount."
-    if ($failedCount -eq 0) { exit 0 }
+    $remainingCandidates = @(Get-CacheCandidate | Select-Object -First 1)
+    Write-Output "Removed $removedCount old IME cache file(s). Failed removals: $failedCount. Remaining matches: $($remainingCandidates.Count)."
+    if ($failedCount -eq 0 -and $remainingCandidates.Count -eq 0) { exit 0 }
     exit 1
 }
 catch {

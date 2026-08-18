@@ -5,7 +5,14 @@
       "Operator": "IsEquals",
       "DataType": "Boolean",
       "Operand": true,
-      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/"
+      "MoreInfoUrl": "https://learn.microsoft.com/windows/deployment/update/",
+      "RemediationStrings": [
+        {
+          "Language": "en_US",
+          "Title": "Windows Update requires a restart. Current value: {ActualValue}.",
+          "Description": "Save your work and restart the device to complete pending Windows updates."
+        }
+      ]
     }
   ]
 }

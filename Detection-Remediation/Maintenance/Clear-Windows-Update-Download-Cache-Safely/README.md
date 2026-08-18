@@ -17,6 +17,7 @@ This remediation package detects old files in the Windows Update download cache 
 | `$MinimumCacheItemAgeDays` | Only target files older than this many days. | `14` |
 | `$ClearCacheItems` | Actually delete matching files. | `$false` |
 | `$StopUpdateServicesBeforeClearing` | Stop update services before deleting files. | `$false` |
+| `$ExitZeroInReportingOnlyMode` | Exit successfully while only reporting. Keep false for remediation contract accuracy. | `$false` |
 
 ## Prerequisites
 
@@ -47,12 +48,12 @@ Deploy in reporting-only mode first, then enable deletion after pilot validation
 
 - Detection `0` - No old cache files found.
 - Detection `1` - Old cache files found.
-- Remediation `0` - Files are absent or removed.
+- Remediation `0` - Files are absent, or removal completes and the final rescan finds no matching files.
 - Remediation `1` - Files remain, deletion failed, or deletion is disabled.
 
 ## Expected Results
 
-Old Windows Update download cache files are reported first and removed only when explicitly enabled.
+Old Windows Update download cache files are reported first and removed only when explicitly enabled. Services stopped by the script are restarted even if deletion encounters an error.
 
 ## Troubleshooting
 

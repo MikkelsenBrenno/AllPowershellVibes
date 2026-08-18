@@ -12,6 +12,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Enable Windows long paths
+        shell: pwsh
+        run: git config --global core.longpaths true
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -19,6 +23,18 @@ jobs:
         shell: pwsh
         run: .\tools\Test-Repository.ps1
 
+      - name: Verify Intune workload contracts
+        shell: pwsh
+        run: .\tools\Test-IntuneWorkloadContracts.ps1
+
       - name: Verify generated catalog is current
         shell: pwsh
         run: .\tools\Update-ScriptCatalog.ps1 -Check
+
+      - name: Verify detection evidence metadata is current
+        shell: pwsh
+        run: .\tools\Test-DetectionEvidence.ps1 -Check
+
+      - name: Verify script portability metadata and baseline are current
+        shell: pwsh
+        run: .\tools\Test-ScriptPortability.ps1 -Check

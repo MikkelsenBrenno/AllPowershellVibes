@@ -11,6 +11,13 @@
   "WritesTo": "Local device security state",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Local accounts/groups",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package audits the local Administrators group and can optionally remove members that are not in the allowed list. Removal is disabled by default. Enable removal only after pilot testing.",
   "Tags": [
     "Security",

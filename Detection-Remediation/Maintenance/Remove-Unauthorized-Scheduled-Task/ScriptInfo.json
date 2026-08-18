@@ -11,6 +11,13 @@
   "WritesTo": "Local device security state",
   "Reboot": "No",
   "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Scheduled task",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
   "Summary": "This remediation package detects a configured unauthorized scheduled task and can remove it after an explicit safety switch is enabled.",
   "Tags": [
     "Maintenance",
