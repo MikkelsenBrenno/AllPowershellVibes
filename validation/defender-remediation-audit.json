@@ -1,0 +1,120 @@
+{
+  "SchemaVersion": "1.0",
+  "ReviewedOn": "2026-08-18",
+  "CandidateDefinition": "Detection and Remediation packages under Security whose folder name begins Defender- and whose detection reads Get-MpPreference direct product evidence.",
+  "Packages": [
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Archive-Scanning",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-advanced-scan-types-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Behavior-Monitoring",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-protection-features-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Cloud-Protection",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/command-line-arguments-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Email-Scanning",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-advanced-scan-types-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-IOAV-Protection",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/evaluate-mdav-using-gp",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Network-Protection",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/enable-network-protection",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-PUA-Protection",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/detect-block-potentially-unwanted-apps-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Real-Time-Protection",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-protection-features-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Removable-Drive-Scanning",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-advanced-scan-types-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/mdav-scan-best-practices",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Enable-Script-Scanning",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/configure-advanced-scan-types-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Defender-Set-Cloud-Block-Level-High",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents the Defender preference and Set-MpPreference contract. Detection is read-only, null-safe, and remediation verifies final direct product preference state; active protection still requires the documented tenant pilot check.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender#cloudblocklevel",
+        "https://learn.microsoft.com/en-us/defender-endpoint/cloud-protection-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-problems-with-tamper-protection"
+      ]
+    }
+  ]
+}

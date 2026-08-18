@@ -436,3 +436,30 @@ exit 1
         }
     }
 }
+
+Describe 'Defender remediation audit' {
+    It 'locks every Defender cmdlet remediation to a source-reviewed PilotReady package' {
+        $auditPath = Join-Path $script:RepositoryRoot 'validation\defender-remediation-audit.json'
+        $audit = [System.IO.File]::ReadAllText($auditPath) | ConvertFrom-Json
+        $candidateRoot = Join-Path $script:RepositoryRoot 'Detection-Remediation\Security'
+        $candidatePaths = @(Get-ChildItem -LiteralPath $candidateRoot -Directory | Where-Object Name -Like 'Defender-*' | ForEach-Object {
+                "Detection-Remediation/Security/$($_.Name)"
+            } | Sort-Object -Unique)
+        $auditPaths = @($audit.Packages.Path | Sort-Object -Unique)
+
+        $candidatePaths.Count | Should -Be 11
+        $auditPaths.Count | Should -Be 11
+        (Compare-Object -ReferenceObject $candidatePaths -DifferenceObject $auditPaths) | Should -BeNullOrEmpty
+
+        foreach ($entry in $audit.Packages) {
+            $entry.Disposition | Should -Be 'PilotReady'
+            @($entry.MicrosoftReferences).Count | Should -BeGreaterThan 1
+            $package = Join-Path $script:RepositoryRoot ($entry.Path.Replace('/', '\'))
+            $metadata = [System.IO.File]::ReadAllText((Join-Path $package 'ScriptInfo.json')) | ConvertFrom-Json
+            $metadata.Status | Should -Be 'PilotReady'
+            $metadata.Context | Should -Be 'System'
+            $metadata.DetectionEvidenceType | Should -Be 'DirectEvidence'
+            $metadata.DetectionReviewStatus | Should -Be 'Reviewed'
+        }
+    }
+}

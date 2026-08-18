@@ -7,9 +7,9 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     System
 
 .INTUNE
     Workload:    Detection and Remediation
@@ -67,7 +67,7 @@ function Write-Log {
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value $line -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -133,4 +133,3 @@ catch {
     Write-Output 'Remediation failed for Defender cloud block level.'
     exit 1
 }
-

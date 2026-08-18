@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable Real Time Protection",
+  "Name": "Defender Enable Real-Time Protection",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "This remediation package checks whether Microsoft Defender real-time protection is enabled and enables it when needed. The script checks the inverted Defender preference `DisableRealtimeMonitoring`. A value of `$false` means real-time protection is enabled.",
+  "Summary": "Enables Microsoft Defender Antivirus real-time monitoring.",
   "Tags": [
     "Security",
     "Detection-Remediation",

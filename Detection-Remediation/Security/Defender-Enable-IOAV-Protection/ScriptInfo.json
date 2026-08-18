@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable IOAV Protection",
+  "Name": "Defender Enable Downloaded File and Attachment Scanning",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
-  "Context": "System recommended",
-  "Requires64BitPowerShell": "Recommended",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Microsoft Defender IOAV protection by keeping `DisableIOAVProtection` set to `$false`.",
+  "Summary": "Enables Microsoft Defender Antivirus IOAV scanning for downloaded files and attachments.",
   "Tags": [
     "Security",
     "Defender",

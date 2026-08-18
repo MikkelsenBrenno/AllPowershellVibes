@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable Removable Drive Scanning",
+  "Name": "Defender Enable Removable Drive Full-Scan Coverage",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
-  "Context": "System recommended",
-  "Requires64BitPowerShell": "Recommended",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Microsoft Defender removable drive scanning by keeping `DisableRemovableDriveScanning` set to `$false`.",
+  "Summary": "Includes removable drives in Microsoft Defender Antivirus full scans.",
   "Tags": [
     "Security",
     "Defender",

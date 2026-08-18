@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable Cloud Protection",
+  "Name": "Defender Enable Cloud Protection and Safe Sample Submission",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "This remediation package checks Microsoft Defender cloud protection settings and remediates them when needed. The default configuration sets `MAPSReporting` to `Advanced` and `SubmitSamplesConsent` to `SendSafeSamples`. Review your organization's privacy requirements before changing sample submission to `SendAllSamples`.",
+  "Summary": "Enables Defender cloud protection with automatic submission of safe samples.",
   "Tags": [
     "Security",
     "Detection-Remediation",
