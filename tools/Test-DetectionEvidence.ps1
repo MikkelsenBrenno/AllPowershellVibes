@@ -35,10 +35,19 @@ param(
 
     [switch]$Check,
 
-    [switch]$FailOnNeedsReview
+    [switch]$FailOnNeedsReview,
+
+    [string[]]$PackagePath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
+$selectedPackagePaths = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
 
 $workloadDisplayNames = @{
     'Detection-Remediation' = 'Detection and Remediation'
@@ -134,6 +143,10 @@ function Get-ScriptFolders {
         foreach ($purposeFolder in $purposeFolders) {
             $scriptFolders = Get-ChildItem -LiteralPath $purposeFolder.FullName -Directory | Sort-Object -Property Name
             foreach ($scriptFolder in $scriptFolders) {
+                $relativePackagePath = Get-RelativePath -BasePath $RepositoryRoot -Path $scriptFolder.FullName
+                if (-not (Test-ValidationPackageSelected -CandidatePath $relativePackagePath -PackagePath $selectedPackagePaths)) {
+                    continue
+                }
                 [pscustomobject]@{
                     WorkloadFolderName = $workloadFolderName
                     Workload = $workloadDisplayNames[$workloadFolderName]
@@ -468,6 +481,7 @@ function New-AuditResult {
 function New-CsvRows {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Results
     )
 
@@ -510,6 +524,7 @@ function Add-MarkdownCountTable {
 function Write-SummaryReport {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [array]$Results,
 
         [Parameter(Mandatory = $true)]
@@ -625,8 +640,36 @@ Write-SummaryReport -Results $results -Path $summaryReportPath
 $needsReviewCount = @($results | Where-Object { $_.DetectionReviewStatus -eq 'NeedsReview' }).Count
 $staleMetadataCount = @($results | Where-Object { -not $_.MetadataCurrent }).Count
 
-Write-Output "Detection evidence audit report written to '$summaryReportPath'."
+if (-not $SummaryOnly) {
+    Write-Output "Detection evidence audit report written to '$summaryReportPath'."
+}
 Write-Output "Packages: $($results.Count); NeedsReview: $needsReviewCount; MetadataNotCurrent: $staleMetadataCount."
+
+if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+    $ruleResults = New-Object System.Collections.Generic.List[object]
+    foreach ($result in $results) {
+        if (-not $result.MetadataCurrent) {
+            $severity = if ($Check) { 'Failure' } else { 'Warning' }
+            $ruleResults.Add((New-ValidationRuleResult -RuleId 'DetectionEvidence.MetadataCurrent' -Severity $severity -Message 'Detection evidence metadata does not match the current classification.' -PackagePath $result.PackagePath -File $result.ScriptInfoPath))
+        }
+        if ($result.DetectionReviewStatus -eq 'NeedsReview') {
+            $severity = if ($FailOnNeedsReview) { 'Failure' } else { 'Warning' }
+            $ruleResults.Add((New-ValidationRuleResult -RuleId 'DetectionEvidence.NeedsReview' -Severity $severity -Message ([string]$result.Reason) -PackagePath $result.PackagePath -File $result.DetectionScriptPath))
+        }
+    }
+    if ($ruleResults.Count -eq 0) {
+        $ruleResults.Add((New-ValidationRuleResult -RuleId 'DetectionEvidence.Current' -Severity Pass -Message "Detection evidence metadata is current for $($results.Count) selected packages."))
+    }
+    $structuredFailures = @($ruleResults | Where-Object Severity -eq 'Failure').Count
+    $structuredWarnings = @($ruleResults | Where-Object Severity -eq 'Warning').Count
+    $structured = [ordered]@{
+        Validator = 'DetectionEvidence'
+        PackageCount = $results.Count
+        Counts = [ordered]@{ Pass = $(if ($structuredFailures -eq 0) { 1 } else { 0 }); Warning = $structuredWarnings; Failure = $structuredFailures }
+        Results = @($ruleResults.ToArray())
+    }
+    Write-ValidationResultFile -Path $ResultPath -InputObject $structured
+}
 
 if ($Check -and $staleMetadataCount -gt 0) {
     Write-Output 'Detection evidence metadata is not current. Run tools\Test-DetectionEvidence.ps1 -UpdateScriptInfo and commit the result.'

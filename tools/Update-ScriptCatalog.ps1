@@ -24,12 +24,22 @@ param(
 
     [switch]$Check,
 
-    [switch]$InitializeMissingScriptInfo
+    [switch]$InitializeMissingScriptInfo,
+
+    [string[]]$PackagePath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
 # Keep catalog ordering identical across maintainer and CI locales.
 $catalogSortCulture = 'en-US'
+[System.Threading.Thread]::CurrentThread.CurrentCulture = [System.Globalization.CultureInfo]::InvariantCulture
+[System.Threading.Thread]::CurrentThread.CurrentUICulture = [System.Globalization.CultureInfo]::InvariantCulture
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
 
 $workloadDisplayNames = @{
     'Detection-Remediation' = 'Detection and Remediation'
@@ -487,10 +497,40 @@ if ($Check) {
     $existingContent = Get-Content -LiteralPath $catalogPath -Raw
 
     if ($existingContent -ne $catalogContent) {
-        Write-Output 'SCRIPT-CATALOG.md is not current. Run tools\Update-ScriptCatalog.ps1 and commit the result.'
+        $existingLines = @($existingContent -split '\r?\n')
+        $expectedLines = @($catalogContent -split '\r?\n')
+        $maximumLineCount = [math]::Max($existingLines.Count, $expectedLines.Count)
+        $firstDifference = 'Content differs, but the first differing line could not be determined.'
+        for ($lineIndex = 0; $lineIndex -lt $maximumLineCount; $lineIndex++) {
+            $existingLine = if ($lineIndex -lt $existingLines.Count) { $existingLines[$lineIndex] } else { '<missing>' }
+            $expectedLine = if ($lineIndex -lt $expectedLines.Count) { $expectedLines[$lineIndex] } else { '<missing>' }
+            if ($existingLine -cne $expectedLine) {
+                $firstDifference = "First difference at line $($lineIndex + 1). Existing='$existingLine' Expected='$expectedLine'."
+                break
+            }
+        }
+        if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+            $structured = [ordered]@{
+                Validator = 'ScriptCatalog'
+                PackageCount = $orderedItems.Count
+                Counts = [ordered]@{ Pass = 0; Warning = 0; Failure = 1 }
+                Results = @((New-ValidationRuleResult -RuleId 'Catalog.Current' -Severity Failure -Message "SCRIPT-CATALOG.md is not current. $firstDifference" -File 'SCRIPT-CATALOG.md'))
+            }
+            Write-ValidationResultFile -Path $ResultPath -InputObject $structured
+        }
+        Write-Output "SCRIPT-CATALOG.md is not current. $firstDifference Run tools\Update-ScriptCatalog.ps1 and commit the result."
         exit 1
     }
 
+    if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+        $structured = [ordered]@{
+            Validator = 'ScriptCatalog'
+            PackageCount = $orderedItems.Count
+            Counts = [ordered]@{ Pass = 1; Warning = 0; Failure = 0 }
+            Results = @((New-ValidationRuleResult -RuleId 'Catalog.Current' -Severity Pass -Message 'SCRIPT-CATALOG.md is current.' -File 'SCRIPT-CATALOG.md'))
+        }
+        Write-ValidationResultFile -Path $ResultPath -InputObject $structured
+    }
     Write-Output 'SCRIPT-CATALOG.md is current.'
     exit 0
 }

@@ -1,25 +1,19 @@
 <#
 .SYNOPSIS
-    Smoke-tests Intune detection scripts.
+    Safely smoke-tests read-only Intune detection and discovery scripts.
 
 .DESCRIPTION
-    Local maintainer tool for this Intune script library. The script discovers
-    remediation and Win32 detection scripts, runs each detection in a fresh
-    64-bit Windows PowerShell 5.1 process, and writes JSON, CSV, and Markdown
-    reports under the configured output folder.
-
-.NOTES
-    Name:        Test-DetectionSmoke.ps1
-    Version:     1.0.0
-    PowerShell:  Windows PowerShell 5.1
-    Context:     Local maintainer
+    Executes only Remediation/Win32 Detect.ps1 and Custom Compliance
+    Discover.ps1 in isolated Windows PowerShell 5.1 child processes. Each
+    process receives temporary ProgramData, LOCALAPPDATA, and APPDATA paths.
+    Remediation, install, uninstall, and Platform scripts are never discovered.
 #>
 
 #Requires -Version 5.1
 
 [CmdletBinding()]
 param(
-    [ValidateSet('AllDetect', 'Remediation', 'Win32')]
+    [ValidateSet('AllReadOnly', 'AllDetect', 'Remediation', 'Win32', 'CustomCompliance')]
     [string]$Scope = 'AllDetect',
 
     [ValidateRange(5, 3600)]
@@ -32,478 +26,287 @@ param(
 
     [string]$OutputRoot = (Join-Path -Path (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path -ChildPath 'output'),
 
-    [string]$RepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path
+    [string]$RepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path,
+
+    [string[]]$PackagePath,
+
+    [string[]]$ScriptPath,
+
+    [switch]$SummaryOnly,
+
+    [string]$ResultPath
 )
 
 $ErrorActionPreference = 'Stop'
+$validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
+Import-Module -Name $validationModulePath -Force
 
 $maxScriptsSpecified = $PSBoundParameters.ContainsKey('MaxScripts')
+$selectedPackages = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
+$selectedScripts = @($ScriptPath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)
+Write-Verbose "Smoke selection: packages=$($selectedPackages.Count) scripts=$($selectedScripts.Count)"
 $powershellPath = Join-Path -Path $env:WINDIR -ChildPath 'System32\WindowsPowerShell\v1.0\powershell.exe'
-$programDataLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $jsonReportPath = Join-Path -Path $OutputRoot -ChildPath 'detection-smoke-results.json'
 $csvReportPath = Join-Path -Path $OutputRoot -ChildPath 'detection-smoke-results.csv'
 $summaryReportPath = Join-Path -Path $OutputRoot -ChildPath 'detection-smoke-summary.md'
 $warningPattern = '(?i)\b(failed|exception|access denied|could not be validated)\b'
 
-function Get-RelativePath {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$BasePath,
-
-        [Parameter(Mandatory = $true)]
-        [string]$Path
+function Get-SafeSmokeScripts {
+    $definitions = @(
+        [pscustomobject]@{ Scope = 'Remediation'; Workload = 'Detection-Remediation'; FileName = 'Detect.ps1'; Role = 'RemediationDetection' },
+        [pscustomobject]@{ Scope = 'Win32'; Workload = 'Win32-Packaged-Scripts'; FileName = 'Detect.ps1'; Role = 'Win32Detection' },
+        [pscustomobject]@{ Scope = 'CustomCompliance'; Workload = 'Custom-Compliance'; FileName = 'Discover.ps1'; Role = 'CustomComplianceDiscovery' }
     )
 
-    $baseUri = New-Object System.Uri(($BasePath.TrimEnd('\') + '\'))
-    $pathUri = New-Object System.Uri($Path)
-    return [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($pathUri).ToString()).Replace('/', '\')
-}
-
-function Get-DetectionScripts {
     $items = New-Object System.Collections.Generic.List[object]
+    foreach ($definition in $definitions) {
+        $include = switch ($Scope) {
+            'AllReadOnly' { $true }
+            'AllDetect' { $definition.Scope -in @('Remediation', 'Win32') }
+            default { $Scope -eq $definition.Scope }
+        }
+        Write-Verbose "Smoke discovery: scope=$Scope definition=$($definition.Scope) include=$include"
+        if (-not $include) { continue }
 
-    if ($Scope -eq 'AllDetect' -or $Scope -eq 'Remediation') {
-        $root = Join-Path -Path $RepositoryRoot -ChildPath 'Detection-Remediation'
-        $files = @(Get-ChildItem -Path (Join-Path -Path $root -ChildPath '*\*\Detect.ps1') -File -ErrorAction SilentlyContinue | Sort-Object FullName)
-
-        foreach ($file in $files) {
+        $workloadRoot = Join-Path -Path $RepositoryRoot -ChildPath $definition.Workload
+        if (-not (Test-Path -LiteralPath $workloadRoot -PathType Container)) { continue }
+        $eligibleFiles = @(Get-ChildItem -Path (Join-Path -Path $workloadRoot -ChildPath "*\*\$($definition.FileName)") -File -ErrorAction SilentlyContinue | Sort-Object FullName)
+        Write-Verbose "Smoke discovery: workload=$($definition.Workload) files=$($eligibleFiles.Count)"
+        foreach ($file in $eligibleFiles) {
             $packageFolder = $file.Directory
-            $purposeFolder = $packageFolder.Parent
+            $packageRelative = Get-ValidationRelativePath -BasePath $RepositoryRoot -Path $packageFolder.FullName
+            $scriptRelative = Get-ValidationRelativePath -BasePath $RepositoryRoot -Path $file.FullName
+            $packageSelected = Test-ValidationPackageSelected -CandidatePath $packageRelative -PackagePath $selectedPackages
+            $scriptSelected = $selectedScripts.Count -eq 0 -or $scriptRelative -in $selectedScripts
+            if (-not $packageSelected) { continue }
+            if (-not $scriptSelected) { continue }
+
             $items.Add([pscustomobject]@{
-                    Workload = 'Detection-Remediation'
-                    Purpose = $purposeFolder.Name
+                    Workload = $definition.Workload
+                    Purpose = $packageFolder.Parent.Name
                     PackageName = $packageFolder.Name
+                    PackagePath = $packageRelative
+                    Role = $definition.Role
                     ScriptPath = $file.FullName
-                    RelativePath = Get-RelativePath -BasePath $RepositoryRoot -Path $file.FullName
+                    RelativePath = $scriptRelative
                     WorkingDirectory = $packageFolder.FullName
+                    RulesPath = if ($definition.Role -eq 'CustomComplianceDiscovery') { Join-Path -Path $packageFolder.FullName -ChildPath 'ComplianceRules.json' } else { '' }
                 })
         }
     }
 
-    if ($Scope -eq 'AllDetect' -or $Scope -eq 'Win32') {
-        $root = Join-Path -Path $RepositoryRoot -ChildPath 'Win32-Packaged-Scripts'
-        $files = @(Get-ChildItem -Path (Join-Path -Path $root -ChildPath '*\*\Detect.ps1') -File -ErrorAction SilentlyContinue | Sort-Object FullName)
-
-        foreach ($file in $files) {
-            $packageFolder = $file.Directory
-            $purposeFolder = $packageFolder.Parent
-            $items.Add([pscustomobject]@{
-                    Workload = 'Win32-Packaged-Scripts'
-                    Purpose = $purposeFolder.Name
-                    PackageName = $packageFolder.Name
-                    ScriptPath = $file.FullName
-                    RelativePath = Get-RelativePath -BasePath $RepositoryRoot -Path $file.FullName
-                    WorkingDirectory = $packageFolder.FullName
-                })
-        }
-    }
-
-    $ordered = @($items | Sort-Object Workload, Purpose, PackageName)
-
-    if ($maxScriptsSpecified) {
-        return @($ordered | Select-Object -First $MaxScripts)
-    }
-
+    $ordered = @($items.ToArray() | Sort-Object Workload, Purpose, PackageName)
+    if ($maxScriptsSpecified) { return @($ordered | Select-Object -First $MaxScripts) }
     return $ordered
 }
 
-function New-ListOnlyResult {
+function New-SmokeResult {
     param(
-        [Parameter(Mandatory = $true)]
-        [object]$Script
+        [Parameter(Mandatory = $true)][object]$Script,
+        [Parameter(Mandatory = $true)][string]$Status,
+        [AllowNull()][object]$ExitCode,
+        [int]$DurationMs = 0,
+        [bool]$TimedOut = $false,
+        [string[]]$FailureReasons = @(),
+        [string[]]$WarningReasons = @(),
+        [string]$StdOut = '',
+        [string]$StdErr = ''
     )
 
-    return [pscustomobject]@{
+    [pscustomobject][ordered]@{
         Workload = $Script.Workload
         Purpose = $Script.Purpose
         PackageName = $Script.PackageName
+        PackagePath = $Script.PackagePath
+        Role = $Script.Role
         RelativePath = $Script.RelativePath
-        ScriptPath = $Script.ScriptPath
-        WorkingDirectory = $Script.WorkingDirectory
-        Status = 'Listed'
-        Passed = $null
-        Warning = $false
-        TimedOut = $false
-        ExitCode = $null
-        DurationMs = $null
-        FailureReasons = @()
-        WarningReasons = @()
-        StdOut = ''
-        StdErr = ''
-        OutputPreview = ''
+        Status = $Status
+        Passed = $Status -in @('Passed', 'Listed')
+        Warning = $Status -eq 'Warning'
+        TimedOut = $TimedOut
+        ExitCode = $ExitCode
+        DurationMs = $DurationMs
+        FailureReasons = @($FailureReasons)
+        WarningReasons = @($WarningReasons)
+        StdOut = $StdOut.Trim()
+        StdErr = $StdErr.Trim()
     }
 }
 
-function Invoke-DetectionScript {
-    param(
-        [Parameter(Mandatory = $true)]
-        [object]$Script
-    )
+function Invoke-SafeSmokeScript {
+    param([Parameter(Mandatory = $true)][object]$Script)
 
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    $failureReasons = New-Object System.Collections.Generic.List[string]
+    $warningReasons = New-Object System.Collections.Generic.List[string]
     $stdout = ''
     $stderr = ''
     $exitCode = $null
     $timedOut = $false
-    $failureReasons = New-Object System.Collections.Generic.List[string]
-    $warningReasons = New-Object System.Collections.Generic.List[string]
     $process = $null
+    $isolationRoot = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath ("intune-validation-" + [guid]::NewGuid().ToString('N'))
+    $isolatedProgramData = Join-Path -Path $isolationRoot -ChildPath 'ProgramData'
+    $isolatedLocalAppData = Join-Path -Path $isolationRoot -ChildPath 'LocalAppData'
+    $isolatedAppData = Join-Path -Path $isolationRoot -ChildPath 'AppData'
+
+    $scriptContent = [System.IO.File]::ReadAllText($Script.ScriptPath)
+    $mainMatch = [regex]::Match($scriptContent, '(?ms)^# =========================\r?\n# MAIN\r?\n# =========================\r?\n(?<Body>.*)$')
+    if (-not $mainMatch.Success) {
+        $failureReasons.Add('The script has no recognizable MAIN section and was not executed.')
+    }
+    else {
+        $mutationPattern = '(?im)^\s*(Set-(?!StrictMode\b|Variable\b)|Remove-|Clear-|Start-(?!Sleep\b)|Stop-|Restart-|Enable-|Disable-|Install-|Uninstall-|New-(?!Object\b)|Add-(Content\b|LocalGroupMember\b))'
+        if ($mainMatch.Groups['Body'].Value -match $mutationPattern) {
+            $failureReasons.Add("The read-only role appears to change managed state in MAIN ('$($matches[0].Trim())') and was not executed.")
+        }
+    }
+
+    if ($failureReasons.Count -gt 0) {
+        $stopwatch.Stop()
+        return New-SmokeResult -Script $Script -Status Failed -ExitCode $null -DurationMs ([math]::Round($stopwatch.Elapsed.TotalMilliseconds)) -FailureReasons @($failureReasons.ToArray())
+    }
 
     try {
+        foreach ($directory in @($isolatedProgramData, $isolatedLocalAppData, $isolatedAppData)) {
+            New-Item -Path $directory -ItemType Directory -Force | Out-Null
+        }
+
         $startInfo = New-Object System.Diagnostics.ProcessStartInfo
         $startInfo.FileName = $powershellPath
-        $startInfo.Arguments = "-NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ""$($Script.ScriptPath)"""
+        $startInfo.Arguments = "-NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File `"$($Script.ScriptPath)`""
         $startInfo.WorkingDirectory = $Script.WorkingDirectory
         $startInfo.UseShellExecute = $false
         $startInfo.RedirectStandardOutput = $true
         $startInfo.RedirectStandardError = $true
         $startInfo.CreateNoWindow = $true
+        $startInfo.EnvironmentVariables['ProgramData'] = $isolatedProgramData
+        $startInfo.EnvironmentVariables['LOCALAPPDATA'] = $isolatedLocalAppData
+        $startInfo.EnvironmentVariables['APPDATA'] = $isolatedAppData
 
         $process = New-Object System.Diagnostics.Process
         $process.StartInfo = $startInfo
-
         if (-not $process.Start()) {
-            $failureReasons.Add('PowerShell process failed to start.')
+            $failureReasons.Add('Windows PowerShell 5.1 process failed to start.')
         }
         else {
             $stdoutTask = $process.StandardOutput.ReadToEndAsync()
             $stderrTask = $process.StandardError.ReadToEndAsync()
-            $completed = $process.WaitForExit($TimeoutSeconds * 1000)
-
-            if (-not $completed) {
+            if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
                 $timedOut = $true
                 $failureReasons.Add("Timed out after $TimeoutSeconds second(s).")
-
-                try {
-                    $process.Kill()
-                    if (-not $process.WaitForExit(5000)) {
-                        $failureReasons.Add('Timed-out PowerShell process did not exit after kill request.')
-                    }
-                }
-                catch {
-                    $failureReasons.Add("Timed-out PowerShell process could not be killed. $($_.Exception.Message)")
-                }
+                try { $process.Kill() } catch { $failureReasons.Add("Timed-out process could not be killed: $($_.Exception.Message)") }
+                [void]$process.WaitForExit(5000)
             }
             else {
                 $process.WaitForExit()
                 $exitCode = $process.ExitCode
             }
-
-            if ($stdoutTask.Wait(5000)) {
-                $stdout = $stdoutTask.Result
-            }
-            else {
-                $failureReasons.Add('STDOUT capture did not complete after process exit.')
-            }
-
-            if ($stderrTask.Wait(5000)) {
-                $stderr = $stderrTask.Result
-            }
-            else {
-                $failureReasons.Add('STDERR capture did not complete after process exit.')
-            }
+            if ($stdoutTask.Wait(5000)) { $stdout = $stdoutTask.Result } else { $failureReasons.Add('STDOUT capture did not complete.') }
+            if ($stderrTask.Wait(5000)) { $stderr = $stderrTask.Result } else { $failureReasons.Add('STDERR capture did not complete.') }
         }
     }
     catch {
-        $failureReasons.Add("Process launch or capture failed. $($_.Exception.Message)")
+        $failureReasons.Add("Process launch or capture failed: $($_.Exception.Message)")
     }
     finally {
         $stopwatch.Stop()
-
-        if ($null -ne $process) {
-            $process.Dispose()
+        if ($null -ne $process) { $process.Dispose() }
+        $tempRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd('\') + '\'
+        $resolvedIsolation = [System.IO.Path]::GetFullPath($isolationRoot)
+        if ($resolvedIsolation.StartsWith($tempRoot, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $resolvedIsolation)) {
+            Remove-Item -LiteralPath $resolvedIsolation -Recurse -Force -ErrorAction SilentlyContinue
         }
     }
 
-    if ($null -eq $exitCode -and -not $timedOut -and $failureReasons.Count -eq 0) {
-        $failureReasons.Add('Process ended without an exit code.')
-    }
+    if (-not [string]::IsNullOrWhiteSpace($stderr)) { $failureReasons.Add('STDERR contained output.') }
 
-    if ($null -ne $exitCode -and $exitCode -notin @(0, 1)) {
-        $failureReasons.Add("Exit code '$exitCode' is not valid for an Intune detection smoke test.")
-    }
-
-    if (-not [string]::IsNullOrWhiteSpace($stderr)) {
-        $failureReasons.Add('PowerShell stderr contained output, which may indicate an unhandled error.')
-    }
-
-    if ($Script.Workload -eq 'Win32-Packaged-Scripts' -and $exitCode -eq 0 -and [string]::IsNullOrWhiteSpace($stdout)) {
-        $failureReasons.Add('Win32 detection exited 0 without STDOUT. Intune may not treat the app as detected.')
-    }
-
-    if ($failureReasons.Count -eq 0 -and $exitCode -eq 1 -and $stdout -match $warningPattern) {
-        $warningReasons.Add('Detection exited 1 cleanly, but output contains failure-like wording that should be reviewed.')
-    }
-
-    $status = if ($failureReasons.Count -gt 0) {
-        'Failed'
-    }
-    elseif ($warningReasons.Count -gt 0) {
-        'Warning'
+    if ($Script.Role -eq 'CustomComplianceDiscovery') {
+        if ($exitCode -ne 0 -and -not $timedOut) { $failureReasons.Add("Custom Compliance discovery exited $exitCode; exit 0 is required.") }
+        if (-not (Test-Path -LiteralPath $Script.RulesPath -PathType Leaf)) {
+            $failureReasons.Add('ComplianceRules.json is missing.')
+        }
+        elseif (-not $timedOut) {
+            foreach ($contractResult in @(Test-CustomComplianceOutput -StdOut $stdout -RulesPath $Script.RulesPath -PackagePath $Script.PackagePath)) {
+                if ($contractResult.Severity -eq 'Failure') { $failureReasons.Add($contractResult.Message) }
+            }
+        }
     }
     else {
-        'Passed'
+        if ($null -ne $exitCode -and $exitCode -notin @(0, 1)) { $failureReasons.Add("Detection exit code '$exitCode' is invalid; expected 0 or 1.") }
+        if ($Script.Role -eq 'Win32Detection' -and $exitCode -eq 0 -and [string]::IsNullOrWhiteSpace($stdout)) { $failureReasons.Add('Win32 detection exited 0 without STDOUT.') }
+        if ($failureReasons.Count -eq 0 -and $exitCode -eq 1 -and $stdout -match $warningPattern) { $warningReasons.Add('Detection exited 1 cleanly, but its output contains failure-like wording.') }
     }
 
-    $combinedOutput = (($stdout, $stderr) -join [Environment]::NewLine).Trim()
-    $preview = $combinedOutput
-    if ($preview.Length -gt 500) {
-        $preview = $preview.Substring(0, 500) + '...'
-    }
-
-    return [pscustomobject]@{
-        Workload = $Script.Workload
-        Purpose = $Script.Purpose
-        PackageName = $Script.PackageName
-        RelativePath = $Script.RelativePath
-        ScriptPath = $Script.ScriptPath
-        WorkingDirectory = $Script.WorkingDirectory
-        Status = $status
-        Passed = ($failureReasons.Count -eq 0)
-        Warning = ($warningReasons.Count -gt 0)
-        TimedOut = $timedOut
-        ExitCode = $exitCode
-        DurationMs = [math]::Round($stopwatch.Elapsed.TotalMilliseconds, 0)
-        FailureReasons = @($failureReasons.ToArray())
-        WarningReasons = @($warningReasons.ToArray())
-        StdOut = $stdout.Trim()
-        StdErr = $stderr.Trim()
-        OutputPreview = $preview
-    }
+    $status = if ($failureReasons.Count -gt 0) { 'Failed' } elseif ($warningReasons.Count -gt 0) { 'Warning' } else { 'Passed' }
+    return New-SmokeResult -Script $Script -Status $status -ExitCode $exitCode -DurationMs ([math]::Round($stopwatch.Elapsed.TotalMilliseconds)) -TimedOut $timedOut -FailureReasons @($failureReasons.ToArray()) -WarningReasons @($warningReasons.ToArray()) -StdOut $stdout -StdErr $stderr
 }
 
-function New-CsvRows {
-    param(
-        [Parameter(Mandatory = $true)]
-        [array]$Results
-    )
+function Write-SmokeSummary {
+    param([Parameter(Mandatory = $true)][AllowEmptyCollection()][array]$Results, [Parameter(Mandatory = $true)][string]$Path)
 
-    foreach ($result in $Results) {
-        [pscustomobject]@{
-            Workload = $result.Workload
-            Purpose = $result.Purpose
-            PackageName = $result.PackageName
-            RelativePath = $result.RelativePath
-            Status = $result.Status
-            Passed = $result.Passed
-            Warning = $result.Warning
-            TimedOut = $result.TimedOut
-            ExitCode = $result.ExitCode
-            DurationMs = $result.DurationMs
-            FailureReasons = ($result.FailureReasons -join '; ')
-            WarningReasons = ($result.WarningReasons -join '; ')
-            OutputPreview = $result.OutputPreview
-        }
-    }
-}
-
-function Add-MarkdownTable {
-    param(
-        [object]$Lines,
-
-        [Parameter(Mandatory = $true)]
-        [array]$Rows,
-
-        [Parameter(Mandatory = $true)]
-        [string]$FirstHeader,
-
-        [Parameter(Mandatory = $true)]
-        [string]$SecondHeader
-    )
-
-    $Lines.Add("| $FirstHeader | $SecondHeader |")
-    $Lines.Add('| --- | ---: |')
-
-    foreach ($row in $Rows) {
-        $Lines.Add("| $($row.Name) | $($row.Count) |")
-    }
-}
-
-function Test-ProgramDataLogRoot {
-    $result = [pscustomobject]@{
-        Path = $programDataLogRoot
-        Writable = $false
-        Message = 'Not tested during list-only discovery.'
-    }
-
-    if ($ListOnly) {
-        return $result
-    }
-
-    $probeFile = Join-Path -Path $programDataLogRoot -ChildPath ('.smoke-test-{0}.tmp' -f ([guid]::NewGuid().ToString('N')))
-
-    try {
-        if (-not (Test-Path -LiteralPath $programDataLogRoot -PathType Container)) {
-            New-Item -Path $programDataLogRoot -ItemType Directory -Force | Out-Null
-        }
-
-        Set-Content -LiteralPath $probeFile -Value 'Detection smoke test log root probe.' -Encoding UTF8
-        Remove-Item -LiteralPath $probeFile -Force
-
-        $result.Writable = $true
-        $result.Message = 'Writable.'
-    }
-    catch {
-        $result.Message = $_.Exception.Message
-    }
-
-    return $result
-}
-
-function Write-SummaryReport {
-    param(
-        [Parameter(Mandatory = $true)]
-        [array]$Results,
-
-        [Parameter(Mandatory = $true)]
-        [string]$Path
-    )
-
+    $passed = @($Results | Where-Object Status -eq 'Passed').Count
+    $warnings = @($Results | Where-Object Status -eq 'Warning')
+    $failures = @($Results | Where-Object Status -eq 'Failed')
     $lines = New-Object System.Collections.Generic.List[string]
-    $executed = @($Results | Where-Object { $_.Status -ne 'Listed' })
-    $failures = @($Results | Where-Object { $_.Status -eq 'Failed' })
-    $warnings = @($Results | Where-Object { $_.Status -eq 'Warning' })
-    $passed = @($Results | Where-Object { $_.Status -eq 'Passed' })
-    $maxScriptsDisplay = if ($maxScriptsSpecified) { $MaxScripts } else { 'All' }
-    $listOnlyDisplay = [bool]$ListOnly
-    $logWritableDisplay = if ($programDataLogCheck.Writable) { 'True' } else { 'False' }
-
-    $lines.Add('# Detection Smoke Test Summary')
+    $lines.Add('# Safe Detection Smoke Summary')
     $lines.Add('')
-    $lines.Add("Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')")
+    $lines.Add("- Discovered: $($Results.Count)")
+    $lines.Add("- Passed: $passed")
+    $lines.Add("- Warnings: $($warnings.Count)")
+    $lines.Add("- Failures: $($failures.Count)")
+    $lines.Add("- Timeout: $TimeoutSeconds seconds")
+    $lines.Add('- Isolation: temporary ProgramData, LOCALAPPDATA, and APPDATA per process')
     $lines.Add('')
-    $lines.Add('## Run Settings')
-    $lines.Add('')
-    $lines.Add("| Setting | Value |")
-    $lines.Add("| --- | --- |")
-    $lines.Add("| Scope | $Scope |")
-    $lines.Add("| TimeoutSeconds | $TimeoutSeconds |")
-    $lines.Add("| MaxScripts | $maxScriptsDisplay |")
-    $lines.Add("| ListOnly | $listOnlyDisplay |")
-    $lines.Add("| PowerShell | $powershellPath |")
-    $lines.Add("| ProgramDataLogRoot | $($programDataLogCheck.Path) |")
-    $lines.Add("| ProgramDataLogRootWritable | $logWritableDisplay |")
-    $lines.Add("| ProgramDataLogRootMessage | $($programDataLogCheck.Message -replace '\|', '/') |")
-    $lines.Add('')
-    $lines.Add('## Results')
-    $lines.Add('')
-    $lines.Add("| Metric | Count |")
-    $lines.Add("| --- | ---: |")
-    $lines.Add("| Discovered | $($Results.Count) |")
-    $lines.Add("| Executed | $($executed.Count) |")
-    $lines.Add("| Passed | $($passed.Count) |")
-    $lines.Add("| Review warnings | $($warnings.Count) |")
-    $lines.Add("| Hard failures | $($failures.Count) |")
-    $lines.Add('')
-
-    $byWorkload = @($Results | Group-Object -Property Workload | Sort-Object Name)
-    $lines.Add('## By Workload')
-    $lines.Add('')
-    Add-MarkdownTable -Lines $lines -Rows $byWorkload -FirstHeader 'Workload' -SecondHeader 'Count'
-    $lines.Add('')
-
-    $byStatus = @($Results | Group-Object -Property Status | Sort-Object Name)
-    $lines.Add('## By Status')
-    $lines.Add('')
-    Add-MarkdownTable -Lines $lines -Rows $byStatus -FirstHeader 'Status' -SecondHeader 'Count'
-    $lines.Add('')
-
-    if ($failures.Count -gt 0) {
-        $lines.Add('## Hard Failures')
-        $lines.Add('')
-        $lines.Add('| Script | ExitCode | Reason |')
-        $lines.Add('| --- | ---: | --- |')
-
-        foreach ($failure in @($failures | Select-Object -First 50)) {
-            $relativePath = $failure.RelativePath -replace '\|', '/'
-            $reason = ($failure.FailureReasons -join '; ') -replace '\|', '/'
-            $lines.Add("| ``$relativePath`` | $($failure.ExitCode) | $reason |")
-        }
-
-        if ($failures.Count -gt 50) {
-            $lines.Add('')
-            $lines.Add("Only the first 50 hard failures are shown. See $csvReportPath or $jsonReportPath for the full list.")
-        }
-
-        $lines.Add('')
+    $lines.Add('Only `Detect.ps1` and `Discover.ps1` are eligible. Action scripts cannot be selected by this runner.')
+    foreach ($item in @($failures + $warnings | Select-Object -First 20)) {
+        $reason = @($item.FailureReasons + $item.WarningReasons) -join '; '
+        $lines.Add("- **$($item.Status)** ``$($item.RelativePath)`` — $reason")
     }
-
-    if ($warnings.Count -gt 0) {
-        $lines.Add('## Review Warnings')
-        $lines.Add('')
-        $lines.Add('| Script | ExitCode | Reason |')
-        $lines.Add('| --- | ---: | --- |')
-
-        foreach ($warning in @($warnings | Select-Object -First 50)) {
-            $relativePath = $warning.RelativePath -replace '\|', '/'
-            $reason = ($warning.WarningReasons -join '; ') -replace '\|', '/'
-            $lines.Add("| ``$relativePath`` | $($warning.ExitCode) | $reason |")
-        }
-
-        if ($warnings.Count -gt 50) {
-            $lines.Add('')
-            $lines.Add("Only the first 50 review warnings are shown. See $csvReportPath or $jsonReportPath for the full list.")
-        }
-
-        $lines.Add('')
-    }
-
-    $lines.Add('## Notes')
-    $lines.Add('')
-    $lines.Add('- This is a smoke test. It does not prove tenant policy compliance.')
-    $lines.Add('- Remediation detections can exit `1` for normal noncompliance.')
-    $lines.Add('- Win32 detections must write STDOUT when exiting `0`.')
-    $lines.Add('- Script logs are written under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs`.')
-
-    Set-Content -LiteralPath $Path -Value ($lines -join [Environment]::NewLine) -Encoding UTF8
+    [System.IO.File]::WriteAllText($Path, (($lines -join [Environment]::NewLine) + [Environment]::NewLine), (New-Object System.Text.UTF8Encoding($false)))
 }
 
-if (-not (Test-Path -LiteralPath $powershellPath -PathType Leaf)) {
-    throw "64-bit Windows PowerShell 5.1 was not found at '$powershellPath'."
-}
+if (-not (Test-Path -LiteralPath $powershellPath -PathType Leaf)) { throw "64-bit Windows PowerShell 5.1 was not found at '$powershellPath'." }
+if (-not (Test-Path -LiteralPath $OutputRoot -PathType Container)) { New-Item -Path $OutputRoot -ItemType Directory -Force | Out-Null }
 
-if (-not (Test-Path -LiteralPath $OutputRoot)) {
-    New-Item -Path $OutputRoot -ItemType Directory -Force | Out-Null
-}
-
-$scripts = @(Get-DetectionScripts)
-$programDataLogCheck = Test-ProgramDataLogRoot
+$scripts = @(Get-SafeSmokeScripts)
 $results = New-Object System.Collections.Generic.List[object]
-$scriptIndex = 0
-$scriptTotal = [math]::Max($scripts.Count, 1)
-
+$index = 0
 foreach ($script in $scripts) {
-    $scriptIndex++
-
+    $index++
     if ($ListOnly) {
-        $results.Add((New-ListOnlyResult -Script $script))
+        $results.Add((New-SmokeResult -Script $script -Status 'Listed' -ExitCode $null))
+        continue
     }
-    else {
-        Write-Output "[$scriptIndex/$($scripts.Count)] Running $($script.RelativePath)"
-        Write-Progress -Activity 'Detection smoke test' -Status $script.RelativePath -PercentComplete (($results.Count / $scriptTotal) * 100)
-
-        $result = Invoke-DetectionScript -Script $script
-        $results.Add($result)
-
-        Write-Output "[$scriptIndex/$($scripts.Count)] $($result.Status) ExitCode=$($result.ExitCode) DurationMs=$($result.DurationMs) $($script.RelativePath)"
-    }
+    if (-not $SummaryOnly) { Write-Output "[$index/$($scripts.Count)] Running $($script.RelativePath)" }
+    $result = Invoke-SafeSmokeScript -Script $script
+    $results.Add($result)
+    if (-not $SummaryOnly -or $result.Status -ne 'Passed') { Write-Output "[$index/$($scripts.Count)] $($result.Status) ExitCode=$($result.ExitCode) DurationMs=$($result.DurationMs) $($script.RelativePath)" }
 }
-
-Write-Progress -Activity 'Detection smoke test' -Completed
 
 $resultArray = @($results.ToArray())
-$resultArray | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $jsonReportPath -Encoding UTF8
-New-CsvRows -Results $resultArray | Export-Csv -LiteralPath $csvReportPath -NoTypeInformation -Encoding UTF8
-Write-SummaryReport -Results $resultArray -Path $summaryReportPath
+Write-ValidationResultFile -Path $jsonReportPath -InputObject $resultArray
+if ($resultArray.Count -gt 0) { $resultArray | Export-Csv -LiteralPath $csvReportPath -NoTypeInformation -Encoding UTF8 } else { Set-Content -LiteralPath $csvReportPath -Value '' -Encoding UTF8 }
+Write-SmokeSummary -Results $resultArray -Path $summaryReportPath
 
-$failures = @($resultArray | Where-Object { $_.Status -eq 'Failed' })
-$warnings = @($resultArray | Where-Object { $_.Status -eq 'Warning' })
+$failures = @($resultArray | Where-Object Status -eq 'Failed')
+$warnings = @($resultArray | Where-Object Status -eq 'Warning')
+Write-Output "Safe smoke totals: Discovered=$($resultArray.Count); Warnings=$($warnings.Count); Failures=$($failures.Count)."
 
-Write-Output "Detection smoke test report written to '$summaryReportPath'."
-Write-Output "Discovered: $($resultArray.Count); HardFailures: $($failures.Count); ReviewWarnings: $($warnings.Count)."
-
-if ($failures.Count -gt 0) {
-    exit 1
+if (-not [string]::IsNullOrWhiteSpace($ResultPath)) {
+    $ruleResults = New-Object System.Collections.Generic.List[object]
+    foreach ($item in $resultArray) {
+        foreach ($reason in @($item.FailureReasons)) { $ruleResults.Add((New-ValidationRuleResult -RuleId 'Smoke.OutputContract' -Severity Failure -Message $reason -PackagePath $item.PackagePath -File $item.RelativePath)) }
+        foreach ($reason in @($item.WarningReasons)) { $ruleResults.Add((New-ValidationRuleResult -RuleId 'Smoke.Review' -Severity Warning -Message $reason -PackagePath $item.PackagePath -File $item.RelativePath)) }
+    }
+    if ($ruleResults.Count -eq 0) { $ruleResults.Add((New-ValidationRuleResult -RuleId 'Smoke.Valid' -Severity Pass -Message "$($resultArray.Count) safe read-only scripts satisfied their runtime contract.")) }
+    $structured = [ordered]@{
+        Validator = 'SafeSmoke'
+        PackageCount = @($resultArray.PackagePath | Sort-Object -Unique).Count
+        Counts = [ordered]@{ Pass = @($resultArray | Where-Object Status -in @('Passed', 'Listed')).Count; Warning = $warnings.Count; Failure = $failures.Count }
+        Results = @($ruleResults.ToArray())
+    }
+    Write-ValidationResultFile -Path $ResultPath -InputObject $structured
 }
 
+if ($failures.Count -gt 0) { exit 1 }
 exit 0

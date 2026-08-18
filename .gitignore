@@ -44,3 +44,4 @@ ConsoleHost_history.txt
 *.env
 *.local.ps1
 local.settings.json
+tenant-profile*.local.json

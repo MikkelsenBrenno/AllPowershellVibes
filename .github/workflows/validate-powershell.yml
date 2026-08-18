@@ -5,36 +5,104 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      enable_smoke:
+        description: Run all eligible read-only detection/discovery smoke tests
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validation-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
-    name: Validate scripts, metadata, and catalog
+    name: Structured Intune validation
     runs-on: windows-latest
+    timeout-minutes: 30
 
     steps:
       - name: Enable Windows long paths
         shell: pwsh
         run: git config --global core.longpaths true
 
-      - name: Checkout repository
+      - name: Checkout repository history
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Run repository validation
+      - name: Install pinned Pester
         shell: pwsh
-        run: .\tools\Test-Repository.ps1
+        run: |
+          $requiredVersion = [version]'5.9.0'
+          $installed = Get-Module -ListAvailable -Name Pester |
+            Where-Object Version -eq $requiredVersion |
+            Select-Object -First 1
+          if ($null -eq $installed) {
+            Install-Module -Name Pester -RequiredVersion $requiredVersion -Scope CurrentUser -Force -SkipPublisherCheck
+          }
+          Import-Module Pester -RequiredVersion $requiredVersion -Force
+          if ((Get-Module Pester).Version -ne $requiredVersion) {
+            throw "Pester $requiredVersion is required."
+          }
 
-      - name: Verify Intune workload contracts
+      - name: Run structured validation
         shell: pwsh
-        run: .\tools\Test-IntuneWorkloadContracts.ps1
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BASE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+          MANUAL_SMOKE: ${{ inputs.enable_smoke }}
+        run: |
+          $parameters = @{
+            OutputRoot = Join-Path $PWD 'output\validation'
+            CI = $true
+          }
 
-      - name: Verify generated catalog is current
-        shell: pwsh
-        run: .\tools\Update-ScriptCatalog.ps1 -Check
+          switch ($env:EVENT_NAME) {
+            'pull_request' {
+              $parameters.Scope = 'Changed'
+              $parameters.BaseRef = $env:PR_BASE_SHA
+              $parameters.HeadRef = $env:PR_HEAD_SHA
+            }
+            'push' {
+              $parameters.Scope = 'Full'
+              $parameters.BaseRef = $env:PUSH_BASE_SHA
+              $parameters.HeadRef = $env:CURRENT_SHA
+              $parameters.EnableSmoke = $true
+            }
+            'schedule' {
+              $parameters.Scope = 'Full'
+              $parameters.HeadRef = $env:CURRENT_SHA
+            }
+            'workflow_dispatch' {
+              $parameters.Scope = 'Full'
+              $parameters.HeadRef = $env:CURRENT_SHA
+              if ($env:MANUAL_SMOKE -eq 'true') {
+                $parameters.EnableSmoke = $true
+              }
+            }
+            default {
+              throw "Unsupported event '$($env:EVENT_NAME)'."
+            }
+          }
 
-      - name: Verify detection evidence metadata is current
-        shell: pwsh
-        run: .\tools\Test-DetectionEvidence.ps1 -Check
+          .\tools\Invoke-Validation.ps1 @parameters
 
-      - name: Verify script portability metadata and baseline are current
-        shell: pwsh
-        run: .\tools\Test-ScriptPortability.ps1 -Check
+      - name: Upload validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-${{ github.run_id }}
+          path: output/validation
+          if-no-files-found: error
+          retention-days: 14

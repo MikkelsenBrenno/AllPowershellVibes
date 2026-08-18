@@ -49,8 +49,8 @@ Before opening a pull request:
 - Run `tools\Update-ScriptCatalog.ps1`.
 - Run `tools\Test-DetectionEvidence.ps1 -UpdateScriptInfo` when detection or discovery logic changes.
 - Run `tools\Test-ScriptPortability.ps1 -UpdateScriptInfo -UpdateBaseline` when portability findings intentionally change.
-- Run `tools\Test-Repository.ps1`.
-- Run `tools\Test-IntuneWorkloadContracts.ps1`.
+- Run `tools\Invoke-Validation.ps1 -Scope Changed -BaseRef <target-branch> -HeadRef HEAD`.
+- See `docs/Validation-Automation.md` for escalation, report, safe smoke, and optional local tenant-profile behavior.
 
 ## Security
 
@@ -83,6 +83,7 @@ Recommended local testing steps:
 3. Test as the local system account for Intune system-context scripts.
 4. Confirm logs are created under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\<ScriptPackageName>\<ScriptName>.log`.
 5. Confirm exit codes match the README.
+6. Never use CI smoke testing for remediation, install, uninstall, or Platform action scripts; only changed detection/discovery files are eligible.
 
 ## Adding a New Script Folder
 

@@ -1,0 +1,29 @@
+{
+  "$schema": "./tenant-profile.schema.json",
+  "SchemaVersion": "1.0",
+  "Packages": [
+    {
+      "Path": "Detection-Remediation/Security/Example-Package-Name",
+      "AllowedStatuses": [
+        "PilotReady",
+        "Validated"
+      ],
+      "ExpectedContext": "System",
+      "ConfigurationAssertions": [
+        {
+          "Script": "Detect.ps1",
+          "Variable": "ExpectedValue",
+          "Equals": "Tenant-approved value"
+        },
+        {
+          "Script": "Remediate.ps1",
+          "Variable": "AllowedValues",
+          "Equals": [
+            "One",
+            "Two"
+          ]
+        }
+      ]
+    }
+  ]
+}
