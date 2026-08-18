@@ -2,9 +2,9 @@
   "Name": "Ensure Windows Consumer Features Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Windows Cloud Content policy that disables consumer features on managed business endpoints.",
+  "Summary": "Detects and remediates the documented device policy that disables Microsoft consumer experiences in Windows.",
   "Tags": [
     "User Experience",
     "Cloud Content",
-    "Business Premium"
+    "Enterprise"
   ]
 }

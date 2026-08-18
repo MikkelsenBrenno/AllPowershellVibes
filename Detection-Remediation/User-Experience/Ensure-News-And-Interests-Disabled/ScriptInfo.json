@@ -2,9 +2,9 @@
   "Name": "Ensure News And Interests Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates policy that disables News and Interests or Widgets surfaces on managed Windows endpoints.",
+  "Summary": "Detects and remediates the documented Windows 11 policy that disables Widgets on the taskbar.",
   "Tags": [
     "User Experience",
     "Widgets",
-    "Business Premium"
+    "Windows 11"
   ]
 }

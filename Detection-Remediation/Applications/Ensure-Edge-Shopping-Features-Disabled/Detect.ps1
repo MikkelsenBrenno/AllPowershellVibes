@@ -154,4 +154,3 @@ catch {
     Write-Output 'Not compliant. Ensure Edge Shopping Features Disabled could not be validated.'
     exit 1
 }
-

@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure RDP Clipboard Redirection Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Disables clipboard redirection in Remote Desktop Services sessions.",
+  "Tags": [
+    "Security",
+    "RDP",
+    "Clipboard"
+  ]
+}

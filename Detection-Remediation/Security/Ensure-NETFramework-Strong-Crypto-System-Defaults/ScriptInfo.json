@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure .NET Framework Strong Crypto And System TLS Defaults",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates .NET Framework 2.x and 4.x, 32-bit and 64-bit settings to use strong cryptography and operating-system TLS defaults.",
+  "Tags": [
+    "Security",
+    ".NET Framework",
+    "TLS"
+  ]
+}

@@ -2,9 +2,9 @@
   "Name": "Ensure Search Highlights Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Windows Search dynamic content policy so search highlights are disabled.",
+  "Summary": "Detects and remediates the documented Windows policy that disables dynamic search-box highlights.",
   "Tags": [
     "User Experience",
-    "Search",
-    "Business Premium"
+    "Windows Search",
+    "Search Highlights"
   ]
 }

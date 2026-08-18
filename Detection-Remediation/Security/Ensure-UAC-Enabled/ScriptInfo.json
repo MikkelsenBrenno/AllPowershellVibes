@@ -1,16 +1,16 @@
 {
-  "Name": "Ensure UAC Enabled",
+  "Name": "Ensure User Account Control Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
-  "Reboot": "No",
-  "Risk": "Medium",
+  "Reboot": "Yes",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates User Account Control policy so admin approval mode remains enabled.",
+  "Summary": "Detects and remediates User Account Control and the default administrator consent-prompt behavior.",
   "Tags": [
     "Security",
     "UAC",
-    "Business Premium"
+    "Elevation"
   ]
 }

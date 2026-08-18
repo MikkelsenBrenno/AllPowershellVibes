@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Controlled Folder Access Audit Mode",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates the Defender Controlled Folder Access policy to audit mode.",
+  "Tags": [
+    "Security",
+    "Defender",
+    "Controlled Folder Access"
+  ]
+}

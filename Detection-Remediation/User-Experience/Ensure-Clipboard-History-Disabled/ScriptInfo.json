@@ -2,9 +2,9 @@
   "Name": "Ensure Clipboard History Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Windows clipboard history policy on shared or privacy-sensitive business endpoints.",
+  "Summary": "Detects and remediates the documented device policy that disables Windows clipboard history.",
   "Tags": [
     "User Experience",
-    "Privacy",
-    "Business Premium"
+    "Clipboard",
+    "Privacy"
   ]
 }

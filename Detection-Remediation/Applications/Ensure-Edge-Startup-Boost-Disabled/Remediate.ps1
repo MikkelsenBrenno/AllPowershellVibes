@@ -165,4 +165,3 @@ catch {
     Write-Output 'Remediation failed for Ensure Edge Startup Boost Disabled.'
     exit 1
 }
-

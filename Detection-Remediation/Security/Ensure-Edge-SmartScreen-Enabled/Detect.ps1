@@ -157,4 +157,3 @@ catch {
     Write-Output 'Not compliant. Edge SmartScreen policy values could not be validated.'
     exit 1
 }
-

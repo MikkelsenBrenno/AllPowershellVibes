@@ -1,23 +1,23 @@
 <#
 .SYNOPSIS
-    Sets Office macro-from-internet policy values.
+    Remediates Ensure Office Blocks Macros From The Internet.
 
 .DESCRIPTION
-    Intune Remediations remediation script. The script writes configured Office policy registry values and validates the final state.
+    Intune Remediations action script. It writes the reviewed registry contract and reads every value back before reporting success.
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     User recommended
+    Context:     User
 
 .INTUNE
     Workload:    Detection and Remediation
-    Exit 0:      Office macro policy values remediated
-    Exit 1:      Office macro policy remediation failed
+    Exit 0:      The final registry type and data are exact
+    Exit 1:      The write failed or final validation did not match
 
 .CUSTOMIZATION
-    Update values in the CONFIGURATION section before deployment.
+    The RegistryValues block is the reviewed package contract. Keep it identical in Detect.ps1 and Remediate.ps1.
 #>
 
 #Requires -Version 5.1
@@ -28,27 +28,28 @@ $ErrorActionPreference = 'Stop'
 # CONFIGURATION
 # =========================
 
-# CUSTOMIZE HERE.
-# Keep every value an admin is expected to change in this section.
-# Common examples: file paths, registry paths, service names, URLs,
-# tenant-specific labels, expected values, and validation timing.
+# CUSTOMIZE HERE. The shipped RegistryValues block is the reviewed package contract.
+# Keep it identical in Detect.ps1 and Remediate.ps1; rename and re-review the package for a different intent.
 
-# Keep these names aligned with the folder and script file.
-# Logs are written to Logs\<ScriptPackageName>\<ScriptName>.log.
 $ScriptPackageName = 'Ensure-Office-Block-Macros-From-Internet'
 $ScriptName = 'Remediate'
 
-$OfficePolicyRoot = 'HKCU:\Software\Policies\Microsoft\Office\16.0'
-$OfficeAppNames = @('word', 'excel', 'powerpoint', 'access')
-$MacroPolicyValueName = 'blockcontentexecutionfrominternet'
-$DesiredMacroPolicyValue = 1
-$ValidationDelaySeconds = 2
+$RegistryValues = @(
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\access\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Access' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\excel\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Excel' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\powerpoint\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in PowerPoint' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\msproject\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Project' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\publisher\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Publisher' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\visio\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Visio' },
+    @{ Path = 'HKCU:\Software\Policies\Microsoft\Office\16.0\word\security'; Name = 'blockcontentexecutionfrominternet'; Type = 'DWord'; Value = 1; Description = 'Block internet macros in Word' }
+)
+$ValidationDelaySeconds = 1
 
 # =========================
 # LOGGING
 # =========================
 
-$BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
+$BaseLogRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
@@ -60,16 +61,12 @@ function Initialize-Log {
 
 function Write-Log {
     param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-
-        [ValidateSet('INFO', 'WARN', 'ERROR')]
-        [string]$Level = 'INFO'
+        [Parameter(Mandatory = $true)][string]$Message,
+        [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'
     )
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-    $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value "$timestamp [$Level] $Message" -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -77,39 +74,40 @@ function Write-ScriptMetadata {
     Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
 }
 
-function Get-OfficeMacroPolicyItems {
-    foreach ($appName in $OfficeAppNames) {
-        [pscustomobject]@{
-            Path = Join-Path -Path $OfficePolicyRoot -ChildPath "$appName\security"
-            Name = $MacroPolicyValueName
-            Value = $DesiredMacroPolicyValue
-            Type = 'DWord'
-            App = $appName
-        }
-    }
-}
+function Get-RegistryValueState {
+    param([Parameter(Mandatory = $true)][array]$Values)
 
-function Get-OfficeMacroPolicyState {
-    $items = @(Get-OfficeMacroPolicyItems)
-    foreach ($item in $items) {
+    foreach ($item in $Values) {
+        $keyExists = Test-Path -LiteralPath $item.Path
+        $valueExists = $false
         $currentValue = $null
-        $compliant = $false
+        $currentType = $null
 
-        if (Test-Path -LiteralPath $item.Path) {
-            $property = Get-ItemProperty -LiteralPath $item.Path -Name $item.Name -ErrorAction SilentlyContinue
-            if ($null -ne $property) {
-                $currentValue = $property.($item.Name)
-                $compliant = ([string]$currentValue -eq [string]$item.Value)
+        if ($keyExists) {
+            $key = Get-Item -LiteralPath $item.Path -ErrorAction Stop
+            $matchingName = @($key.GetValueNames() | Where-Object { $_ -ieq [string]$item.Name } | Select-Object -First 1)
+            if ($matchingName.Count -eq 1) {
+                $valueExists = $true
+                $currentType = $key.GetValueKind([string]$matchingName[0]).ToString()
+                $currentValue = $key.GetValue([string]$matchingName[0], $null, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
             }
         }
 
+        $typeMatches = $valueExists -and ([string]$currentType -ceq [string]$item.Type)
+        $valueMatches = $valueExists -and [object]::Equals($currentValue, $item.Value)
+
         [pscustomobject]@{
-            App = $item.App
             Path = $item.Path
             Name = $item.Name
-            CurrentValue = $currentValue
+            DesiredType = $item.Type
             DesiredValue = $item.Value
-            Compliant = $compliant
+            CurrentType = $currentType
+            CurrentValue = $currentValue
+            KeyExists = $keyExists
+            ValueExists = $valueExists
+            TypeMatches = $typeMatches
+            ValueMatches = $valueMatches
+            Compliant = ($typeMatches -and $valueMatches)
         }
     }
 }
@@ -121,41 +119,38 @@ function Get-OfficeMacroPolicyState {
 try {
     Initialize-Log
     Write-ScriptMetadata
-    Write-Log -Message "Remediation started. OfficePolicyRoot='$OfficePolicyRoot'; Apps='$($OfficeAppNames -join ',')'."
+    Write-Log -Message "Remediation started. Registry value count='$($RegistryValues.Count)'."
 
-    foreach ($item in @(Get-OfficeMacroPolicyItems)) {
+    foreach ($item in $RegistryValues) {
         if (-not (Test-Path -LiteralPath $item.Path)) {
             New-Item -Path $item.Path -Force | Out-Null
         }
 
-        Write-Log -Message "Setting Office macro policy App='$($item.App)' Path='$($item.Path)' Name='$($item.Name)' Value='$($item.Value)'."
+        Write-Log -Message "Writing Path='$($item.Path)' Name='$($item.Name)' Type='$($item.Type)' Value='$($item.Value)'."
         New-ItemProperty -LiteralPath $item.Path -Name $item.Name -Value $item.Value -PropertyType $item.Type -Force | Out-Null
     }
 
     Start-Sleep -Seconds $ValidationDelaySeconds
-    $state = @(Get-OfficeMacroPolicyState)
-    $nonCompliant = @($state | Where-Object { -not $_.Compliant })
+    $state = @(Get-RegistryValueState -Values $RegistryValues)
+    foreach ($item in $state) {
+        Write-Log -Message "Validation state Path='$($item.Path)' Name='$($item.Name)' CurrentType='$($item.CurrentType)' DesiredType='$($item.DesiredType)' Current='$($item.CurrentValue)' Desired='$($item.DesiredValue)' Compliant='$($item.Compliant)'."
+    }
 
+    $nonCompliant = @($state | Where-Object { -not $_.Compliant })
     if ($nonCompliant.Count -eq 0) {
-        $message = 'Remediation succeeded. Office macro-from-internet policy values match the desired state.'
+        $message = 'Remediation succeeded. Every configured registry value has the exact required type and data.'
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Remediation failed. $($nonCompliant.Count) Office app macro policy value(s) are still missing or different."
+    $message = "Remediation failed. $($nonCompliant.Count) registry value(s) still have the wrong type or data."
     Write-Log -Message $message -Level 'ERROR'
     Write-Output $message
     exit 1
 }
 catch {
-    try {
-        Write-Log -Message "$ScriptName failed. $($_.Exception.Message)" -Level 'ERROR'
-    }
-    catch {
-    }
-
-    Write-Output 'Remediation failed for Office macro policy values.'
+    try { Write-Log -Message "$ScriptName failed. $($_.Exception.Message)" -Level 'ERROR' } catch {}
+    Write-Output 'Remediation failed. The registry contract was not established.'
     exit 1
 }
-

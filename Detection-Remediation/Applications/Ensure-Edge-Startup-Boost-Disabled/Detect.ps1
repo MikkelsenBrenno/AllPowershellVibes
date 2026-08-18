@@ -154,4 +154,3 @@ catch {
     Write-Output 'Not compliant. Ensure Edge Startup Boost Disabled could not be validated.'
     exit 1
 }
-

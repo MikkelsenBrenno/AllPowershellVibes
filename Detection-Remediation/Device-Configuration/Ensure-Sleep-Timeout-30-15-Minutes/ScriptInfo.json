@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Sleep Timeout 30 and 15 Minutes",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Configures sleep timeouts to 30 minutes on AC and 15 minutes on battery.",
+  "Tags": [
+    "Device Configuration",
+    "Power",
+    "Sleep"
+  ]
+}

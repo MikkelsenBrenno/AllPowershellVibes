@@ -165,4 +165,3 @@ catch {
     Write-Output 'Remediation failed for Ensure Edge Password Manager Disabled.'
     exit 1
 }
-

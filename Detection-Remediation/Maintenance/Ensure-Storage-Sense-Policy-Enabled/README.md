@@ -1,49 +1,89 @@
-# Ensure-Storage-Sense-Policy-Enabled
+# Ensure Storage Sense Policy Enabled
 
 ## Summary
 
-Detects and optionally configures machine policy registry values for Storage Sense. This gives technicians a simple, copy-friendly baseline for enabling disk cleanup behavior on Windows devices.
+Detects and remediates the documented Storage Sense policy baseline with monthly cadence.
 
-## Prerequisites
+**Repository status:** `PilotReady`. Microsoft documents the path, value name, type, and data semantics, and both scripts enforce exact registry type and data. This is ready for a controlled tenant pilot, not pre-labeled as `Validated`.
 
-- Deploy as an Intune Remediations package.
-- Run in the system context.
-- Run in 64-bit PowerShell.
-- Test on pilot devices before enabling policy writes.
-- Confirm these settings do not conflict with Settings Catalog, GPO, or other device configuration profiles.
+## Copy To Intune
+
+Copy `Detect.ps1` into the **Detection script** field and `Remediate.ps1` into the **Remediation script** field of the same Intune Remediations package. Do not combine the files and do not reverse their roles.
+
+## Configuration Contract
+
+Keep `$RegistryValues` identical in both scripts.
+
+| Path | Name | Type | Required data |
+| --- | --- | --- | --- |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Windows\StorageSense` | `AllowStorageSenseGlobal` | `DWord` | `1` |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Windows\StorageSense` | `ConfigStorageSenseGlobalCadence` | `DWord` | `30` |
+
+**Effect:** Enables Storage Sense and configures its global cadence to monthly. It does not add deletion rules beyond Windows defaults or other separately configured policies.
 
 ## Customization
 
-Edit the CONFIGURATION section near the top of each script:
+The shipped registry contract is the source-verified baseline for this package name. Keep $RegistryValues identical in both scripts. If a different state is required, create a separately named and reviewed package so its purpose, documentation, and rollback remain honest.
 
-- `$StorageSensePolicyPath`: Registry path for Storage Sense policy values.
-- `$EnableValueName`: Registry value used to enable Storage Sense.
-- `$ExpectedEnableValue`: Expected detection value.
-- `$CadenceValueName`: Registry value used for cleanup cadence.
-- `$ExpectedCadenceValue`: Expected detection cadence.
-- `$RequireCadenceValue`: Require cadence to match during detection.
-- `$ApplyPolicy`: Set to `$true` in `Remediate.ps1` after pilot testing.
-- `$ExitZeroInReportingOnlyMode`: Set to `$true` only when report-only remediation should appear successful.
+## Prerequisites
+
+- Device-scoped policy for supported Windows 10 version 1903 and later editions listed in the Storage Policy CSP.
+- Settings Catalog is normally the preferred owner. Use this remediation only when registry drift enforcement is intentional, and never configure a conflicting Storage Sense baseline elsewhere.
+- Use Windows PowerShell 5.1 in 64-bit `System` context.
+- Do not simultaneously manage these values to a different state through Settings Catalog, Administrative Templates, security baselines, Group Policy, or another tool.
 
 ## Intune Settings
 
-- Detection script: `Detect.ps1`
-- Remediation script: `Remediate.ps1`
-- Run this script using the logged-on credentials: `No`
-- Enforce script signature check: `No`, unless your organization signs scripts
-- Run script in 64-bit PowerShell: `Yes`
+| Setting | Required/recommended value |
+| --- | --- |
+| Workload | Remediations |
+| Detection script | `Detect.ps1` |
+| Remediation script | `Remediate.ps1` |
+| Run using logged-on credentials | No |
+| Enforce script signature check | Follow tenant signing policy |
+| Run script in 64-bit PowerShell | Yes |
+
+Assign to a small, representative nonproduction group first. Intune runs remediation only when detection exits `1`.
 
 ## Expected Results
 
-- Detection exits `0` when Storage Sense policy matches expected values.
-- Detection exits `1` when policy values are missing or different.
-- Remediation exits `1` in report-only mode by default.
-- Remediation exits `0` after `$ApplyPolicy` is enabled and registry values are written.
-- Logs are written to `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Storage-Sense-Policy-Enabled`.
+- Detection is read-only and exits `0` only when every value exists with the exact required registry type and data.
+- A missing key, missing value, wrong type, wrong data, or read error exits `1`.
+- Remediation creates missing keys, writes the reviewed values, reads them back, and exits `0` only after exact final validation.
+- Logs are written under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Storage-Sense-Policy-Enabled`.
+
+## Pilot Validation
+
+Use a disposable or nonproduction Windows client in the exact Intune context above.
+
+1. Confirm the device satisfies the documented OS and edition scope and record its build.
+2. Export or record the original key/value state, including value type and data.
+3. Test a missing value; detection must exit `1`.
+4. Test the value with the wrong registry type; detection must exit `1`.
+5. Test the correct type with wrong data; detection must exit `1`.
+6. Set the exact configuration contract; detection must exit `0`.
+7. From a restored noncompliant state, let Intune run remediation. It must report success only after the final type and data match.
+8. Run detection again, review both package logs and the Intune Management Extension logs, then perform the product check: Check **Settings > System > Storage > Storage Sense** and confirm it is enabled with the intended cadence.
+9. Check for policy conflict or reversion after device sync, user sign-in where relevant, and restart.
+10. Restore the recorded original state if the pilot is not approved.
+
+Do not change this package to `Validated` until non-sensitive pilot evidence is recorded using `docs/Trusted-Remediation-Pilot.md`.
+
+## Rollback
+
+Restore every recorded original value with its original type and data. If a value did not exist before the pilot, remove that value only. Remove a key only when the pilot created it and it has no sibling values. For this package, also consider: Settings Catalog is normally the preferred owner. Use this remediation only when registry drift enforcement is intentional, and never configure a conflicting Storage Sense baseline elsewhere.
 
 ## Troubleshooting
 
-- If remediation keeps reporting only, verify `$ApplyPolicy` is set to `$true`.
-- If values revert, check GPO, Settings Catalog, or security baseline assignment.
-- If detection fails on cadence, verify `$RequireCadenceValue` and `$WriteCadenceValue` are aligned.
-- Review the script log for the exact registry path and values used.
+- Confirm Intune used `System` context and 64-bit PowerShell.
+- Compare the effective registry type as well as data; a string such as `"0"` is not a DWORD `0`.
+- Check Settings Catalog, Administrative Templates, security baselines, Group Policy, and third-party agents for duplicate ownership.
+- Review `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs` and the package log path above.
+- Recheck the linked Microsoft applicability table if the value is exact but the product behavior does not change.
+
+## Microsoft References
+
+- [Storage Policy CSP - AllowStorageSenseGlobal](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-storage#allowstoragesenseglobal)
+- [Storage Policy CSP - ConfigStorageSenseGlobalCadence](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-storage#configstoragesenseglobalcadence)
+- [Storage Sense management guidance](https://learn.microsoft.com/en-us/windows/configuration/storage/storage-sense)
+- [Use Remediations to detect and fix support issues](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

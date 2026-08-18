@@ -2,9 +2,9 @@
   "Name": "Ensure Cortana Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Windows Search policy so Cortana is disabled on managed business endpoints.",
+  "Summary": "Detects and remediates the documented legacy Windows policy that disables Cortana while leaving local search available.",
   "Tags": [
     "User Experience",
-    "Search",
-    "Business Premium"
+    "Cortana",
+    "Legacy Windows"
   ]
 }

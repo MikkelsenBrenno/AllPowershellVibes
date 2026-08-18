@@ -165,4 +165,3 @@ catch {
     Write-Output 'Remediation failed for Ensure Edge Shopping Features Disabled.'
     exit 1
 }
-

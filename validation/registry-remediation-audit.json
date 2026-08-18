@@ -4,113 +4,945 @@
   "ReviewedOn": "2026-08-18",
   "CandidateDefinition": "Detection-Remediation packages whose Detect.ps1 reads or references Windows registry state.",
   "Packages": [
-    { "Path": "Detection-Remediation/Applications/Detect-Installed-App-Version", "Disposition": "OutOfScope", "Batch": 0, "Reason": "Reads uninstall inventory as application evidence; it does not enforce a documented registry policy value.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Edge-Extension-Blocklist-Template", "Disposition": "NeedsCustomization", "Batch": 5, "Reason": "The wildcard blocklist is intentionally a template and requires an approved extension strategy before promotion.", "MicrosoftReferences": ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/ExtensionInstallBlocklist"] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Edge-Password-Manager-Disabled", "Disposition": "PilotReady", "Batch": 1, "Reason": "Microsoft documents the mandatory REG_DWORD policy and disabling it is appropriate only where another approved password manager is standard.", "MicrosoftReferences": ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PasswordManagerEnabled"] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Edge-Shopping-Features-Disabled", "Disposition": "PilotReady", "Batch": 1, "Reason": "Microsoft documents the mandatory REG_DWORD policy and value semantics.", "MicrosoftReferences": ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/EdgeShoppingAssistantEnabled"] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Edge-Startup-Boost-Disabled", "Disposition": "PilotReady", "Batch": 1, "Reason": "Microsoft documents the mandatory REG_DWORD policy and value semantics for supported Edge versions.", "MicrosoftReferences": ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/StartupBoostEnabled"] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Microsoft-365-Apps-Update-Channel", "Disposition": "NeedsSourceVerification", "Batch": 5, "Reason": "The Click-to-Run channel URL and supported management authority require current Microsoft 365 Apps documentation review.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Applications/Ensure-Office-Automatic-Updates-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 5, "Reason": "Office ADMX path, value casing, supported products, and policy precedence require source verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Applications/Remove-Unsupported-MSI-Products", "Disposition": "OutOfScope", "Batch": 0, "Reason": "Uses uninstall inventory to locate products and performs software removal; it is not a simple registry policy remediation.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Autofill-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeAutofillPolicy is not a documented Microsoft Edge policy value; use specific documented Autofill policies.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Cookie-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeCookiePolicy is a generated placeholder rather than a documented Microsoft Edge policy value.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Download-Restrictions", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeDownloadRestrictions is not the documented DownloadRestrictions policy name or data contract.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Extension-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeExtensionPolicy is a generated placeholder rather than a documented Edge extension policy.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Homepage-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeHomepagePolicy is not a documented Edge policy and contains tenant placeholder data.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Password-Manager", "Disposition": "Duplicate", "Batch": 0, "Reason": "Generic placeholder duplicates the source-backed Ensure-Edge-Password-Manager-Disabled package.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Profile-SignIn", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeProfileSignIn is not the documented BrowserSignin policy name or integer data contract.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Search-Provider", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeSearchProvider is not a documented Edge policy and the package lacks the required provider policy set.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-SmartScreen-State", "Disposition": "Duplicate", "Batch": 0, "Reason": "Generic placeholder duplicates the source-backed Ensure-Edge-SmartScreen-Enabled package.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Sync-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeSyncPolicy is not the documented SyncDisabled policy name or Boolean DWORD contract.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Update-Policy", "Disposition": "InvalidPlaceholder", "Batch": 0, "Reason": "EdgeUpdatePolicy is not a documented Microsoft Edge Update policy value.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-Baseline-Marker", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A repository-owned marker does not prove BitLocker encryption or policy state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-Policy-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso marker does not prove effective BitLocker policy state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-Recovery-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso marker does not prove recovery-key escrow or protection state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Compliance/Ensure-Compliance-Registry-Marker", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "The marker proves only that the package wrote its own value.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Advertising-ID-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Windows edition, policy mapping, and current Advertising ID behavior require Microsoft source verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Computer-Description", "Disposition": "NeedsRedesign", "Batch": 0, "Reason": "Computer description is system state rather than a stable Microsoft policy registry contract.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Fast-Startup-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "HiberbootEnabled behavior, hardware applicability, and supported policy ownership require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Feedback-Notifications-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The ADMX/Policy CSP mapping and supported editions require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Input-Personalization-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The policy path, value semantics, and current Windows support require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Location-Access-Disabled-Template", "Disposition": "NeedsCustomization", "Batch": 2, "Reason": "The package is explicitly a template and location policy scope must be selected deliberately.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-App-Notifications-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The current Windows policy mapping and edition applicability require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-Camera-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The Personalization ADMX mapping, edition applicability, and current lock-screen behavior require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Configuration-File", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso registry value does not prove that a power configuration file exists or is applied.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Policy-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso registry marker does not prove effective power policy state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Readiness-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso registry marker does not prove device power readiness.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Registry-Marker", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "The package requirement is only a repository-owned marker and has no independent device-state claim.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Scheduled-Task", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso registry marker does not prove the scheduled task exists or is correct.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Registry-Value", "Disposition": "NeedsCustomization", "Batch": 0, "Reason": "This is an example registry template with synthetic path and value data.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Device-Configuration/Ensure-Tailored-Experiences-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The Cloud Content policy mapping and supported editions require verification.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Maintenance/Ensure-Storage-Sense-Policy-Enabled", "Disposition": "PreferNativeManagement", "Batch": 2, "Reason": "Storage Sense has supported Intune policy controls; registry enforcement and policy precedence require redesign justification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Maintenance/Refresh-Group-Policy-When-Stale", "Disposition": "OutOfScope", "Batch": 0, "Reason": "Registry data is used as freshness evidence before running gpupdate; this is not a simple registry value policy.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Networking/Ensure-DNS-Client-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso marker does not prove DNS client configuration or health.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Networking/Ensure-DNS-Connectivity", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso marker does not test DNS connectivity.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Networking/Ensure-DNS-Policy-State", "Disposition": "MarkerOnly", "Batch": 0, "Reason": "A Contoso marker does not prove effective DNS policy state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Networking/Ensure-IPv6-Transition-Technologies-Disabled-Template", "Disposition": "NeedsCustomization", "Batch": 6, "Reason": "The package is a template and each transition technology requires scenario-specific Microsoft guidance.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Networking/Ensure-LLMNR-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 6, "Reason": "The DNS Client ADMX mapping and applicability require official verification before promotion.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Networking/Ensure-Teredo-Disabled-Template", "Disposition": "NeedsCustomization", "Batch": 6, "Reason": "The package is explicitly a template and Teredo requirements vary by tenant connectivity scenario.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Security/Ensure-Anonymous-SAM-Enumeration-Restricted", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "Security Options mapping, defaults, and domain-controller applicability require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-AutoRun-AutoPlay-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "Multiple AutoPlay policies and value semantics require official source verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-AutoRun-Disabled-All-Drives", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "The selected NoDriveTypeAutoRun value and machine policy path require official verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Cached-Domain-Logons-Limited", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "Security Options string value semantics and offline-logon impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Controlled-Folder-Access-Audit-Template", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Controlled Folder Access should normally use supported Defender policy or cmdlets; the template needs scenario approval.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-CredSSP-Oracle-Remediation-Enforced", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "CredSSP policy value semantics, compatibility impact, and current mitigation guidance require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Defender-Cloud-Protection-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Defender cloud protection has supported Intune/Defender controls and tamper-protection considerations.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Defender-Network-Protection-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Network Protection has supported Defender policy and cmdlet management with richer effective-state evidence.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Defender-PUA-Protection-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "PUA protection has supported Defender/Intune management and effective-state validation options.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Edge-SmartScreen-Enabled", "Disposition": "PilotReady", "Batch": 1, "Reason": "Microsoft documents all four mandatory REG_DWORD policies, supported versions, and value semantics.", "MicrosoftReferences": ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/SmartScreenEnabled", "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/SmartScreenPuaEnabled", "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PreventSmartScreenPromptOverride", "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PreventSmartScreenPromptOverrideForFiles"] },
-    { "Path": "Detection-Remediation/Security/Ensure-Firewall-Domain-Profile-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Windows Firewall has supported Intune policy and firewall cmdlets that expose effective profile state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Firewall-Private-Profile-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Windows Firewall has supported Intune policy and firewall cmdlets that expose effective profile state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Firewall-Public-Profile-Enabled", "Disposition": "PreferNativeManagement", "Batch": 3, "Reason": "Windows Firewall has supported Intune policy and firewall cmdlets that expose effective profile state.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Insecure-Guest-Logons-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "Lanman Workstation ADMX mapping and SMB compatibility impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-LM-Hash-Storage-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "Security Options mapping, defaults, and restart/password-change behavior require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Local-Account-Remote-UAC-Filtering-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 3, "Reason": "The LocalAccountTokenFilterPolicy semantics and remote administration impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-LSA-Protection-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "LSA protection configuration differs by Windows version and may require UEFI or reboot-aware validation.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Office-Block-Macros-From-Internet", "Disposition": "PreferNativeManagement", "Batch": 5, "Reason": "Office macro policy is better expressed through supported Office ADMX/Cloud Policy with application-specific scope.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-PowerShell-Module-Logging-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "PowerShell ADMX value paths, wildcard behavior, and log-volume impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-PowerShell-ScriptBlock-Logging-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "PowerShell ADMX mapping and operational logging impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-RDP-NLA-Required", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "RDP listener value mapping, supported policy path, and session impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Remote-Assistance-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "Remote Assistance policy mapping and product applicability require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Remote-Desktop-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "The policy path, firewall interaction, and remote-management safety plan require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Remote-Desktop-Disabled-Template", "Disposition": "Duplicate", "Batch": 0, "Reason": "Template duplicates Ensure-Remote-Desktop-Disabled and should not be promoted independently.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-SMBv1-Client-Driver-Disabled", "Disposition": "PreferNativeManagement", "Batch": 4, "Reason": "SMB1 is a Windows optional feature/service stack and should use supported feature-state management and validation.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-SMBv1-Server-Disabled", "Disposition": "PreferNativeManagement", "Batch": 4, "Reason": "SMB server configuration has supported cmdlets and feature-state checks that provide stronger evidence.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-TLS12-For-NETFramework", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": ".NET Framework TLS defaults require version, architecture, and application compatibility verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-UAC-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "Two UAC Security Options are combined and require separate source and restart-impact verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-UAC-Secure-Desktop-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "Security Options mapping and interactive impact require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-USB-Storage-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "USBSTOR service state is not equivalent to every removable-storage control and requires scope verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-WDigest-Credential-Caching-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "WDigest defaults vary by patched OS and the explicit value's current support must be verified.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Windows-Installer-AlwaysElevated-Machine-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "Both machine and user policy scopes affect AlwaysInstallElevated; this package currently covers only machine scope.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Security/Ensure-Windows-Script-Host-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 4, "Reason": "Windows Script Host configuration, application compatibility, and supported policy status require verification.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/User-Experience/Configure-Edge-Startup-Pages", "Disposition": "NeedsCustomization", "Batch": 5, "Reason": "Startup URLs are tenant-specific and the package must use the documented Edge policy set and list contract.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Activity-History-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Activity history policy behavior has changed across Windows versions and requires current source verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Clipboard-History-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Policy CSP/ADMX mapping and supported editions require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Cloud-Clipboard-Sync-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Cross-device clipboard policy mapping and supported editions require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Cortana-Disabled", "Disposition": "NeedsRedesign", "Batch": 2, "Reason": "Cortana has been deprecated/removed on current Windows releases, so version applicability must be redesigned.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-GameDVR-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Game DVR policy mapping and supported editions require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-News-And-Interests-Disabled", "Disposition": "NeedsRedesign", "Batch": 2, "Reason": "The feature and policy applicability differ across Windows generations and taskbar experiences.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-OneDrive-Files-On-Demand-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 5, "Reason": "OneDrive ADMX mapping, client prerequisites, and per-machine policy behavior require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-OneDrive-Silent-Account-Config-Enabled", "Disposition": "NeedsSourceVerification", "Batch": 5, "Reason": "OneDrive silent configuration has identity, join-state, and client-version prerequisites requiring verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Search-Highlights-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Search policy naming and supported Windows versions require current verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Start-Menu-Web-Search-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Search-box suggestions policy applicability and current Windows behavior require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Consumer-Features-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "Cloud Content policy edition restrictions and current behavior require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Copilot-Disabled-Template", "Disposition": "NeedsRedesign", "Batch": 2, "Reason": "The package is a template and Copilot policy applicability has changed across Windows and Microsoft 365 experiences.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Spotlight-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "The broad Spotlight policy and edition applicability require verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Tips-Disabled", "Disposition": "NeedsSourceVerification", "Batch": 2, "Reason": "DisableSoftLanding mapping and current Windows support require verification.", "MicrosoftReferences": [] },
-
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Delivery-Optimization-LAN-Mode", "Disposition": "PreferNativeManagement", "Batch": 6, "Reason": "Delivery Optimization has supported Intune policy with network-aware options and clearer precedence.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Feature-Update-Safeguard-Holds-Allowed", "Disposition": "NeedsSourceVerification", "Batch": 6, "Reason": "Safeguard hold policy semantics and Windows Update for Business behavior require current verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Active-Hours-Template", "Disposition": "NeedsCustomization", "Batch": 6, "Reason": "Active hours are tenant-specific and the template must be aligned with supported WUfB policy.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Drivers-Excluded-Template", "Disposition": "NeedsCustomization", "Batch": 6, "Reason": "Driver-update exclusion is a tenant decision and the package is explicitly a template.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-No-Auto-Reboot-With-Users", "Disposition": "NeedsSourceVerification", "Batch": 6, "Reason": "Legacy AU policy interaction with modern WUfB restart policy requires verification.", "MicrosoftReferences": [] },
-    { "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Policy-Keys-Present", "Disposition": "NeedsRedesign", "Batch": 0, "Reason": "Key presence alone does not prove an effective Windows Update policy or desired values.", "MicrosoftReferences": [] }
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-App-Installer-Default-Source-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-desktopappinstaller#enabledefaultsource"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Edge-Extensions-Blocked-By-Default",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "The template is now an explicit block-by-default policy using Microsoft-documented list value 1 = * with allowlist and rollout prerequisites.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/extensioninstallblocklist"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Edge-Password-Manager-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 1,
+      "Reason": "Microsoft documents the mandatory REG_DWORD policy and disabling it is appropriate only where another approved password manager is standard.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PasswordManagerEnabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Edge-Shopping-Features-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 1,
+      "Reason": "Microsoft documents the mandatory REG_DWORD policy and value semantics.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/EdgeShoppingAssistantEnabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Edge-Startup-Boost-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 1,
+      "Reason": "Microsoft documents the mandatory REG_DWORD policy and value semantics for supported Edge versions.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/StartupBoostEnabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Microsoft-365-Apps-Monthly-Enterprise-Channel",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "The unmanaged CDN URL comparison was replaced by Microsoft-documented UpdateBranch REG_SZ MonthlyEnterprise and the package name now states the chosen channel.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/microsoft-365-apps/insider/deploy/registry",
+        "https://learn.microsoft.com/en-us/microsoft-365-apps/updates/change-update-channels"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-Office-Automatic-Updates-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "Microsoft documentation supports the OfficeUpdate EnableAutomaticUpdates DWORD, with Click-to-Run scope and management-authority precedence disclosed.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/microsoft-365-apps/installation/automatic-updates",
+        "https://learn.microsoft.com/en-us/microsoft-365-apps/updates/configure-update-settings-microsoft-365-apps"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Applications/Ensure-App-Installer-Experimental-Features-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-desktopappinstaller#enableexperimentalfeatures"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Autofill-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/autofilladdressenabled",
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/autofillcreditcardenabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Third-Party-Cookies-Blocked",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/blockthirdpartycookies"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Dangerous-Downloads-Blocked",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/downloadrestrictions"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-External-Extensions-Blocked",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/blockexternalextensions"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Homepage-New-Tab",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/homepageisnewtabpage"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Password-Import-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/importsavedpasswords"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Browser-SignIn-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/browsersignin"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Search-Suggestions-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/searchsuggestenabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Typosquatting-Protection-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/typosquattingcheckerenabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Sync-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/syncdisabled"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Browser-Management/Ensure-Edge-Automatic-Updates-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-update-policies#updatedefault"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-OS-Drive-XTS-AES-256",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-protection/troubleshoot-bitlocker-policies",
+        "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/configure"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-Fixed-Drive-XTS-AES-256",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-protection/troubleshoot-bitlocker-policies",
+        "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/configure"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Compliance/Ensure-BitLocker-Removable-Drive-AES-CBC-256",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-protection/troubleshoot-bitlocker-policies",
+        "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/configure"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Compliance/Ensure-Password-Reveal-Button-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-credentialsui#disablepasswordreveal"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Advertising-ID-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the AdvertisingInfo registry mapping and the DisabledByGroupPolicy DWORD contract.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#disableadvertisingid"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Long-Paths-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Fast-Startup-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents HiberbootEnabled as a DWORD under the Session Manager Power key; the package is explicitly scoped to compatible Windows clients.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/configuration/unified-write-filter/hibernate-once-resume-many-horm",
+        "https://learn.microsoft.com/en-us/windows/win32/power/system-power-states"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Feedback-Notifications-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the DoNotShowFeedbackNotifications registry mapping and value semantics.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#donotshowfeedbacknotifications"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Input-Personalization-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the AllowInputPersonalization registry mapping and disabling value.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#allowinputpersonalization"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Location-Access-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "The former template now enforces the documented device-wide DisableLocation DWORD and clearly warns about location-dependent functionality.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-system#allowlocation"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-App-Notifications-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the DisableLockScreenAppNotifications registry mapping and enabled data value.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowslogon#disablelockscreenappnotifications"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Lock-Screen-Camera-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the NoLockScreenCamera registry mapping for the lock-screen camera restriction.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-devicelock#preventenablinglockscreencamera"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Display-Off-Timeout-15-5-Minutes",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#displayofftimeoutpluggedin",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#displayofftimeoutonbattery"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Sleep-Timeout-30-15-Minutes",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#standbytimeoutpluggedin",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#standbytimeoutonbattery"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Power-Button-Action-Sleep",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#selectpowerbuttonactionpluggedin",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#selectpowerbuttonactiononbattery"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Lid-Close-Action-Sleep",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#selectlidcloseactionpluggedin",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#selectlidcloseactiononbattery"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Hard-Disk-Timeout-20-10-Minutes",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#harddiskpowerdowntimeoutpluggedin",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-power#harddiskpowerdowntimeoutonbattery"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Windows-Error-Reporting-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/win32/wer/wer-settings",
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-client/system-management-components/windows-error-reporting-diagnostics-enablement-guidance"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Device-Configuration/Ensure-Tailored-Experiences-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "The package now uses the documented user-scoped HKCU CloudContent mapping and explicit user execution context.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowtailoredexperienceswithdiagnosticdata"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Maintenance/Ensure-Storage-Sense-Policy-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents both Storage Sense registry mappings and the monthly cadence value; documentation states that native policy is normally preferred and forbids conflicting ownership.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-storage#allowstoragesenseglobal",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-storage#configstoragesenseglobalcadence"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Maintenance/Ensure-Group-Policy-Background-Refresh-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-grouppolicy#disablebackgroundpolicy"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-Smart-Multi-Homed-Name-Resolution-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-dnsclient#dns_smartmultihomednameresolution"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-DNS-Preferred-Over-Link-Local-Responses",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-dnsclient#dns_smartprotocolreorder"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-DNS-Suffix-Devolution-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-dnsclient#dns_usedomainnamedevolution"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-6to4-And-ISATAP-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The template now has a distinct, tenant-neutral contract for Microsoft-documented 6to4 and ISATAP disabled states, excluding Teredo to avoid duplication.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/configure-ipv6-in-windows",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-tcpip"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-LLMNR-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "Microsoft documents EnableMulticast DWORD 0 for the device policy and its all-adapter effect; DNS and fallback dependencies are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-dnsclient#turn_off_multicast"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Networking/Ensure-Teredo-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The template suffix is removed and the exact Microsoft-documented Teredo_State Disabled policy is scoped separately from other transition technologies.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-tcpip#teredo_state",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-interface"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Anonymous-SAM-Enumeration-Restricted",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents RestrictAnonymousSAM as REG_DWORD 1 for the security option; applicability and legacy access impact are called out for pilot testing.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj852230(v=ws.11)",
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-AutoRun-AutoPlay-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents NoDriveTypeAutoRun 255 and NoAutorun 1; both values are enforced so the package name matches its complete contract.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-autoplay",
+        "https://learn.microsoft.com/en-us/windows/win32/shell/autoplay-reg"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-AutoPlay-NonVolume-Devices-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "The misleading all-drives duplicate was replaced with Microsoft-documented NoAutoplayfornonVolume policy semantics and a scope-accurate name.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-autoplay#disallowautoplayfornonvolumedevices"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Cached-Domain-Logons-Limited",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents CachedLogonsCount as REG_SZ and the baseline recommends four or fewer; offline-logon impact is explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-client/user-profiles-and-logon/cached-user-logon-fails-lsasrv-event-45058",
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Controlled-Folder-Access-Audit",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "The template is now a concrete audit-mode package using the documented value 2, with Defender policy ownership and tamper-protection cautions.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/defender-endpoint/controlled-folder-access-configure",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender#enablecontrolledfolderaccess"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-CredSSP-Oracle-Remediation-Enforced",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents AllowEncryptionOracle 0 as force updated clients; connection impact to unpatched peers is explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/windows/credssp-encryption-oracle-remediation",
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Defender-Cloud-Protection-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents advanced MAPS membership and safe-sample consent values; privacy and native-management considerations are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Defender-Network-Protection-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents EnableNetworkProtection 1 as block mode; client scope, server prerequisites, and policy ownership are called out.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/defender-endpoint/network-protection",
+        "https://learn.microsoft.com/en-us/defender-endpoint/enable-network-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Defender-PUA-Protection-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents PUAProtection 1 as enabled block mode; Defender ownership and application compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/defender-endpoint/detect-block-potentially-unwanted-apps-microsoft-defender-antivirus"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Edge-SmartScreen-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 1,
+      "Reason": "Microsoft documents all four mandatory REG_DWORD policies, supported versions, and value semantics.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/SmartScreenEnabled",
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/SmartScreenPuaEnabled",
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PreventSmartScreenPromptOverride",
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/PreventSmartScreenPromptOverrideForFiles"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Firewall-Domain-Profile-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft baseline mappings document EnableFirewall 1 for the domain profile; native firewall policy and rule compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Firewall-Private-Profile-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft baseline mappings document EnableFirewall 1 for the private profile; native firewall policy and rule compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Firewall-Public-Profile-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft baseline mappings document EnableFirewall 1 for the public profile; native firewall policy and rule compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Insecure-Guest-Logons-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents AllowInsecureGuestAuth 0 as blocking insecure guest logons; legacy NAS compatibility is explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-lanmanworkstation#enableinsecureguestlogons"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-LM-Hash-Storage-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft baseline mapping documents NoLMHash 1; the next-password-change behavior and legacy compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Local-Account-Remote-UAC-Filtering-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 3,
+      "Reason": "Microsoft documents LocalAccountTokenFilterPolicy 0 as filtered-token behavior; remote tool impact and safer identity patterns are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/security/identity-protection/access-control/local-accounts",
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/user-account-control-and-remote-restriction"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-LSA-Protection-Enabled-No-UEFI-Lock",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The renamed package uses Microsoft-documented RunAsPPL 2 for Windows 11 protection without UEFI lock and requires reboot and compatibility testing.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Office-Block-Macros-From-Internet",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "The package now covers all seven Microsoft-documented Office applications with literal per-user registry contracts and explicit edition and macro-workflow prerequisites.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/microsoft-365-apps/security/internet-macros-blocked"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-PowerShell-Module-Logging-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft documents EnableModuleLogging and the wildcard module list; the exact ModuleNames string value and log sensitivity are included.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-powershellexecutionpolicy#enablemodulelogging",
+        "https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/prerequisites",
+        "https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/windows/debug-customscriptextension-runcommand-scripts"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-PowerShell-ScriptBlock-Logging-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft documents EnableScriptBlockLogging 1 and warns of sensitive log content; collection and access-control prerequisites are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowspowershell#turnonpowershellscriptblocklogging",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-RDP-NLA-Required",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The package now uses the Microsoft-documented policy path and UserAuthentication 1, with client compatibility and recovery requirements.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-terminalserver#ts_user_authentication_policy"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Remote-Assistance-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The wrong registry path was replaced with Microsoft-documented Terminal Services policy values for both solicited and unsolicited assistance.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-remoteassistance"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Remote-Desktop-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The package now uses the documented policy path and fDenyTSConnections 1, with explicit lockout and recovery precautions.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-server/remote/remote-desktop-cannot-connect-remote-computer",
+        "https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/windows/serial-console-cmd-ps-commands"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-RDP-Clipboard-Redirection-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-terminalserver#ts_client_clip"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-SMB-Client-Signing-Required",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The incomplete SMB1 driver edit was replaced by a Microsoft-documented SMB client signing policy with an accurate package name.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-SMBv1-Server-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft explicitly documents LanmanServer SMB1 0 and restart behavior; feature-state scope and legacy compatibility are clear.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/storage/file-server/troubleshoot/detect-enable-and-disable-smbv1-v2-v3"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-NETFramework-Strong-Crypto-System-Defaults",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The misleading TLS 1.2 name was replaced by Microsoft-documented strong-crypto and system-default settings across both framework and architecture views.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/dotnet/framework/network-programming/tls"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-UAC-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft baseline mappings support EnableLUA 1 and ConsentPromptBehaviorAdmin 5; restart and application impact are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows",
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/disable-user-account-control"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-UAC-Secure-Desktop-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft baseline mapping documents PromptOnSecureDesktop 1; remote-support and accessibility impact are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-All-Removable-Storage-Access-Denied",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "The misleading USBSTOR service package was replaced by the documented Deny_All policy and renamed to state its broader removable-storage scope.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-removablestorage#removablestorageclasses_denyall_access_2"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-WDigest-Credential-Caching-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft baseline mapping documents UseLogonCredential 0; modern default behavior and legacy compatibility are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/azure/governance/policy/samples/guest-configuration-baseline-windows"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Windows-Installer-AlwaysElevated-Machine-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft documents that both scopes must be enabled for elevated installation; this accurately named package enforces the machine half to 0.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/win32/msi/alwaysinstallelevated",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-applicationmanagement#msialwaysinstallwithelevatedprivileges"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Windows-Script-Host-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 4,
+      "Reason": "Microsoft support guidance confirms the HKLM Enabled DWORD 0 behavior; weaker source status and broad application impact are explicitly disclosed for pilot verification.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/answers/questions/2604764/windows-script-host-error"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Edge-Startup-New-Tab",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "Tenant placeholder URLs were removed and replaced by the documented, tenant-neutral RestoreOnStartup value 5 with a scope-accurate name.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/restoreonstartup"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Activity-History-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the PublishUserActivities and UploadUserActivities registry mappings and disabling values.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#publishuseractivities",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#uploaduseractivities"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Clipboard-History-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the AllowClipboardHistory registry mapping, supported scope, and value semantics.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowclipboardhistory"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Cloud-Clipboard-Sync-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the AllowCrossDeviceClipboard registry mapping and disabling value.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#allowcrossdeviceclipboard"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Cortana-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft continues to document the AllowCortana DWORD for supported Windows versions; the package is explicitly limited to the legacy Cortana control and disclaims Copilot coverage.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowcortana"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-GameDVR-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the AllowGameDVR registry mapping and the package explicitly limits targeting to its documented Windows 10 desktop scope.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-applicationmanagement#allowgamedvr"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-News-And-Interests-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents AllowNewsAndInterests under the Dsh key as the Windows 11 Widgets control.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-newsandinterests#allownewsandinterests"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-OneDrive-Files-On-Demand-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "Microsoft documents FilesOnDemandEnabled DWORD 1, recommends the setting, and states OS, sync client, and cloud-filter prerequisites.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/sharepoint/use-group-policy#use-onedrive-files-on-demand"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-OneDrive-Silent-Account-Config-Enabled",
+      "Disposition": "PilotReady",
+      "Batch": 5,
+      "Reason": "Microsoft explicitly documents SilentAccountConfig DWORD 1 and its Entra join, SSO, MFA, rollout, and verification prerequisites.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/sharepoint/use-group-policy#silently-sign-in-users-to-the-onedrive-sync-app-with-their-windows-credentials",
+        "https://learn.microsoft.com/en-us/sharepoint/use-silent-account-configuration"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Search-Highlights-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the EnableDynamicContentInWSB registry mapping and the package directs targeting to listed Windows update levels.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-search#allowsearchhighlights"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Start-Menu-Web-Search-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "The incorrect File Explorer suggestion value was replaced with Microsoft's ConnectedSearchUseWeb mapping for DoNotUseWebResults.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-search#donotusewebresults"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Consumer-Features-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents the DisableWindowsConsumerFeatures registry mapping; the package explicitly states the edition restriction.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowwindowsconsumerfeatures"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Recall-Snapshots-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "The deprecated and misleading Copilot template was replaced with Microsoft's current DisableAIDataAnalysis policy for Recall snapshots, with exact build scope and deletion warning.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai#disableaidataanalysis",
+        "https://learn.microsoft.com/en-us/windows/client-management/manage-windows-copilot"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Spotlight-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "The package now uses the documented user-scoped HKCU DisableWindowsSpotlightFeatures mapping and states edition limitations.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowwindowsspotlight"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/User-Experience/Ensure-Windows-Tips-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 2,
+      "Reason": "Microsoft documents DisableSoftLanding as the registry mapping for AllowWindowsTips; the package states edition limitations.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowwindowstips"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Delivery-Optimization-LAN-Mode",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "Microsoft documents DODownloadMode 1 as HTTP blended with peers behind the same NAT; network and native-management implications are explicit.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-deliveryoptimization#dodownloadmode",
+        "https://learn.microsoft.com/en-us/windows/deployment/do/delivery-optimization-workflow"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Feature-Update-Safeguard-Holds-Allowed",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The package now enforces the documented default value 0 exactly rather than treating missing and arbitrary values as compliant.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-update#disablewufbsafeguards",
+        "https://learn.microsoft.com/en-us/windows/deployment/update/safeguard-opt-out"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Active-Hours-08-17",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The tenant-specific template is now a precisely named 08:00-17:00 baseline using all three Microsoft-documented registry values.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Drivers-Excluded",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The template is now an explicit tenant-neutral exclusion policy with Microsoft-documented scope limits and a required alternative driver-servicing plan.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/update/waas-configure-wufb#exclude-drivers-from-quality-updates",
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-update#excludewudriversinqualityupdate"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Legacy-AU-No-Auto-Reboot-With-Users",
+      "Disposition": "PilotReady",
+      "Batch": 6,
+      "Reason": "The package is explicitly restricted to the documented legacy scenario, now enforces required AUOptions 4, and prominently records Microsoft current replacement guidance.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/update/waas-restart",
+        "https://learn.microsoft.com/en-us/windows/deployment/update/avoid-legacy-policy-configurations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Pause-Access-Disabled",
+      "Disposition": "PilotReady",
+      "Batch": 7,
+      "Reason": "Replaced the legacy placeholder or duplicate with a Microsoft-documented registry policy. Exact type/data detection and write-readback remediation are ready for controlled tenant pilot; product behavior still requires pilot evidence.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-update#setdisablepauseuxaccess"
+      ]
+    }
   ]
 }

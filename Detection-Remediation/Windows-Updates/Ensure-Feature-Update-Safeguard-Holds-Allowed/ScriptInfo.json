@@ -2,15 +2,15 @@
   "Name": "Ensure Feature Update Safeguard Holds Allowed",
   "Workload": "Detection and Remediation",
   "Purpose": "Windows-Updates",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
-  "WritesTo": "File system or local configuration removal",
+  "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "High",
+  "Risk": "Low",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects whether the Windows Update for Business safeguard hold override is enabled and can set it back to a safer state. This is useful when feature update troubleshooting uncovers devices bypassing safeguard holds.",
+  "Summary": "Detects and remediates Windows Update for Business policy so Microsoft safeguard holds remain enabled.",
   "Tags": [
-    "Windows-Updates",
-    "Detection-Remediation",
-    "Business Premium"
+    "Windows Updates",
+    "Feature Updates",
+    "Safeguards"
   ]
 }

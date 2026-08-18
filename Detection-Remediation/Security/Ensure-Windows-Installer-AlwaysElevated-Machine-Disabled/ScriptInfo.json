@@ -1,16 +1,16 @@
 {
-  "Name": "Ensure Windows Installer AlwaysElevated Machine Disabled",
+  "Name": "Ensure Windows Installer Always Elevated Machine Policy Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates the machine-scope AlwaysInstallElevated policy so MSI packages cannot be elevated through unsafe policy.",
+  "Summary": "Detects and remediates the machine half of Windows Installer AlwaysInstallElevated to disabled.",
   "Tags": [
     "Security",
     "Windows Installer",
-    "Business Premium"
+    "Privilege Escalation"
   ]
 }

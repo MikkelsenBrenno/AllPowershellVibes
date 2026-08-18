@@ -167,4 +167,3 @@ catch {
     Write-Output 'Remediation failed for Edge SmartScreen policy values.'
     exit 1
 }
-

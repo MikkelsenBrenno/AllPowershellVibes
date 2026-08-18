@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure 6to4 And ISATAP Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates the Windows IPv6 transition policies that disable 6to4 and ISATAP.",
+  "Tags": [
+    "Networking",
+    "IPv6",
+    "Transition Technologies"
+  ]
+}

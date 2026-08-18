@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Windows Error Reporting Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Ensures Windows Error Reporting is not disabled through its machine registry setting.",
+  "Tags": [
+    "Device Configuration",
+    "Diagnostics",
+    "WER"
+  ]
+}

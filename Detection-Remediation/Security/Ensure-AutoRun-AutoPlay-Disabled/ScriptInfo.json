@@ -1,10 +1,10 @@
 {
-  "Name": "Ensure AutoRun AutoPlay Disabled",
+  "Name": "Ensure AutoRun And AutoPlay Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and optionally disables AutoRun and AutoPlay by writing machine-level Explorer policy values. The remediation starts in report-only mode so administrators can pilot the change before enforcing it.",
+  "Summary": "Detects and remediates the documented machine policies that disable AutoPlay on all drive types and stop AutoRun commands.",
   "Tags": [
     "Security",
-    "Detection-Remediation",
-    "Business Premium"
+    "AutoPlay",
+    "AutoRun"
   ]
 }

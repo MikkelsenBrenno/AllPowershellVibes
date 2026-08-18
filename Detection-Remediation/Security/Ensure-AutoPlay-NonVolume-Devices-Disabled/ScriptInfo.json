@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure AutoPlay For Non-Volume Devices Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Low",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates the documented machine policy that disables AutoPlay for non-volume devices.",
+  "Tags": [
+    "Security",
+    "AutoPlay",
+    "Devices"
+  ]
+}
