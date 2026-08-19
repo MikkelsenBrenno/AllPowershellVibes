@@ -179,6 +179,8 @@ Each script sets `$ScriptPackageName` to the folder name and `$ScriptName` to th
 - `docs/Teams-Failure-Alerting.md`
 - `docs/Script-Quality-Checklist.md`
 - `docs/Safe-Pilot-Testing.md`
+- `docs/Trusted-Remediation-Pilot.md`
+- `docs/Registry-Remediation-Audit.md`
 - `docs/Detection-Smoke-Testing.md`
 - `docs/Detection-Evidence-Audit.md`
 - `docs/Script-Portability-Audit.md`
@@ -228,6 +230,12 @@ Audit scripts for language, OS-version, registry-view, path, command-parsing, an
 .\tools\Test-ScriptPortability.ps1
 .\tools\Test-ScriptPortability.ps1 -UpdateScriptInfo -UpdateBaseline
 .\tools\Test-ScriptPortability.ps1 -Check
+```
+
+Audit all registry-reading Remediation packages and enforce trusted-package type/data gates:
+
+```powershell
+.\tools\Test-RegistryRemediationAudit.ps1 -SummaryOnly
 ```
 
 Create a starter folder from repository conventions:

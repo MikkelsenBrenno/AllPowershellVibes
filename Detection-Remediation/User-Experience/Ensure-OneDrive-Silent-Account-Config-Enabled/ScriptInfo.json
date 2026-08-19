@@ -1,10 +1,10 @@
 {
-  "Name": "Ensure OneDrive Silent Account Config Enabled",
+  "Name": "Ensure OneDrive Silent Account Configuration Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates OneDrive policy that silently configures the sync client for signed-in Windows users.",
+  "Summary": "Detects and remediates the OneDrive machine policy that silently configures eligible signed-in users.",
   "Tags": [
     "User Experience",
     "OneDrive",
-    "Business Premium"
+    "Sign-in"
   ]
 }

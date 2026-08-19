@@ -2,33 +2,35 @@
 
 ## Summary
 
-Detects and remediates Microsoft Edge shopping assistant policy for a quieter managed browser experience.
+Detects and remediates the documented Microsoft Edge shopping assistant policy for organizations that choose not to expose shopping features in the managed browser.
+
+**Repository status:** `PilotReady`. The policy name, path, type, and data are verified against Microsoft Learn, and both scripts validate exact registry type and data. This is an organizational browser-experience choice, not a universal security baseline, and it still requires a controlled pilot.
 
 ## Files
 
-- `Detect.ps1` - Checks the current state.
-- `Remediate.ps1` - Fixes the issue when detection exits `1`.
+- `Detect.ps1` checks the policy without changing the device.
+- `Remediate.ps1` writes the policy only after detection exits `1`, then verifies the final type and data.
 
-## What To Change First
+## Configuration Contract
 
-Open both scripts and review the `CONFIGURATION` section before changing anything else.
+Keep `$RegistryValues` identical in both scripts.
 
-| Setting | Description | Default |
-| --- | --- | --- |
-| `$RegistryValues` | Registry values to validate and enforce. | Package-specific |
-| `$ValidationDelaySeconds` | Wait time before remediation validation. | `2` |
+| Path | Name | Type | Required data | Effect |
+| --- | --- | --- | --- | --- |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Edge` | `EdgeShoppingAssistantEnabled` | `DWord` | `0` | Disables shopping assistant features in Microsoft Edge. |
 
-## Prerequisites
-
-- Windows device enrolled in Microsoft Intune.
-- Intune Remediations licensing and permissions.
-- PowerShell 5.1.
-- System context required for native HKLM policy paths.
-- 64-bit PowerShell recommended for native Windows registry and service state.
+`$ValidationDelaySeconds` defaults to `2`. The registry name is the Microsoft policy identifier and should not be renamed.
 
 ## Customization
 
-Update the `CONFIGURATION` section in both scripts before deployment. Keep service names, registry paths, expected values, safety toggles, and validation timing near the top so technicians can customize quickly.
+The default registry contract is the verified package purpose. Keep `$RegistryValues` identical in both scripts. Adjust only documented timing or logging configuration; use a separately named and reviewed policy when the intended state is to enable shopping features.
+
+## Prerequisites
+
+- Windows device enrolled in Microsoft Intune, using Windows PowerShell 5.1 in 64-bit System context.
+- Microsoft Edge 87 or later on Windows, as documented for this policy.
+- An approved browser-experience decision for the targeted users.
+- No Settings Catalog, Administrative Templates, GPO, or other tool intentionally managing the same value to a different state.
 
 ## Intune Settings
 
@@ -37,34 +39,44 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 | Script type | Remediation |
 | Detection script | `Detect.ps1` |
 | Remediation script | `Remediate.ps1` |
-| Run this script using the logged-on credentials | No |
+| Run using logged-on credentials | No |
 | Enforce script signature check | Tenant policy |
 | Run script in 64-bit PowerShell | Yes |
 
-## Intune Deployment
-
-1. Go to Intune admin center.
-2. Open **Devices > Manage devices > Scripts and remediations**.
-3. Create a script package.
-4. Upload `Detect.ps1` as the detection script.
-5. Upload `Remediate.ps1` as the remediation script.
-6. Choose the settings above.
-7. Assign to a small pilot group before broad deployment.
+Assign to a small nonproduction pilot group. Prefer native Edge policy management when it meets the same requirement, and avoid assigning two tools as owners of the same policy.
 
 ## Expected Results
 
-- Detection exits `0` when all configured registry values match.
-- Detection exits `1` when one or more values are missing or different.
-- Remediation creates missing keys, writes the configured values, and validates the final state.
+- Detection exits `0` only when `EdgeShoppingAssistantEnabled` exists as `REG_DWORD` with data `0`.
+- A missing key, missing value, different data, or wrong registry type exits `1`.
+- Remediation writes `REG_DWORD 0`, reads it back, and exits `0` only when both type and data match.
+- Logs are written under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Edge-Shopping-Features-Disabled`.
+
+## Pilot Validation
+
+Use a disposable or nonproduction Windows client in the same System/64-bit context configured in Intune.
+
+1. Record the original key/value existence, type, and data.
+2. Verify missing value, wrong type, and wrong DWORD data each make detection exit `1`.
+3. Set the exact baseline (`REG_DWORD 0`) and verify detection exits `0`.
+4. On the pilot device only, run remediation from a noncompliant state; it must exit `0` only after exact final verification.
+5. Run detection again and open `edge://policy` to confirm `EdgeShoppingAssistantEnabled` is loaded without an error.
+6. Confirm the intended shopping UI is unavailable, review logs, and restore the original registry state.
+
+Do not change this package to `Validated` until pilot evidence is recorded using `docs/Trusted-Remediation-Pilot.md`.
+
+## Rollback
+
+Restore the recorded original type and data. If the value was originally absent, remove `EdgeShoppingAssistantEnabled`. Remove the Edge policy key only if the pilot created it and it is empty.
 
 ## Troubleshooting
 
-- Review logs in `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Edge-Shopping-Features-Disabled`.
-- Confirm the setting is available on the target Windows version.
-- Confirm another Intune policy, security baseline, GPO, or third-party agent is not changing the state back.
-- Review Intune Management Extension logs in `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs`.
+- Confirm System context and 64-bit PowerShell.
+- Check `edge://policy` for the active value, errors, and policy source.
+- Look for competing Settings Catalog, Administrative Templates, GPO, or third-party policy.
+- Review the package and Intune Management Extension logs.
 
-## Source Inspiration
+## Microsoft References
 
-Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
-
+- [EdgeShoppingAssistantEnabled Microsoft Edge policy](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/EdgeShoppingAssistantEnabled) defines the registry path, DWORD type, data values, supported Edge versions, and policy behavior.
+- [Use Remediations to detect and fix support issues](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations) defines the Intune execution model.

@@ -121,6 +121,7 @@ if ($runPackageValidators) {
     $selected = if ($resolution.EffectiveScope -eq 'Full') { @() } else { @($resolution.PackagePaths) }
     Invoke-ValidationChildScript -Name 'Repository' -ScriptName 'Test-Repository.ps1' -SelectedPackages $selected
     Invoke-ValidationChildScript -Name 'WorkloadContracts' -ScriptName 'Test-IntuneWorkloadContracts.ps1' -SelectedPackages $selected
+    Invoke-ValidationChildScript -Name 'RegistryRemediationAudit' -ScriptName 'Test-RegistryRemediationAudit.ps1' -SelectedPackages $selected
     Invoke-ValidationChildScript -Name 'DetectionEvidence' -ScriptName 'Test-DetectionEvidence.ps1' -Arguments @('-Check', '-OutputRoot', (Join-Path $OutputRoot 'detection-evidence')) -SelectedPackages $selected
     Invoke-ValidationChildScript -Name 'ScriptPortability' -ScriptName 'Test-ScriptPortability.ps1' -Arguments @('-Check', '-OutputRoot', (Join-Path $OutputRoot 'script-portability')) -SelectedPackages $selected
 }

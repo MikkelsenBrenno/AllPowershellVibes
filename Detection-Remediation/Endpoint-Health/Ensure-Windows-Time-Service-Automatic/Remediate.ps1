@@ -8,7 +8,7 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
     Context:     System recommended
 
@@ -39,7 +39,8 @@ $ScriptName = 'Remediate'
 
 $ServiceName = 'W32Time'
 $StartupType = 'Automatic'
-$StartServiceAfterChange = $true
+$ExpectedStartMode = 'Auto'
+$RequireRunning = $false
 
 # =========================
 # LOGGING
@@ -66,15 +67,19 @@ try {
         throw "Service '$ServiceName' was not found."
     }
 
-    Set-Service -Name $ServiceName -StartupType $StartupType -ErrorAction Stop
+    if ([string]$service.StartMode -ne $ExpectedStartMode) {
+        Set-Service -Name $ServiceName -StartupType $StartupType -ErrorAction Stop
+    }
 
-    if ($StartServiceAfterChange) {
+    if ($RequireRunning -and [string]$service.State -ne 'Running') {
         Start-Service -Name $ServiceName -ErrorAction Stop
     }
 
     $updatedService = Get-CimInstance -ClassName Win32_Service -Filter "Name='$ServiceName'" -ErrorAction Stop
-    if ([string]$updatedService.StartMode -ne 'Auto') {
-        throw "Service '$ServiceName' StartMode is '$($updatedService.StartMode)' after remediation."
+    $startModeOk = ([string]$updatedService.StartMode -eq $ExpectedStartMode)
+    $runningOk = (-not $RequireRunning -or [string]$updatedService.State -eq 'Running')
+    if (-not $startModeOk -or -not $runningOk) {
+        throw "Service '$ServiceName' validation failed. StartMode='$($updatedService.StartMode)' State='$($updatedService.State)'."
     }
 
     Write-Output "Windows Time service '$ServiceName' StartMode='$($updatedService.StartMode)' State='$($updatedService.State)'."

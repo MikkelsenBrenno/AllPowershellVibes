@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable Email Scanning",
+  "Name": "Defender Enable Email File Scanning",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
-  "Context": "System recommended",
-  "Requires64BitPowerShell": "Recommended",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Microsoft Defender email scanning by keeping `DisableEmailScanning` set to `$false`.",
+  "Summary": "Enables Microsoft Defender Antivirus scanning of supported email storage files.",
   "Tags": [
     "Security",
     "Defender",

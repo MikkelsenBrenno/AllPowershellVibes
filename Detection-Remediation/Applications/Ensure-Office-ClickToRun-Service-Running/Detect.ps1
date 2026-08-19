@@ -4,12 +4,12 @@
 
 .DESCRIPTION
     Intune Remediations detection script. The script checks whether the Office
-    Click-to-Run service exists, has an acceptable startup type, and is running
+    Click-to-Run service exists, has the expected startup type, and is running
     when required.
 
 .NOTES
     Name:        Detect.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
     Context:     System recommended
 
@@ -39,7 +39,7 @@ $ScriptPackageName = 'Ensure-Office-ClickToRun-Service-Running'
 $ScriptName = 'Detect'
 
 $ServiceName = 'ClickToRunSvc'
-$AcceptableStartModes = @('Auto', 'Manual')
+$ExpectedStartMode = 'Auto'
 $RequireRunning = $true
 
 # =========================
@@ -69,7 +69,7 @@ try {
     }
 
     Write-Log -Message "Service '$ServiceName' StartMode='$($service.StartMode)' State='$($service.State)'."
-    $startModeOk = ($AcceptableStartModes -contains [string]$service.StartMode)
+    $startModeOk = ([string]$service.StartMode -eq $ExpectedStartMode)
     $runningOk = (-not $RequireRunning -or [string]$service.State -eq 'Running')
 
     if ($startModeOk -and $runningOk) {

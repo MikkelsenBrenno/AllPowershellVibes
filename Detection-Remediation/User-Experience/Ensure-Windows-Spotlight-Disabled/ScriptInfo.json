@@ -2,9 +2,9 @@
   "Name": "Ensure Windows Spotlight Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
-  "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Status": "PilotReady",
+  "Context": "User",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Windows Spotlight feature policy for a quieter managed endpoint experience.",
+  "Summary": "Detects and remediates the documented per-user policy that turns off all Windows Spotlight features.",
   "Tags": [
     "User Experience",
-    "Cloud Content",
-    "Business Premium"
+    "Windows Spotlight",
+    "User Context"
   ]
 }

@@ -2,69 +2,88 @@
 
 ## Summary
 
-Detects and remediates Microsoft Defender MAPS and sample submission policy for stronger cloud-delivered protection.
+Detects and remediates Defender advanced cloud protection and safe-sample submission policy values.
 
-## Files
+**Repository status:** `PilotReady`. Microsoft documentation supports the shipped registry contract, and both scripts enforce exact registry type and data. This is ready for a controlled tenant pilot, not pre-labeled as `Validated`.
 
-- `Detect.ps1` - Checks the current state.
-- `Remediate.ps1` - Fixes the issue when detection exits `1`.
+## Copy To Intune
 
-## What To Change First
+Copy `Detect.ps1` into the **Detection script** field and `Remediate.ps1` into the **Remediation script** field of the same Intune Remediations package. Do not combine the files and do not reverse their roles.
 
-Open both scripts and review the `CONFIGURATION` section before changing anything else.
+## Configuration Contract
 
-| Setting | Description | Default |
-| --- | --- | --- |
-| `$RegistryValues` | Registry values to validate and enforce. | Package-specific |
-| `$ValidationDelaySeconds` | Wait time before remediation validation. | `2` |
+Keep `$RegistryValues` identical in both scripts.
 
-## Prerequisites
+| Path | Name | Type | Required data |
+| --- | --- | --- | --- |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet` | `SpynetReporting` | `DWord` | `2` |
+| `HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet` | `SubmitSamplesConsent` | `DWord` | `1` |
 
-- Windows device enrolled in Microsoft Intune.
-- Intune Remediations licensing and permissions.
-- PowerShell 5.1.
-- System context required for native HKLM policy paths.
-- 64-bit PowerShell recommended for native Windows registry and service state.
+**Effect:** Enables advanced Microsoft Active Protection Service membership and automatic submission of safe samples.
 
 ## Customization
 
-Update the `CONFIGURATION` section in both scripts before deployment. Keep service names, registry paths, expected values, safety toggles, and validation timing near the top so technicians can customize quickly.
+The shipped registry contract is the source-verified baseline for this package name. Keep `$RegistryValues` identical in both scripts. If a different state is required, create a separately named and reviewed package so its purpose, documentation, and rollback remain honest.
+
+## Prerequisites
+
+- Review organizational privacy, data-handling, and sample-submission requirements.
+- Prefer Endpoint security or Defender policy for ongoing ownership. Use remediation only when explicit registry drift correction is intentionally selected.
+- Check Defender health, connectivity, tamper protection, and duplicate policy ownership.
+- Use Windows PowerShell 5.1 in 64-bit `System` context.
+- Do not simultaneously manage these values to a different state through Settings Catalog, Administrative Templates, Endpoint security, security baselines, Group Policy, or another tool.
 
 ## Intune Settings
 
-| Setting | Recommended value |
+| Setting | Required/recommended value |
 | --- | --- |
-| Script type | Remediation |
+| Workload | Remediations |
 | Detection script | `Detect.ps1` |
 | Remediation script | `Remediate.ps1` |
-| Run this script using the logged-on credentials | No |
-| Enforce script signature check | Tenant policy |
+| Run using logged-on credentials | No |
+| Enforce script signature check | Follow tenant signing policy |
 | Run script in 64-bit PowerShell | Yes |
 
-## Intune Deployment
-
-1. Go to Intune admin center.
-2. Open **Devices > Manage devices > Scripts and remediations**.
-3. Create a script package.
-4. Upload `Detect.ps1` as the detection script.
-5. Upload `Remediate.ps1` as the remediation script.
-6. Choose the settings above.
-7. Assign to a small pilot group before broad deployment.
+Assign to a small, representative nonproduction group first. Intune runs remediation only when detection exits `1`.
 
 ## Expected Results
 
-- Detection exits `0` when all configured registry values match.
-- Detection exits `1` when one or more values are missing or different.
-- Remediation creates missing keys, writes the configured values, and validates the final state.
+- Detection is read-only and exits `0` only when every value exists with the exact required registry type and data.
+- A missing key, missing value, wrong type, wrong data, or read error exits `1`.
+- Remediation creates missing keys, writes the reviewed values, reads them back, and exits `0` only after exact final validation.
+- Logs are written under `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Defender-Cloud-Protection-Enabled`.
+
+## Pilot Validation
+
+Use a disposable or nonproduction Windows client in the exact Intune context above.
+
+1. Confirm the device satisfies the documented OS, edition, role, and product prerequisites and record its build.
+2. Export or record the original key/value state, including value type and data.
+3. Test a missing value; detection must exit `1`.
+4. Test the value with the wrong registry type; detection must exit `1`.
+5. Test the correct type with wrong data; detection must exit `1`.
+6. Set the exact configuration contract; detection must exit `0`.
+7. From a restored noncompliant state, let Intune run remediation. It must report success only after the final type and data match.
+8. Run detection again, review both package logs and the Intune Management Extension logs, then perform the product check: Confirm Defender reports cloud-delivered protection enabled and review the effective sample-submission setting on a pilot device.
+9. Check required applications, authentication, networking, security telemetry, policy conflict, and reversion after device sync and restart where applicable.
+10. Restore the recorded original state if the pilot is not approved.
+
+Do not change this package to `Validated` until non-sensitive pilot evidence is recorded using `docs/Trusted-Remediation-Pilot.md`.
+
+## Rollback
+
+Restore every recorded original value with its original type and data. If a value did not exist before the pilot, remove that value only. Remove a key only when the pilot created it and it has no sibling values. Restore the previous Defender policy through its owning management plane; weakening cloud protection reduces response capability.
 
 ## Troubleshooting
 
-- Review logs in `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Defender-Cloud-Protection-Enabled`.
-- Confirm the setting is available on the target Windows version.
-- Confirm another Intune policy, security baseline, GPO, or third-party agent is not changing the state back.
-- Review Intune Management Extension logs in `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs`.
+- Confirm Intune used `System` context and 64-bit PowerShell.
+- Compare the effective registry type as well as data; a string such as `"0"` is not a DWORD `0`.
+- Check Settings Catalog, Administrative Templates, Endpoint security, security baselines, Group Policy, and third-party agents for duplicate ownership.
+- Review `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs` and the package log path above.
+- Recheck the linked Microsoft applicability and behavior documentation if the value is exact but product behavior does not change.
 
-## Source Inspiration
+## Microsoft References
 
-Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
-
+- [Enable cloud protection in Microsoft Defender Antivirus](https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)
+- [Defender Policy CSP](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender)
+- [Use Remediations to detect and fix support issues](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

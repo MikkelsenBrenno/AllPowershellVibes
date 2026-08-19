@@ -1,10 +1,10 @@
 {
-  "Name": "Ensure PowerShell ScriptBlock Logging Enabled",
+  "Name": "Ensure PowerShell Script Block Logging Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates PowerShell policy so script block logging is enabled for troubleshooting and security review.",
+  "Summary": "Detects and remediates Windows PowerShell script block logging policy.",
   "Tags": [
     "Security",
     "PowerShell",
-    "Business Premium"
+    "Logging"
   ]
 }

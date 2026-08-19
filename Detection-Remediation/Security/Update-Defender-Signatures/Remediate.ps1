@@ -50,7 +50,10 @@ $UpdateSource = ''
 
 # Keep report-only mode enabled until the update path is approved for your tenant.
 $ApplyUpdate = $false
-$ExitZeroInReportingOnlyMode = $false
+
+# Allow time for Defender to publish the refreshed status after the update command returns.
+$ValidationAttempts = 4
+$ValidationDelaySeconds = 15
 
 # =========================
 # LOGGING
@@ -105,7 +108,7 @@ function Test-SignatureFreshness {
     $signatureAge = New-TimeSpan -Start $lastUpdated -End (Get-Date)
 
     return [pscustomobject]@{
-        IsFresh          = ($signatureAge.TotalDays -le $MaximumAgeDays)
+        IsFresh          = ($signatureAge.TotalDays -ge 0 -and $signatureAge.TotalDays -le $MaximumAgeDays)
         LastUpdated      = $lastUpdated
         SignatureAgeDays = [math]::Round($signatureAge.TotalDays, 2)
     }
@@ -124,6 +127,15 @@ try {
         throw 'MaximumSignatureAgeDays must be 1 or greater.'
     }
 
+    if ($ValidationAttempts -lt 1 -or $ValidationDelaySeconds -lt 1) {
+        throw 'ValidationAttempts and ValidationDelaySeconds must be 1 or greater.'
+    }
+
+    $allowedUpdateSources = @('', 'InternalDefinitionUpdateServer', 'MicrosoftUpdateServer', 'MMPC', 'FileShares')
+    if ($allowedUpdateSources -notcontains $UpdateSource) {
+        throw "UpdateSource '$UpdateSource' is not supported."
+    }
+
     if (-not (Get-Command -Name Get-MpComputerStatus -ErrorAction SilentlyContinue)) {
         throw 'Get-MpComputerStatus is not available on this device.'
     }
@@ -139,11 +151,6 @@ try {
         $message = 'Report-only mode. Set $ApplyUpdate to $true after pilot testing to run Update-MpSignature.'
         Write-Log -Message $message -Level 'WARN'
         Write-Output $message
-
-        if ($ExitZeroInReportingOnlyMode) {
-            exit 0
-        }
-
         exit 1
     }
 
@@ -156,14 +163,18 @@ try {
         Update-MpSignature -UpdateSource $UpdateSource
     }
 
-    $after = Test-SignatureFreshness -MaximumAgeDays $MaximumSignatureAgeDays
-    Write-Log -Message "After remediation: LastUpdated='$($after.LastUpdated)'; SignatureAgeDays='$($after.SignatureAgeDays)'; IsFresh='$($after.IsFresh)'."
+    $after = $null
+    for ($attempt = 1; $attempt -le $ValidationAttempts; $attempt++) {
+        Start-Sleep -Seconds $ValidationDelaySeconds
+        $after = Test-SignatureFreshness -MaximumAgeDays $MaximumSignatureAgeDays
+        Write-Log -Message "Validation attempt '$attempt' of '$ValidationAttempts': LastUpdated='$($after.LastUpdated)'; SignatureAgeDays='$($after.SignatureAgeDays)'; IsFresh='$($after.IsFresh)'."
 
-    if ($after.IsFresh) {
-        $message = "Remediation succeeded. Defender signatures are $($after.SignatureAgeDays) days old."
-        Write-Log -Message $message
-        Write-Output $message
-        exit 0
+        if ($after.IsFresh) {
+            $message = "Remediation succeeded. Defender signatures are $($after.SignatureAgeDays) days old."
+            Write-Log -Message $message
+            Write-Output $message
+            exit 0
+        }
     }
 
     $message = "Remediation failed. Defender signatures are still stale. LastUpdated='$($after.LastUpdated)'; SignatureAgeDays='$($after.SignatureAgeDays)'."

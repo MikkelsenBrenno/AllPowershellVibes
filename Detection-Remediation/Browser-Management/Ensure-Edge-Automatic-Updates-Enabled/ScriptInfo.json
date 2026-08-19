@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Edge Automatic Updates Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Browser-Management",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Allows Microsoft Edge Update to apply automatic updates.",
+  "Tags": [
+    "Browser",
+    "Microsoft Edge",
+    "Updates"
+  ]
+}

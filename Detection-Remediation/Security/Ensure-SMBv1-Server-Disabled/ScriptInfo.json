@@ -1,16 +1,16 @@
 {
-  "Name": "Ensure SMBv1 Server Disabled",
+  "Name": "Ensure SMBv1 Server Protocol Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
-  "Reboot": "No",
-  "Risk": "Medium",
+  "Reboot": "Yes",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Lanman Server policy so SMBv1 server support is disabled.",
+  "Summary": "Detects and remediates the documented Lanman Server registry setting that disables SMBv1 server protocol support.",
   "Tags": [
     "Security",
     "SMB",
-    "Business Premium"
+    "SMBv1"
   ]
 }

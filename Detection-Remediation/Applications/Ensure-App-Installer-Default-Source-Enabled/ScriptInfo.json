@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure App Installer Default Source Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Enables the Microsoft community source as an App Installer default source.",
+  "Tags": [
+    "Applications",
+    "App Installer",
+    "WinGet"
+  ]
+}

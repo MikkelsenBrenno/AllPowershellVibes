@@ -8,7 +8,7 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
     Context:     System recommended
 
@@ -39,7 +39,8 @@ $ScriptName = 'Remediate'
 
 $ServiceName = 'ClickToRunSvc'
 $StartupType = 'Automatic'
-$StartServiceAfterChange = $true
+$ExpectedStartMode = 'Auto'
+$RequireRunning = $true
 $ValidationDelaySeconds = 3
 
 # =========================
@@ -61,26 +62,36 @@ function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsId
 try {
     Initialize-Log
     Write-ScriptMetadata
+    Write-Log -Message "Remediation started. ServiceName='$ServiceName'; StartupType='$StartupType'; ExpectedStartMode='$ExpectedStartMode'; RequireRunning='$RequireRunning'."
 
-    $service = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+    $service = Get-CimInstance -ClassName Win32_Service -Filter "Name='$ServiceName'" -ErrorAction SilentlyContinue
     if ($null -eq $service) {
         throw "Service '$ServiceName' was not found."
     }
 
-    Set-Service -Name $ServiceName -StartupType $StartupType -ErrorAction Stop
+    Write-Log -Message "Current service state StartMode='$($service.StartMode)' State='$($service.State)'."
+    if ([string]$service.StartMode -ne $ExpectedStartMode) {
+        Write-Log -Message "Setting service '$ServiceName' startup type to '$StartupType'."
+        Set-Service -Name $ServiceName -StartupType $StartupType -ErrorAction Stop
+    }
 
-    if ($StartServiceAfterChange -and $service.Status -ne 'Running') {
+    if ($RequireRunning -and [string]$service.State -ne 'Running') {
+        Write-Log -Message "Starting service '$ServiceName'."
         Start-Service -Name $ServiceName -ErrorAction Stop
     }
 
     Start-Sleep -Seconds $ValidationDelaySeconds
     $serviceState = Get-CimInstance -ClassName Win32_Service -Filter "Name='$ServiceName'" -ErrorAction Stop
 
-    if ($serviceState.StartMode -eq 'Disabled' -or ($StartServiceAfterChange -and $serviceState.State -ne 'Running')) {
+    $startModeOk = ([string]$serviceState.StartMode -eq $ExpectedStartMode)
+    $runningOk = (-not $RequireRunning -or [string]$serviceState.State -eq 'Running')
+    if (-not $startModeOk -or -not $runningOk) {
         throw "Service validation failed. StartMode='$($serviceState.StartMode)' State='$($serviceState.State)'."
     }
 
-    Write-Output "Remediation succeeded. Service '$ServiceName' StartMode='$($serviceState.StartMode)' State='$($serviceState.State)'."
+    $message = "Remediation succeeded. Service '$ServiceName' StartMode='$($serviceState.StartMode)' State='$($serviceState.State)'."
+    Write-Log -Message $message
+    Write-Output $message
     exit 0
 }
 catch {

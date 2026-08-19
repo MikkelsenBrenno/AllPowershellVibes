@@ -1,0 +1,143 @@
+{
+  "SchemaVersion": "1.0",
+  "ReviewedOn": "2026-08-18",
+  "CandidateDefinition": "The 15 direct-state security, health, maintenance, and Windows Update remediation packages selected for the first service-and-account pilot-readiness review.",
+  "Packages": [
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Guest-Account-Disabled",
+      "Disposition": "PilotReady",
+      "Reason": "The built-in Guest account has a stable well-known RID, Microsoft recommends leaving it disabled, detection is read-only, and remediation verifies the final account state.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-default-user-accounts",
+        "https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Update-Defender-Signatures",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents both Defender status and signature-update cmdlets. The package validates source input, rejects future timestamps, and retries direct final-state reads before reporting success.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/powershell/module/defender/update-mpsignature?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/defender/get-mpcomputerstatus?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/defender-endpoint/manage-protection-updates-microsoft-defender-antivirus"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Base-Filtering-Engine-Service-Running",
+      "Disposition": "PilotReady",
+      "Reason": "BFE is an always-installed automatic security service; Microsoft warns that stopping or disabling it significantly reduces security. Remediation only starts it and verifies Running.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#base-filtering-engine",
+        "https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Security-Center-Service-Running",
+      "Disposition": "PilotReady",
+      "Reason": "Microsoft documents that Windows Security uses wscsvc for security-health reporting and advises against disabling it. Remediation only starts it and verifies Running.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/security/operating-system-security/system-security/windows-defender-security-center/windows-defender-security-center",
+        "https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services#security-center"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Endpoint-Health/Ensure-Windows-Event-Log-Service-Running",
+      "Disposition": "PilotReady",
+      "Reason": "Windows Event Log is an always-installed automatic service and Microsoft warns that stopping it can compromise security and reliability. Remediation only starts it and verifies Running.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#windows-event-log",
+        "https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Maintenance/Ensure-Task-Scheduler-Service-Running",
+      "Disposition": "PilotReady",
+      "Reason": "Task Scheduler is an always-installed automatic service hosting system-critical tasks. Remediation only starts it and verifies Running, while documentation restricts stopped-state testing to disposable lab systems.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#task-scheduler",
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-client/system-management-components/task-scheduler-service-not-start"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Maintenance/Ensure-WMI-Service-Healthy",
+      "Disposition": "PilotReady",
+      "Reason": "WMI is a core Windows component. Detection and remediation now agree on Automatic and Running, and remediation verifies both direct final-state properties before success.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/win32/wmisdk/winmgmt",
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#windows-management-instrumentation"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Cryptographic-Service-Running",
+      "Disposition": "PilotReady",
+      "Reason": "Cryptographic Services is an always-installed automatic service required for Windows file signatures, trusted roots, and dependent services. Remediation only starts it and verifies Running.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#cryptographic-services",
+        "https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Security/Ensure-Remote-Registry-Service-Disabled",
+      "Disposition": "RetainExample",
+      "Reason": "A blanket disablement contract is not tenant-neutral. Microsoft service guidance notes dependencies and does not consistently recommend disabling Remote Registry across supported Windows roles, so approved remote-management requirements must be defined first.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#remote-registry",
+        "https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Endpoint-Health/Ensure-Windows-Time-Service-Automatic",
+      "Disposition": "NeedsReview",
+      "Reason": "Microsoft documents different correct W32Time startup and running states for domain-joined and workgroup devices. The current unconditional Automatic-and-Running contract would create false noncompliance.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/troubleshoot/windows-client/active-directory/w32time-not-start-on-workgroup",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-BITS-Service-Available",
+      "Disposition": "RetainExample",
+      "Reason": "BITS is normally Manual and can correctly stop while idle. Availability means installed and not disabled, not continuously Running; the current package contract is too strict.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#background-intelligent-transfer-service",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Delivery-Optimization-Service-Enabled",
+      "Disposition": "RetainExample",
+      "Reason": "Delivery Optimization is managed around workload demand and policy. A stopped service is not by itself proof of failure, so the current always-Running contract is not suitable for promotion.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/do/delivery-optimization-configure",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Update-Orchestrator-Service-Running",
+      "Disposition": "RetainExample",
+      "Reason": "Microsoft lists UsoSvc as Manual and advises not to disable it. Manual trigger-managed operation does not require it to remain continuously Running, so the current contract is too strict.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#update-orchestrator-service-for-windows-update",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Medic-Service-Running",
+      "Disposition": "RetainExample",
+      "Reason": "Windows Update Medic is system-managed and can be stopped outside repair activity. Running state alone is not stable update-health evidence, so automatic start remediation is not promoted.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-overview",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    },
+    {
+      "Path": "Detection-Remediation/Windows-Updates/Ensure-Windows-Update-Service-Enabled",
+      "Disposition": "RetainExample",
+      "Reason": "Windows Update service operation is demand- and policy-driven. Not Disabled is a useful availability signal, but requiring Running and forcing a fixed startup mode makes the current package contract too broad.",
+      "MicrosoftReferences": [
+        "https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-overview",
+        "https://learn.microsoft.com/en-us/windows/win32/services/service-trigger-events"
+      ]
+    }
+  ]
+}

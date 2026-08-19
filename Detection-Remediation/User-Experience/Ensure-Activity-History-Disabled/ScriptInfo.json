@@ -2,9 +2,9 @@
   "Name": "Ensure Activity History Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "User-Experience",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Activity History publishing and upload policies on managed business devices.",
+  "Summary": "Detects and remediates the Windows activity-feed policies that prevent publishing and cloud upload of user activities.",
   "Tags": [
     "User Experience",
     "Privacy",
-    "Business Premium"
+    "Activity History"
   ]
 }

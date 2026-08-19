@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure SMB Client Signing Required",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Security",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates the SMB client policy that requires security signatures.",
+  "Tags": [
+    "Security",
+    "SMB",
+    "Signing"
+  ]
+}

@@ -2,9 +2,9 @@
   "Name": "Ensure Storage Sense Policy Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Maintenance",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and optionally configures machine policy registry values for Storage Sense. This gives technicians a simple, copy-friendly baseline for enabling disk cleanup behavior on Windows devices.",
+  "Summary": "Detects and remediates the documented Storage Sense policy baseline with monthly cadence.",
   "Tags": [
     "Maintenance",
-    "Detection-Remediation",
-    "Business Premium"
+    "Storage Sense",
+    "Disk"
   ]
 }

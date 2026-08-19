@@ -51,12 +51,25 @@ BeforeAll {
     function New-MiniRepository {
         param([Parameter(Mandatory = $true)][string]$Root)
 
+        $pilotReadme = @'
+# Fixture package
+
+## Pilot Validation
+
+Run the fixture in an isolated test repository.
+
+## Microsoft References
+
+- https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations
+'@
+
         foreach ($workload in @('Detection-Remediation', 'Custom-Compliance', 'Intune-Platform-Scripts', 'Win32-Packaged-Scripts')) {
             New-Item -Path (Join-Path $Root "$workload\Security") -ItemType Directory -Force | Out-Null
         }
 
         $remediation = Join-Path $Root 'Detection-Remediation\Security\Fixture-Remediation'
         Write-TestFile -Path (Join-Path $remediation 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Detection and Remediation' -Status PilotReady -HasRemediation Yes)
+        Write-TestFile -Path (Join-Path $remediation 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $remediation 'Detect.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Remediation'
@@ -68,9 +81,13 @@ $RetryCount = 3
 $OptionalValue = $null
 # LOGGING
 function Write-ScriptMetadata {}
+# =========================
 # MAIN
+# =========================
 $service = Get-Service -Name $ExpectedService -ErrorAction SilentlyContinue
-if ($null -ne $service) { exit 0 }
+if ($null -ne $service) {
+    exit 0
+}
 exit 1
 '@
         Write-TestFile -Path (Join-Path $remediation 'Remediate.ps1') -Content @'
@@ -79,13 +96,18 @@ $ScriptPackageName = 'Fixture-Remediation'
 $ScriptName = 'Remediate'
 # LOGGING
 function Write-ScriptMetadata {}
+# =========================
 # MAIN
-if ($false) { exit 1 }
+# =========================
+if ($false) {
+    exit 1
+}
 exit 0
 '@
 
         $compliance = Join-Path $Root 'Custom-Compliance\Security\Fixture-Compliance'
         Write-TestFile -Path (Join-Path $compliance 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Custom Compliance' -Status PilotReady -HasRemediation No)
+        Write-TestFile -Path (Join-Path $compliance 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $compliance 'Discover.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Compliance'
@@ -100,6 +122,7 @@ exit 0
 
         $platform = Join-Path $Root 'Intune-Platform-Scripts\Security\Fixture-Platform'
         Write-TestFile -Path (Join-Path $platform 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Intune Platform Scripts' -Status PilotReady -HasRemediation 'N/A' -EvidenceType 'N/A' -EvidenceSource 'No detection script for this workload' -EvidenceReview NotApplicable)
+        Write-TestFile -Path (Join-Path $platform 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $platform 'Run.ps1') -Content @'
 # CONFIGURATION
 $ScriptPackageName = 'Fixture-Platform'
@@ -113,6 +136,7 @@ exit 0
 
         $win32 = Join-Path $Root 'Win32-Packaged-Scripts\Security\Fixture-Win32'
         Write-TestFile -Path (Join-Path $win32 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Win32 Packaged Scripts' -Status PilotReady -HasRemediation 'N/A' -HasUninstall Yes -EvidenceType PackageMarker -EvidenceSource 'Win32 package install/version marker')
+        Write-TestFile -Path (Join-Path $win32 'README.md') -Content $pilotReadme
         Write-TestFile -Path (Join-Path $win32 'Install.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Install'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nexit 0"
         Write-TestFile -Path (Join-Path $win32 'Detect.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Detect'`n`$PackageVersion='1.0'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nif (`$PackageVersion) { Write-Output 'Detected'; exit 0 }`nexit 1"
         Write-TestFile -Path (Join-Path $win32 'Uninstall.ps1') -Content "# CONFIGURATION`n`$ScriptPackageName='Fixture-Win32'`n`$ScriptName='Uninstall'`n# LOGGING`nfunction Write-ScriptMetadata {}`n# MAIN`nexit 0"
@@ -244,6 +268,47 @@ Describe 'Custom Compliance runtime contract' {
 }
 
 Describe 'Existing validator integration with temporary packages' {
+    It 'accepts PilotReady documentation with pilot steps and a Microsoft Learn reference' {
+        $resultPath = Join-Path $script:FixtureRoot 'pilot-documentation-result.json'
+        & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+        $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+        $LASTEXITCODE | Should -Be 0 -Because ($result.Results.Message -join '; ')
+    }
+
+    It 'blocks promotion when Pilot Validation documentation is missing' {
+        $readmePath = Join-Path $script:FixtureRoot 'Detection-Remediation\Security\Fixture-Remediation\README.md'
+        $originalReadme = [System.IO.File]::ReadAllText($readmePath)
+        $resultPath = Join-Path $script:FixtureRoot 'missing-pilot-documentation-result.json'
+        try {
+            Write-TestFile -Path $readmePath -Content "# Fixture package`n`nhttps://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations"
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            ($result.Results.Message -join ' ') | Should -Match "no 'Pilot Validation' section"
+        }
+        finally {
+            Write-TestFile -Path $readmePath -Content $originalReadme
+        }
+    }
+
+    It 'requires non-sensitive evidence documentation for Validated status' {
+        $scriptInfoPath = Join-Path $script:FixtureRoot 'Detection-Remediation\Security\Fixture-Remediation\ScriptInfo.json'
+        $originalScriptInfo = [System.IO.File]::ReadAllText($scriptInfoPath)
+        $resultPath = Join-Path $script:FixtureRoot 'missing-validation-evidence-result.json'
+        try {
+            $scriptInfo = $originalScriptInfo | ConvertFrom-Json
+            $scriptInfo.Status = 'Validated'
+            Write-TestFile -Path $scriptInfoPath -Content ($scriptInfo | ConvertTo-Json -Depth 8)
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-IntuneWorkloadContracts.ps1') -RepositoryRoot $script:FixtureRoot -PackagePath 'Detection-Remediation/Security/Fixture-Remediation' -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            ($result.Results.Message -join ' ') | Should -Match "no 'Validation Evidence' section"
+        }
+        finally {
+            Write-TestFile -Path $scriptInfoPath -Content $originalScriptInfo
+        }
+    }
+
     It 'keeps a normal one-package summary below 200 console lines' {
         $resultPath = Join-Path $script:FixtureRoot 'one-package-repository-result.json'
         $console = @(& $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-Repository.ps1') -RepositoryRoot $script:RepositoryRoot -PackagePath 'Detection-Remediation/Applications/Clear-Microsoft-Store-Cache-Safely' -SummaryOnly -ResultPath $resultPath)
@@ -311,5 +376,157 @@ Describe 'Existing validator integration with temporary packages' {
         $LASTEXITCODE | Should -Be 1
         $detail = [System.IO.File]::ReadAllText((Join-Path $output 'detection-smoke-results.json')) | ConvertFrom-Json
         $detail.TimedOut | Should -BeTrue
+    }
+}
+
+Describe 'Registry remediation audit' {
+    It 'locks the tracked audit to all 100 current registry candidates' {
+        $resultPath = Join-Path $script:FixtureRoot 'registry-audit-current-result.json'
+        & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-RegistryRemediationAudit.ps1') -RepositoryRoot $script:RepositoryRoot -SummaryOnly -ResultPath $resultPath
+        $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+        $LASTEXITCODE | Should -Be 0 -Because ($result.Results.Message -join '; ')
+        $result.CandidateCount | Should -Be 100
+        $result.EntryCount | Should -Be 100
+        $result.Counts.Failure | Should -Be 0
+    }
+
+    It 'blocks PilotReady registry scripts that do not verify the value type' {
+        $relativePackage = 'Detection-Remediation/Security/Fixture-Registry-Type'
+        $package = Join-Path $script:FixtureRoot ($relativePackage.Replace('/', '\'))
+        $auditPath = Join-Path $script:FixtureRoot 'registry-audit-type-gate.json'
+        $resultPath = Join-Path $script:FixtureRoot 'registry-audit-type-gate-result.json'
+        try {
+            Write-TestFile -Path (Join-Path $package 'ScriptInfo.json') -Content (New-TestScriptInfo -Workload 'Detection and Remediation' -Status PilotReady -HasRemediation Yes -EvidenceSource Registry)
+            $scriptBody = @'
+# CONFIGURATION
+$RegistryValues = @(
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Fixture'; Name = 'Enabled'; Type = 'DWord'; Value = 1 }
+)
+# LOGGING
+# MAIN
+$state = Get-ItemProperty -LiteralPath $RegistryValues[0].Path -ErrorAction SilentlyContinue
+if ($state) { exit 0 }
+exit 1
+'@
+            Write-TestFile -Path (Join-Path $package 'Detect.ps1') -Content $scriptBody
+            Write-TestFile -Path (Join-Path $package 'Remediate.ps1') -Content $scriptBody
+            Write-TestFile -Path $auditPath -Content (@{
+                SchemaVersion = '1.0'
+                ReviewedOn = '2026-08-18'
+                CandidateDefinition = 'Fixture registry readers.'
+                Packages = @(@{
+                    Path = $relativePackage
+                    Disposition = 'PilotReady'
+                    Batch = 1
+                    Reason = 'Fixture must validate type.'
+                    MicrosoftReferences = @('https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations')
+                })
+            } | ConvertTo-Json -Depth 8)
+
+            & $script:CurrentEngine -NoLogo -NoProfile -NonInteractive -File (Join-Path $script:RepositoryRoot 'tools\Test-RegistryRemediationAudit.ps1') -RepositoryRoot $script:FixtureRoot -AuditPath $auditPath -SummaryOnly -ResultPath $resultPath
+            $LASTEXITCODE | Should -Be 1
+            $result = [System.IO.File]::ReadAllText($resultPath) | ConvertFrom-Json
+            @($result.Results.RuleId) | Should -Contain 'RegistryAudit.ValueType'
+        }
+        finally {
+            if (Test-Path -LiteralPath $package) { Remove-Item -LiteralPath $package -Recurse -Force }
+            foreach ($path in @($auditPath, $resultPath)) {
+                if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path -Force }
+            }
+        }
+    }
+}
+
+Describe 'Defender remediation audit' {
+    It 'locks every Defender cmdlet remediation to a source-reviewed PilotReady package' {
+        $auditPath = Join-Path $script:RepositoryRoot 'validation\defender-remediation-audit.json'
+        $audit = [System.IO.File]::ReadAllText($auditPath) | ConvertFrom-Json
+        $candidateRoot = Join-Path $script:RepositoryRoot 'Detection-Remediation\Security'
+        $candidatePaths = @(Get-ChildItem -LiteralPath $candidateRoot -Directory | Where-Object Name -Like 'Defender-*' | ForEach-Object {
+                "Detection-Remediation/Security/$($_.Name)"
+            } | Sort-Object -Unique)
+        $auditPaths = @($audit.Packages.Path | Sort-Object -Unique)
+
+        $candidatePaths.Count | Should -Be 11
+        $auditPaths.Count | Should -Be 11
+        (Compare-Object -ReferenceObject $candidatePaths -DifferenceObject $auditPaths) | Should -BeNullOrEmpty
+
+        foreach ($entry in $audit.Packages) {
+            $entry.Disposition | Should -Be 'PilotReady'
+            @($entry.MicrosoftReferences).Count | Should -BeGreaterThan 1
+            $package = Join-Path $script:RepositoryRoot ($entry.Path.Replace('/', '\'))
+            $metadata = [System.IO.File]::ReadAllText((Join-Path $package 'ScriptInfo.json')) | ConvertFrom-Json
+            $metadata.Status | Should -Be 'PilotReady'
+            $metadata.Context | Should -Be 'System'
+            $metadata.DetectionEvidenceType | Should -Be 'DirectEvidence'
+            $metadata.DetectionReviewStatus | Should -Be 'Reviewed'
+        }
+    }
+}
+
+Describe 'Direct security and health remediation audit' {
+    BeforeAll {
+        $script:DirectAuditPath = Join-Path $script:RepositoryRoot 'validation\direct-security-health-remediation-audit.json'
+        $script:DirectAudit = [System.IO.File]::ReadAllText($script:DirectAuditPath) | ConvertFrom-Json
+    }
+
+    It 'records all reviewed packages with an honest disposition' {
+        $entries = @($script:DirectAudit.Packages)
+        $paths = @($entries.Path | Sort-Object -Unique)
+
+        $entries.Count | Should -Be 15
+        $paths.Count | Should -Be 15
+        @($entries | Where-Object Disposition -EQ 'PilotReady').Count | Should -Be 8
+        @($entries | Where-Object Disposition -EQ 'RetainExample').Count | Should -Be 6
+        @($entries | Where-Object Disposition -EQ 'NeedsReview').Count | Should -Be 1
+
+        foreach ($entry in $entries) {
+            @($entry.MicrosoftReferences).Count | Should -BeGreaterOrEqual 2
+            $package = Join-Path $script:RepositoryRoot ($entry.Path.Replace('/', '\'))
+            Test-Path -LiteralPath $package -PathType Container | Should -BeTrue
+            $metadata = [System.IO.File]::ReadAllText((Join-Path $package 'ScriptInfo.json')) | ConvertFrom-Json
+
+            switch ($entry.Disposition) {
+                'PilotReady' { $metadata.Status | Should -Be 'PilotReady' }
+                'RetainExample' { $metadata.Status | Should -Be 'Example' }
+                'NeedsReview' { $metadata.Status | Should -Be 'NeedsReview' }
+            }
+
+            if ($entry.Disposition -eq 'PilotReady') {
+                $metadata.Context | Should -Be 'System'
+                $metadata.DetectionEvidenceType | Should -Be 'DirectEvidence'
+                $metadata.DetectionReviewStatus | Should -Be 'Reviewed'
+            }
+        }
+    }
+
+    It 'prevents report-only service remediation from reporting false success' {
+        $servicePackages = @(
+            'Detection-Remediation/Security/Ensure-Base-Filtering-Engine-Service-Running',
+            'Detection-Remediation/Security/Ensure-Security-Center-Service-Running',
+            'Detection-Remediation/Endpoint-Health/Ensure-Windows-Event-Log-Service-Running',
+            'Detection-Remediation/Maintenance/Ensure-Task-Scheduler-Service-Running',
+            'Detection-Remediation/Windows-Updates/Ensure-Cryptographic-Service-Running'
+        )
+
+        foreach ($relativePath in $servicePackages) {
+            $remediationPath = Join-Path $script:RepositoryRoot (($relativePath + '/Remediate.ps1').Replace('/', '\'))
+            $content = [System.IO.File]::ReadAllText($remediationPath)
+            $block = [regex]::Match($content, 'if \(-not \$StartService\) \{(?s:.*?)\r?\n\s*\}')
+
+            $block.Success | Should -BeTrue -Because $relativePath
+            $block.Value | Should -Match 'exit 1' -Because $relativePath
+            $block.Value | Should -Not -Match 'exit 0' -Because $relativePath
+        }
+    }
+
+    It 'keeps account and Defender report-only paths noncompliant' {
+        $guest = [System.IO.File]::ReadAllText((Join-Path $script:RepositoryRoot 'Detection-Remediation\Security\Ensure-Guest-Account-Disabled\Remediate.ps1'))
+        $signature = [System.IO.File]::ReadAllText((Join-Path $script:RepositoryRoot 'Detection-Remediation\Security\Update-Defender-Signatures\Remediate.ps1'))
+
+        $guest | Should -Not -Match 'ExitZeroInReportingOnlyMode'
+        $signature | Should -Not -Match 'ExitZeroInReportingOnlyMode'
+        $signature | Should -Match 'ValidationAttempts'
+        $signature | Should -Match 'allowedUpdateSources'
     }
 }

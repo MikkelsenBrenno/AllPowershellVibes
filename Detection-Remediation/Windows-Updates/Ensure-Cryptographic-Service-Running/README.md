@@ -70,3 +70,15 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 
 Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
 
+## Pilot Validation
+
+1. Deploy with `$StartService = $false`; a stopped service must remain unchanged and remediation must exit `1`.
+2. Test the stopped-service path only on an affected lab device or disposable VM snapshot.
+3. Set `$StartService = $true`, verify remediation reads back `Running`, and confirm certificate-chain validation and Windows Update scanning still work.
+4. Rerun detection and verify exit `0`; review both package and Intune Management Extension logs.
+
+Microsoft references:
+
+- [Microsoft system-service guidance: Cryptographic Services](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#cryptographic-services)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+

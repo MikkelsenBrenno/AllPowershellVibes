@@ -1,10 +1,10 @@
 {
-  "Name": "Defender Enable PUA Protection",
+  "Name": "Defender Enable PUA Protection Block Mode",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended",
+  "Requires64BitPowerShell": "Recommended for consistent Defender module availability",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,7 +18,7 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "This remediation package checks whether Microsoft Defender potentially unwanted application protection is enabled and enables it when needed. The default desired state is `Enabled`.",
+  "Summary": "Enables Microsoft Defender potentially unwanted application protection in block mode.",
   "Tags": [
     "Security",
     "Detection-Remediation",

@@ -2,26 +2,26 @@
   "Name": "Ensure Remote Desktop Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Recommended for native Windows paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
-  "DetectionEvidenceSource": "Registry; Network configuration",
+  "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
   "PortabilityReviewStatus": "Reviewed",
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "This remediation package detects whether Remote Desktop is enabled and can disable it after an explicit safety switch is enabled.",
+  "Summary": "Detects and remediates the supported machine policy that denies Remote Desktop connections.",
   "Tags": [
     "Security",
-    "Detection-Remediation",
-    "Business Premium"
+    "RDP",
+    "Remote Access"
   ]
 }

@@ -19,6 +19,7 @@ Edit the CONFIGURATION section near the top of each script:
 - `$RequireRunning`: Whether detection requires the service to be running.
 - `$AllowedStartModes`: Startup modes allowed by detection.
 - `$StartupType`: Startup type remediation applies.
+- `$ExpectedStartMode`: CIM startup mode required by final validation. Keep `Auto` aligned with `$StartupType = 'Automatic'`.
 - `$StartServiceAfterChange`: Whether remediation starts the service.
 - `$ValidationDelaySeconds`: Delay before post-remediation validation.
 
@@ -43,3 +44,16 @@ Edit the CONFIGURATION section near the top of each script:
 - If the service will not start, review System event logs and service dependencies.
 - If policy disables the service again, check GPO, baseline, or hardening tools.
 - Review script logs and Intune Management Extension logs together.
+
+## Pilot Validation
+
+1. Confirm `$StartupType = 'Automatic'`, `$ExpectedStartMode = 'Auto'`, and `$StartServiceAfterChange = $true` remain aligned.
+2. Do not deliberately stop WMI on a production device. Use an affected lab device or disposable VM snapshot to test remediation.
+3. Verify remediation reads back both `StartMode='Auto'` and `State='Running'`; any other final state must exit `1`.
+4. Rerun detection, execute a harmless `Get-CimInstance Win32_OperatingSystem` query, and confirm both succeed.
+
+Microsoft references:
+
+- [`winmgmt` and WMI service behavior](https://learn.microsoft.com/en-us/windows/win32/wmisdk/winmgmt)
+- [Microsoft system-service guidance: Windows Management Instrumentation](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#windows-management-instrumentation)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

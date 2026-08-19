@@ -2,15 +2,15 @@
   "Name": "Ensure Defender Network Protection Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,11 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Microsoft Defender Network Protection policy so malicious network destinations are blocked.",
+  "Summary": "Detects and remediates Microsoft Defender Network Protection to block mode.",
   "Tags": [
     "Security",
     "Defender",
-    "Network Protection",
-    "Business Premium"
+    "Network Protection"
   ]
 }

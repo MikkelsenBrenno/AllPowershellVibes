@@ -2,9 +2,9 @@
   "Name": "Ensure Anonymous SAM Enumeration Restricted",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates local security policy registry state that restricts anonymous SAM account enumeration.",
+  "Summary": "Detects and remediates the Windows security option that prevents anonymous enumeration of local SAM accounts.",
   "Tags": [
     "Security",
-    "Local Security Policy",
-    "Business Premium"
+    "SAM",
+    "Anonymous Access"
   ]
 }

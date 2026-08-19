@@ -2,7 +2,7 @@
 
 This document is the repository source of truth for choosing and implementing an Intune script workload. Microsoft Learn remains the authoritative product documentation. Recheck the linked Microsoft documentation when Intune behavior changes.
 
-Last reviewed against Microsoft Learn: 2026-08-17.
+Last reviewed against Microsoft Learn: 2026-08-18.
 
 ## Choose The Workload By Deployment Behavior
 
@@ -120,7 +120,7 @@ Do not generate one package per workload simply to fill the catalog.
 | `PilotReady` | Contract checks pass and the package is ready only for controlled pilot testing. |
 | `Validated` | Contract checks pass and documented testing has been completed. Tenant-specific approval is still required. |
 
-The repository validator applies strict semantic gates to `PilotReady` and `Validated`. Marker-only evidence, unfinished placeholders, missing Custom Compliance rule fields, mismatched workload metadata, or an unreviewed evidence classification prevents promotion.
+The repository validator applies strict semantic gates to `PilotReady` and `Validated`. Marker-only evidence, unfinished placeholders, missing Custom Compliance rule fields, mismatched workload metadata, or an unreviewed evidence classification prevents promotion. A promoted package README must also contain a `Pilot Validation` section and a relevant Microsoft Learn reference. `Validated` packages additionally require a `Validation Evidence` section with non-sensitive test results.
 
 ## Adding A New Script
 
@@ -140,8 +140,9 @@ The repository validator applies strict semantic gates to `PilotReady` and `Vali
 .\tools\Update-ScriptCatalog.ps1 -Check
 ```
 
-8. Change `Status` to `PilotReady` only after the strict checks pass and the package is ready for a controlled pilot.
-9. Change `Status` to `Validated` only after documented testing succeeds. This status never removes the need for tenant change control and security review.
+8. Add a package-specific `Pilot Validation` procedure, rollback guidance, and relevant Microsoft Learn references to the README.
+9. Change `Status` to `PilotReady` only after the strict checks pass and the package is ready for a controlled pilot.
+10. Change `Status` to `Validated` only after documented testing succeeds and a non-sensitive `Validation Evidence` section is added to the package README. This status never removes the need for tenant change control and security review.
 
 ## Review Questions
 

@@ -70,3 +70,15 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 
 Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
 
+## Pilot Validation
+
+1. Deploy to a disposable Windows pilot VM with `$StartService = $false`; a stopped BFE service must remain unchanged and remediation must exit `1`.
+2. Do not deliberately stop BFE on a production device. Use an already affected lab device or a VM snapshot for the noncompliant case.
+3. Set `$StartService = $true`, rerun remediation, and verify the final direct service state is `Running`.
+4. Confirm Windows Firewall and IPsec-dependent connectivity remain healthy, then rerun detection and verify exit `0`.
+
+Microsoft references:
+
+- [Microsoft system-service guidance: Base Filtering Engine](https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server#base-filtering-engine)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+

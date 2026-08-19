@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Group Policy Background Refresh Enabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Maintenance",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "Yes",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Ensures background Group Policy refresh is not disabled.",
+  "Tags": [
+    "Maintenance",
+    "Group Policy",
+    "Refresh"
+  ]
+}

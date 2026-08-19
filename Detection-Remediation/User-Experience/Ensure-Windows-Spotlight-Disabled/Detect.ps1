@@ -3,21 +3,21 @@
     Detects Ensure Windows Spotlight Disabled.
 
 .DESCRIPTION
-    Intune Remediations detection script. The script checks configured registry values and exits 1 when remediation should write the desired state.
+    Read-only Intune Remediations detection script. It validates that every documented registry value exists with the exact required registry type and data.
 
 .NOTES
     Name:        Detect.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     User
 
 .INTUNE
     Workload:    Detection and Remediation
-    Exit 0:      Ensure Windows Spotlight Disabled is compliant
-    Exit 1:      Ensure Windows Spotlight Disabled is missing or different
+    Exit 0:      The documented registry contract is exact
+    Exit 1:      The key/value is missing, has the wrong type/data, or cannot be read
 
 .CUSTOMIZATION
-    Update values in the CONFIGURATION section before deployment.
+    The RegistryValues block is the reviewed package contract. Keep it identical in Detect.ps1 and Remediate.ps1.
 #>
 
 #Requires -Version 5.1
@@ -28,25 +28,21 @@ $ErrorActionPreference = 'Stop'
 # CONFIGURATION
 # =========================
 
-# CUSTOMIZE HERE.
-# Keep every value an admin is expected to change in this section.
-# Common examples: file paths, registry paths, service names, URLs,
-# tenant-specific labels, expected values, and validation timing.
+# CUSTOMIZE HERE. The shipped RegistryValues block is the reviewed package contract.
+# Keep it identical in Detect.ps1 and Remediate.ps1; rename and re-review the package for a different intent.
 
-# Keep these names aligned with the folder and script file.
-# Logs are written to Logs\<ScriptPackageName>\<ScriptName>.log.
 $ScriptPackageName = 'Ensure-Windows-Spotlight-Disabled'
 $ScriptName = 'Detect'
 
 $RegistryValues = @(
-    @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'; Name = 'DisableWindowsSpotlightFeatures'; Type = 'DWord'; Value = 1; Description = 'Disable Windows Spotlight features' }
+    @{ Path = 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'; Name = 'DisableWindowsSpotlightFeatures'; Type = 'DWord'; Value = 1; Description = 'Disable all Windows Spotlight features' }
 )
 
 # =========================
 # LOGGING
 # =========================
 
-$BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
+$BaseLogRoot = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\IntuneScriptLibrary\Logs'
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
@@ -58,16 +54,12 @@ function Initialize-Log {
 
 function Write-Log {
     param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-
-        [ValidateSet('INFO', 'WARN', 'ERROR')]
-        [string]$Level = 'INFO'
+        [Parameter(Mandatory = $true)][string]$Message,
+        [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'
     )
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-    $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value "$timestamp [$Level] $Message" -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -76,33 +68,39 @@ function Write-ScriptMetadata {
 }
 
 function Get-RegistryValueState {
-    param(
-        [Parameter(Mandatory = $true)]
-        [array]$Values
-    )
+    param([Parameter(Mandatory = $true)][array]$Values)
 
     foreach ($item in $Values) {
-        $exists = Test-Path -LiteralPath $item.Path
+        $keyExists = Test-Path -LiteralPath $item.Path
+        $valueExists = $false
         $currentValue = $null
-        $compliant = $false
+        $currentType = $null
 
-        if ($exists) {
-            $property = Get-ItemProperty -LiteralPath $item.Path -Name $item.Name -ErrorAction SilentlyContinue
-            if ($null -ne $property) {
-                $currentValue = $property.($item.Name)
-                $compliant = ([string]$currentValue -eq [string]$item.Value)
+        if ($keyExists) {
+            $key = Get-Item -LiteralPath $item.Path -ErrorAction Stop
+            $matchingName = @($key.GetValueNames() | Where-Object { $_ -ieq [string]$item.Name } | Select-Object -First 1)
+            if ($matchingName.Count -eq 1) {
+                $valueExists = $true
+                $currentType = $key.GetValueKind([string]$matchingName[0]).ToString()
+                $currentValue = $key.GetValue([string]$matchingName[0], $null, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
             }
         }
+
+        $typeMatches = $valueExists -and ([string]$currentType -ceq [string]$item.Type)
+        $valueMatches = $valueExists -and [object]::Equals($currentValue, $item.Value)
 
         [pscustomobject]@{
             Path = $item.Path
             Name = $item.Name
-            Type = $item.Type
+            DesiredType = $item.Type
             DesiredValue = $item.Value
+            CurrentType = $currentType
             CurrentValue = $currentValue
-            Exists = $exists
-            Compliant = $compliant
-            Description = $item.Description
+            KeyExists = $keyExists
+            ValueExists = $valueExists
+            TypeMatches = $typeMatches
+            ValueMatches = $valueMatches
+            Compliant = ($typeMatches -and $valueMatches)
         }
     }
 }
@@ -118,30 +116,24 @@ try {
 
     $state = @(Get-RegistryValueState -Values $RegistryValues)
     foreach ($item in $state) {
-        Write-Log -Message "Registry state Path='$($item.Path)' Name='$($item.Name)' Current='$($item.CurrentValue)' Desired='$($item.DesiredValue)' Compliant='$($item.Compliant)'."
+        Write-Log -Message "Registry state Path='$($item.Path)' Name='$($item.Name)' CurrentType='$($item.CurrentType)' DesiredType='$($item.DesiredType)' Current='$($item.CurrentValue)' Desired='$($item.DesiredValue)' Compliant='$($item.Compliant)'."
     }
 
     $nonCompliant = @($state | Where-Object { -not $_.Compliant })
     if ($nonCompliant.Count -eq 0) {
-        $message = 'Compliant. All configured registry values match the desired state.'
+        $message = 'Compliant. Every configured registry value has the exact required type and data.'
         Write-Log -Message $message
         Write-Output $message
         exit 0
     }
 
-    $message = "Not compliant. $($nonCompliant.Count) configured registry value(s) are missing or different."
+    $message = "Not compliant. $($nonCompliant.Count) registry value(s) are missing or have the wrong type or data."
     Write-Log -Message $message -Level 'WARN'
     Write-Output $message
     exit 1
 }
 catch {
-    try {
-        Write-Log -Message "$ScriptName failed. $($_.Exception.Message)" -Level 'ERROR'
-    }
-    catch {
-    }
-
-    Write-Output 'Not compliant. Ensure Windows Spotlight Disabled could not be validated.'
+    try { Write-Log -Message "$ScriptName failed. $($_.Exception.Message)" -Level 'ERROR' } catch {}
+    Write-Output 'Not compliant. The registry contract could not be validated.'
     exit 1
 }
-

@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure DNS Preferred Over Link-Local Responses",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Networking",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Configures Windows name resolution to prefer DNS responses over link-local protocols.",
+  "Tags": [
+    "Networking",
+    "DNS",
+    "Name Resolution"
+  ]
+}

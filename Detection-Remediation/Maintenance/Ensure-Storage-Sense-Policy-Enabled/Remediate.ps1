@@ -1,25 +1,23 @@
 <#
 .SYNOPSIS
-    Configures Storage Sense policy.
+    Remediates Ensure Storage Sense Policy Enabled.
 
 .DESCRIPTION
-    Intune Remediations remediation script. The script writes configurable
-    machine policy registry values for Storage Sense after ApplyPolicy is
-    enabled.
+    Intune Remediations action script. It writes the reviewed registry contract and reads every value back before reporting success.
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     System
 
 .INTUNE
     Workload:    Detection and Remediation
-    Exit 0:      Storage Sense policy matches expected values
-    Exit 1:      Storage Sense policy remains missing or different
+    Exit 0:      The final registry type and data are exact
+    Exit 1:      The write failed or final validation did not match
 
 .CUSTOMIZATION
-    Update values in the CONFIGURATION section before deployment.
+    The RegistryValues block is the reviewed package contract. Keep it identical in Detect.ps1 and Remediate.ps1.
 #>
 
 #Requires -Version 5.1
@@ -30,22 +28,17 @@ $ErrorActionPreference = 'Stop'
 # CONFIGURATION
 # =========================
 
-# CUSTOMIZE HERE.
-# Keep every value an admin is expected to change in this section.
-# Common examples: file paths, registry paths, service names, URLs,
-# tenant-specific labels, expected values, and validation timing.
+# CUSTOMIZE HERE. The shipped RegistryValues block is the reviewed package contract.
+# Keep it identical in Detect.ps1 and Remediate.ps1; rename and re-review the package for a different intent.
 
 $ScriptPackageName = 'Ensure-Storage-Sense-Policy-Enabled'
 $ScriptName = 'Remediate'
 
-$StorageSensePolicyPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\StorageSense'
-$EnableValueName = 'AllowStorageSenseGlobal'
-$EnableValue = 1
-$CadenceValueName = 'ConfigStorageSenseGlobalCadence'
-$CadenceValue = 30
-$WriteCadenceValue = $true
-$ApplyPolicy = $false
-$ExitZeroInReportingOnlyMode = $false
+$RegistryValues = @(
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\StorageSense'; Name = 'AllowStorageSenseGlobal'; Type = 'DWord'; Value = 1; Description = 'Enable Storage Sense by policy' }
+    @{ Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\StorageSense'; Name = 'ConfigStorageSenseGlobalCadence'; Type = 'DWord'; Value = 30; Description = 'Run Storage Sense monthly' }
+)
+$ValidationDelaySeconds = 1
 
 # =========================
 # LOGGING
@@ -55,9 +48,64 @@ $BaseLogRoot = Join-Path -Path $env:ProgramData -ChildPath 'Microsoft\IntuneScri
 $LogRoot = Join-Path -Path $BaseLogRoot -ChildPath $ScriptPackageName
 $LogPath = Join-Path -Path $LogRoot -ChildPath "$ScriptName.log"
 
-function Initialize-Log { if (-not (Test-Path -LiteralPath $LogRoot)) { New-Item -Path $LogRoot -ItemType Directory -Force | Out-Null } }
-function Write-Log { param([Parameter(Mandatory = $true)][string]$Message, [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'); Add-Content -Path $LogPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Level] $Message" -Encoding UTF8 }
-function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name; Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'." }
+function Initialize-Log {
+    if (-not (Test-Path -LiteralPath $LogRoot)) {
+        New-Item -Path $LogRoot -ItemType Directory -Force | Out-Null
+    }
+}
+
+function Write-Log {
+    param(
+        [Parameter(Mandatory = $true)][string]$Message,
+        [ValidateSet('INFO', 'WARN', 'ERROR')][string]$Level = 'INFO'
+    )
+
+    $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+    Add-Content -LiteralPath $LogPath -Value "$timestamp [$Level] $Message" -Encoding UTF8
+}
+
+function Write-ScriptMetadata {
+    $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+    Write-Log -Message "Script metadata: Package='$ScriptPackageName'; Script='$ScriptName'; LogPath='$LogPath'; User='$identity'; PowerShell='$($PSVersionTable.PSVersion)'; Is64BitProcess='$([System.Environment]::Is64BitProcess)'."
+}
+
+function Get-RegistryValueState {
+    param([Parameter(Mandatory = $true)][array]$Values)
+
+    foreach ($item in $Values) {
+        $keyExists = Test-Path -LiteralPath $item.Path
+        $valueExists = $false
+        $currentValue = $null
+        $currentType = $null
+
+        if ($keyExists) {
+            $key = Get-Item -LiteralPath $item.Path -ErrorAction Stop
+            $matchingName = @($key.GetValueNames() | Where-Object { $_ -ieq [string]$item.Name } | Select-Object -First 1)
+            if ($matchingName.Count -eq 1) {
+                $valueExists = $true
+                $currentType = $key.GetValueKind([string]$matchingName[0]).ToString()
+                $currentValue = $key.GetValue([string]$matchingName[0], $null, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
+            }
+        }
+
+        $typeMatches = $valueExists -and ([string]$currentType -ceq [string]$item.Type)
+        $valueMatches = $valueExists -and [object]::Equals($currentValue, $item.Value)
+
+        [pscustomobject]@{
+            Path = $item.Path
+            Name = $item.Name
+            DesiredType = $item.Type
+            DesiredValue = $item.Value
+            CurrentType = $currentType
+            CurrentValue = $currentValue
+            KeyExists = $keyExists
+            ValueExists = $valueExists
+            TypeMatches = $typeMatches
+            ValueMatches = $valueMatches
+            Compliant = ($typeMatches -and $valueMatches)
+        }
+    }
+}
 
 # =========================
 # MAIN
@@ -66,37 +114,38 @@ function Write-ScriptMetadata { $identity = [System.Security.Principal.WindowsId
 try {
     Initialize-Log
     Write-ScriptMetadata
+    Write-Log -Message "Remediation started. Registry value count='$($RegistryValues.Count)'."
 
-    if (-not $ApplyPolicy) {
-        Write-Output 'Storage Sense policy would be configured, but ApplyPolicy is disabled.'
-        if ($ExitZeroInReportingOnlyMode) { exit 0 }
-        exit 1
+    foreach ($item in $RegistryValues) {
+        if (-not (Test-Path -LiteralPath $item.Path)) {
+            New-Item -Path $item.Path -Force | Out-Null
+        }
+
+        Write-Log -Message "Writing Path='$($item.Path)' Name='$($item.Name)' Type='$($item.Type)' Value='$($item.Value)'."
+        New-ItemProperty -LiteralPath $item.Path -Name $item.Name -Value $item.Value -PropertyType $item.Type -Force | Out-Null
     }
 
-    if (-not (Test-Path -LiteralPath $StorageSensePolicyPath -PathType Container)) {
-        New-Item -Path $StorageSensePolicyPath -Force | Out-Null
+    Start-Sleep -Seconds $ValidationDelaySeconds
+    $state = @(Get-RegistryValueState -Values $RegistryValues)
+    foreach ($item in $state) {
+        Write-Log -Message "Validation state Path='$($item.Path)' Name='$($item.Name)' CurrentType='$($item.CurrentType)' DesiredType='$($item.DesiredType)' Current='$($item.CurrentValue)' Desired='$($item.DesiredValue)' Compliant='$($item.Compliant)'."
     }
 
-    New-ItemProperty -Path $StorageSensePolicyPath -Name $EnableValueName -Value $EnableValue -PropertyType DWord -Force | Out-Null
-
-    if ($WriteCadenceValue) {
-        New-ItemProperty -Path $StorageSensePolicyPath -Name $CadenceValueName -Value $CadenceValue -PropertyType DWord -Force | Out-Null
+    $nonCompliant = @($state | Where-Object { -not $_.Compliant })
+    if ($nonCompliant.Count -eq 0) {
+        $message = 'Remediation succeeded. Every configured registry value has the exact required type and data.'
+        Write-Log -Message $message
+        Write-Output $message
+        exit 0
     }
 
-    $item = Get-ItemProperty -LiteralPath $StorageSensePolicyPath -ErrorAction Stop
-    if ([int]$item.$EnableValueName -ne $EnableValue) {
-        throw "$EnableValueName was not set to '$EnableValue'."
-    }
-
-    if ($WriteCadenceValue -and [int]$item.$CadenceValueName -ne $CadenceValue) {
-        throw "$CadenceValueName was not set to '$CadenceValue'."
-    }
-
-    Write-Output "Storage Sense policy was configured. Enabled='$EnableValue'; Cadence='$CadenceValue'."
-    exit 0
+    $message = "Remediation failed. $($nonCompliant.Count) registry value(s) still have the wrong type or data."
+    Write-Log -Message $message -Level 'ERROR'
+    Write-Output $message
+    exit 1
 }
 catch {
-    try { Write-Log -Message "Remediation failed. $($_.Exception.Message)" -Level 'ERROR' } catch {}
-    Write-Output 'Remediation failed while configuring Storage Sense policy.'
+    try { Write-Log -Message "$ScriptName failed. $($_.Exception.Message)" -Level 'ERROR' } catch {}
+    Write-Output 'Remediation failed. The registry contract was not established.'
     exit 1
 }

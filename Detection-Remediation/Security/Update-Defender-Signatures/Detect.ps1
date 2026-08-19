@@ -107,7 +107,7 @@ try {
     $signatureAgeDays = [math]::Round($signatureAge.TotalDays, 2)
     Write-Log -Message "AntivirusSignatureLastUpdated='$lastUpdated'; SignatureAgeDays='$signatureAgeDays'."
 
-    if ($signatureAge.TotalDays -le $MaximumSignatureAgeDays) {
+    if ($signatureAge.TotalDays -ge 0 -and $signatureAge.TotalDays -le $MaximumSignatureAgeDays) {
         $message = "Compliant. Defender signatures are $signatureAgeDays days old."
         Write-Log -Message $message
         Write-Output $message

@@ -2,7 +2,7 @@
   "Name": "Ensure Task Scheduler Service Running",
   "Workload": "Detection and Remediation",
   "Purpose": "Maintenance",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "Yes",

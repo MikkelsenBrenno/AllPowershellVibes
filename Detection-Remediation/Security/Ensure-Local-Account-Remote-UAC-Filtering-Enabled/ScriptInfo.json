@@ -2,15 +2,15 @@
   "Name": "Ensure Local Account Remote UAC Filtering Enabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates LocalAccountTokenFilterPolicy so local administrator tokens are filtered over remote connections.",
+  "Summary": "Detects and remediates remote UAC filtering for local administrator accounts.",
   "Tags": [
     "Security",
     "UAC",
-    "Business Premium"
+    "Local Accounts"
   ]
 }

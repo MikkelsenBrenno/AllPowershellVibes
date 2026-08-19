@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure BitLocker Fixed Drive XTS-AES 256 Policy",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Compliance",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Configures the BitLocker fixed-drive encryption-method policy for XTS-AES 256.",
+  "Tags": [
+    "Compliance",
+    "BitLocker",
+    "Encryption"
+  ]
+}

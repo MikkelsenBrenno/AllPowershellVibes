@@ -1,72 +1,91 @@
-# Ensure Office Block Macros From Internet
+# Ensure Office Blocks Macros From The Internet
 
 ## Summary
 
-Detects and remediates Microsoft 365 Apps policy values that block VBA macros from files marked as downloaded from the internet.
+Detects and remediates the per-user Office policies that block macros in files from the internet for all seven supported desktop applications.
 
-## Files
+**Repository status:** `PilotReady`. Microsoft documentation supports the shipped registry contract, and both scripts enforce exact registry type and data. This is ready for a controlled tenant pilot, not pre-labeled as `Validated`.
 
-- `Detect.ps1` - Checks the current state.
-- `Remediate.ps1` - Fixes or reports the issue when detection exits `1`.
+## Copy To Intune
 
-## What To Change First
+Copy `Detect.ps1` into the **Detection script** field and `Remediate.ps1` into the **Remediation script** field of one Intune Remediations package. Do not combine or reverse the files.
 
-Open both scripts and review the `CONFIGURATION` section before changing anything else.
+## Configuration Contract
 
-| Setting | Description | Default |
-| --- | --- | --- |
-| `$OfficePolicyRoot` | Policy root to use. Change to HKLM for device-scope policy testing. | `HKCU:\Software\Policies\Microsoft\Office\16.0` |
-| `$OfficeAppNames` | Office apps to configure. | `word`, `excel`, `powerpoint`, `access` |
-| `$MacroPolicyValueName` | Office macro policy value name. | `blockcontentexecutionfrominternet` |
-| `$DesiredMacroPolicyValue` | Desired policy value. | `1` |
-| `$ValidationDelaySeconds` | Wait time before remediation validation. | `2` |
+Keep `$RegistryValues` identical in both scripts.
 
-## Prerequisites
+| Path | Name | Type | Required data |
+| --- | --- | --- | --- |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\access\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\excel\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\powerpoint\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\msproject\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\publisher\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\visio\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
+| `HKCU:\Software\Policies\Microsoft\Office\16.0\word\security` | `blockcontentexecutionfrominternet` | `DWord` | `1` |
 
-- Windows device enrolled in Microsoft Intune.
-- Microsoft 365 Apps installed or policy-ready.
-- PowerShell 5.1.
-- Run in the logged-on user context for HKCU policy.
-- 64-bit PowerShell recommended.
+**Effect:** Blocks macros in Mark-of-the-Web files for Access, Excel, PowerPoint, Project, Publisher, Visio, and Word.
 
 ## Customization
 
-Update the `CONFIGURATION` section in both scripts before deployment. Keep tenant-specific values, paths, profile names, and safety toggles near the top so technicians can review them immediately.
+The shipped contract is the source-verified baseline for this exact package name. Keep `$RegistryValues` identical in both scripts. For a different state, create a separately named and reviewed package so purpose, documentation, risk, and rollback stay honest.
+
+## Prerequisites
+
+- Run in logged-on user context; the policy is under HKCU and logs use LOCALAPPDATA.
+- Microsoft documents policy availability for Microsoft 365 Apps for enterprise, not Microsoft 365 Apps for business.
+- Inventory signed macros, trusted publishers, trusted locations, intranet shares, and legitimate workflows before assignment; do not remove Mark of the Web as a blanket workaround.
+- Use Windows PowerShell 5.1 in 64-bit `User` context.
+- Do not simultaneously manage these values to a different state through Intune policy, security baselines, Group Policy, Cloud Policy, or another tool.
 
 ## Intune Settings
 
-| Setting | Recommended value |
+| Setting | Required/recommended value |
 | --- | --- |
-| Script type | Remediation |
+| Workload | Remediations |
 | Detection script | `Detect.ps1` |
 | Remediation script | `Remediate.ps1` |
-| Run this script using the logged-on credentials | Yes |
-| Enforce script signature check | Tenant policy |
+| Run using logged-on credentials | Yes |
+| Enforce script signature check | Follow tenant signing policy |
 | Run script in 64-bit PowerShell | Yes |
 
-## Intune Deployment
-
-1. Go to Intune admin center.
-2. Open **Devices > Manage devices > Scripts and remediations**.
-3. Create a script package.
-4. Upload `Detect.ps1` as the detection script.
-5. Upload `Remediate.ps1` as the remediation script.
-6. Choose the settings above.
-7. Assign to a small pilot group first.
+Assign a small, representative nonproduction group first. Intune runs remediation only when detection exits `1`.
 
 ## Expected Results
 
-- Detection exits `0` when each configured Office app has the macro policy value.
-- Remediation creates missing policy keys and writes the desired value.
-- Office apps may need to restart before reading the new policy state.
+- Detection is read-only and exits `0` only when every value exists with the exact required registry type and data.
+- A missing key, missing value, wrong type, wrong data, or read error exits `1`.
+- Remediation writes the reviewed values, reads them back, and exits `0` only after exact final validation.
+- Logs are written under `%LOCALAPPDATA%\Microsoft\IntuneScriptLibrary\Logs\Ensure-Office-Block-Macros-From-Internet`.
+
+## Pilot Validation
+
+1. Use a disposable or nonproduction device that satisfies every prerequisite and record its OS and product versions.
+2. Export or record the original key/value state, including type and data.
+3. Verify detection exits `1` for a missing value, a wrong type, and correct type with wrong data.
+4. Set the complete exact contract and verify detection exits `0`.
+5. Restore a noncompliant state and let Intune remediate. It must report success only after exact read-back validation.
+6. Run detection again and review the package and Intune Management Extension logs.
+7. Perform the product check: Open a harmless macro-enabled test file carrying Mark of the Web in each installed Office application and confirm macros are blocked without an Enable Content bypass.
+8. Test required user, application, security, networking, servicing, sign-in, and restart workflows relevant to this package.
+9. Check for policy conflict or reversion after device sync, user sign-in, application restart, and device restart where relevant.
+10. Restore the original state if the pilot is not approved.
+
+Do not change this package to `Validated` until non-sensitive pilot evidence is recorded using `docs/Trusted-Remediation-Pilot.md`.
+
+## Rollback
+
+Restore every recorded original value with its original type and data. If a value did not exist before the pilot, remove that value only; remove a key only when the pilot created it and it has no sibling values. Restore only reviewed exceptions through trusted publishers or carefully controlled trusted locations; broadly allowing internet macros materially weakens protection.
 
 ## Troubleshooting
 
-- Review logs in `C:\ProgramData\Microsoft\IntuneScriptLibrary\Logs\Ensure-Office-Block-Macros-From-Internet`.
-- Confirm whether the script is running as user context for HKCU or system context for HKLM.
-- Check whether Microsoft 365 Apps Administrative Template or Settings Catalog policy already controls the same setting.
+- Confirm Intune used the documented context and 64-bit PowerShell.
+- Compare registry type as well as data; a string `"1"` is not a DWORD `1`.
+- Check every supported policy authority for duplicate ownership or higher-precedence configuration.
+- Review `C:\ProgramData\Microsoft\IntuneManagementExtension\Logs` and the package log.
+- Recheck Microsoft applicability and product prerequisites when the registry is exact but behavior differs.
 
-## Source Inspiration
+## Microsoft References
 
-Original implementation for this repository. Topic inspiration comes from public Microsoft 365 Apps and Intune hardening patterns in [aaronparker/intune](https://github.com/aaronparker/intune) and Microsoft policy documentation in [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs).
-
+- [Macros from the internet are blocked by default in Office](https://learn.microsoft.com/en-us/microsoft-365-apps/security/internet-macros-blocked)
+- [Use Remediations to detect and fix support issues](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)

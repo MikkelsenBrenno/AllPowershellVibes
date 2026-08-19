@@ -2,15 +2,15 @@
   "Name": "Ensure LM Hash Storage Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates the NoLMHash setting to prevent storage of LAN Manager password hashes.",
+  "Summary": "Detects and remediates the Windows security option that prevents storage of LAN Manager password hashes.",
   "Tags": [
     "Security",
-    "Credentials",
-    "Business Premium"
+    "Authentication",
+    "LM Hash"
   ]
 }

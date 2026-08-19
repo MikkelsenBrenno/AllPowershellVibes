@@ -39,6 +39,7 @@ $ScriptName = 'Remediate'
 
 $ServiceName = 'Winmgmt'
 $StartupType = 'Automatic'
+$ExpectedStartMode = 'Auto'
 $StartServiceAfterChange = $true
 $ValidationDelaySeconds = 3
 
@@ -76,7 +77,7 @@ try {
     Start-Sleep -Seconds $ValidationDelaySeconds
     $serviceState = Get-CimInstance -ClassName Win32_Service -Filter "Name='$ServiceName'" -ErrorAction Stop
 
-    if ($serviceState.StartMode -eq 'Disabled' -or ($StartServiceAfterChange -and $serviceState.State -ne 'Running')) {
+    if ($serviceState.StartMode -ne $ExpectedStartMode -or ($StartServiceAfterChange -and $serviceState.State -ne 'Running')) {
         throw "Service validation failed. StartMode='$($serviceState.StartMode)' State='$($serviceState.State)'."
     }
 

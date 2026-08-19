@@ -2,15 +2,15 @@
   "Name": "Ensure LLMNR Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Networking",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,11 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates the DNS Client policy that disables multicast name resolution on managed Windows endpoints.",
+  "Summary": "Detects and remediates the DNS Client policy that disables Link-Local Multicast Name Resolution.",
   "Tags": [
     "Networking",
     "DNS",
-    "Security",
-    "Business Premium"
+    "LLMNR"
   ]
 }

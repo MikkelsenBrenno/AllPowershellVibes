@@ -260,7 +260,7 @@ function Write-SmokeSummary {
     $lines.Add('Only `Detect.ps1` and `Discover.ps1` are eligible. Action scripts cannot be selected by this runner.')
     foreach ($item in @($failures + $warnings | Select-Object -First 20)) {
         $reason = @($item.FailureReasons + $item.WarningReasons) -join '; '
-        $lines.Add("- **$($item.Status)** ``$($item.RelativePath)`` — $reason")
+        $lines.Add("- **$($item.Status)** ``$($item.RelativePath)`` - $reason")
     }
     [System.IO.File]::WriteAllText($Path, (($lines -join [Environment]::NewLine) + [Environment]::NewLine), (New-Object System.Text.UTF8Encoding($false)))
 }

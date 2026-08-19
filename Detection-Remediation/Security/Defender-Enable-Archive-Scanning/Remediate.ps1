@@ -7,9 +7,9 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     System
 
 .INTUNE
     Workload:    Detection and Remediation
@@ -68,7 +68,7 @@ function Write-Log {
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value $line -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -91,7 +91,12 @@ function Get-DefenderPreferenceValue {
         throw "Defender preference '$Name' was not found on this device."
     }
 
-    return $preferences.$Name
+    $value = $preferences.$Name
+    if ($null -eq $value) {
+        throw "Defender preference '$Name' returned no value."
+    }
+
+    return $value
 }
 
 function Format-BooleanValue {
@@ -159,4 +164,3 @@ catch {
     Write-Output 'Remediation failed for Microsoft Defender archive scanning.'
     exit 1
 }
-

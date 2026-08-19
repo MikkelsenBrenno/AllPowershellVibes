@@ -31,7 +31,7 @@ param(
 
     [string]$OutputRoot = (Join-Path -Path (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path -ChildPath 'output'),
 
-    [string]$BaselinePath = (Join-Path -Path (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path -ChildPath 'tools\script-portability-baseline.json'),
+    [string]$BaselinePath,
 
     [switch]$UpdateScriptInfo,
 
@@ -47,6 +47,10 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$defaultRepositoryRoot = (Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath '..')).Path
+if ([string]::IsNullOrWhiteSpace($BaselinePath)) {
+    $BaselinePath = Join-Path -Path $defaultRepositoryRoot -ChildPath 'tools\script-portability-baseline.json'
+}
 $validationModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'IntuneLibrary.Validation.psm1'
 Import-Module -Name $validationModulePath -Force
 $selectedPackagePaths = @($PackagePath | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) } | ForEach-Object { ConvertTo-ValidationPath -Path $_ } | Sort-Object -Unique)

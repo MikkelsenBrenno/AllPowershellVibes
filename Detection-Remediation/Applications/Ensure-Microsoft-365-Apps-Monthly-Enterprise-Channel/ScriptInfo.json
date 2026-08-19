@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Microsoft 365 Apps Monthly Enterprise Channel",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Applications",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Detects and remediates the Microsoft 365 Apps update-channel policy to Monthly Enterprise Channel.",
+  "Tags": [
+    "Applications",
+    "Microsoft 365 Apps",
+    "Updates"
+  ]
+}

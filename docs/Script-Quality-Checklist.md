@@ -54,6 +54,8 @@ Use this checklist before publishing or deploying a script.
 - README includes install, uninstall, or detection commands when applicable.
 - JSON rules are explained when applicable.
 - Any known reboot, logoff, or service restart requirement is documented.
+- `PilotReady` and `Validated` READMEs include a package-specific `Pilot Validation` section and relevant Microsoft Learn references.
+- `Validated` READMEs include a non-sensitive `Validation Evidence` section.
 
 ## Testing
 
@@ -63,3 +65,5 @@ Use this checklist before publishing or deploying a script.
 - The script was tested in the same context Intune will use.
 - Registry and file system behavior was tested in the intended 32-bit or 64-bit PowerShell host.
 - Deployment was piloted before broad assignment.
+
+Use `docs/Trusted-Remediation-Pilot.md` for the remediation handoff, pilot record, and status-promotion rules.

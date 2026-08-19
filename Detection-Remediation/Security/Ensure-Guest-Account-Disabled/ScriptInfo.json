@@ -2,7 +2,7 @@
   "Name": "Ensure Guest Account Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "Yes",

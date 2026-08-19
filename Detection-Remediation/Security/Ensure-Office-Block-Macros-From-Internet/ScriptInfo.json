@@ -1,16 +1,16 @@
 {
-  "Name": "Ensure Office Block Macros From Internet",
+  "Name": "Ensure Office Blocks Macros From The Internet",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
-  "Context": "User recommended",
-  "Requires64BitPowerShell": "Recommended",
+  "Status": "PilotReady",
+  "Context": "User",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,12 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates Microsoft 365 Apps policy values that block VBA macros from files marked as downloaded from the internet.",
+  "Summary": "Detects and remediates the per-user Office policies that block macros in files from the internet for all seven supported desktop applications.",
   "Tags": [
     "Security",
     "Microsoft 365 Apps",
-    "Office",
-    "Macros",
-    "Business Premium"
+    "Macros"
   ]
 }

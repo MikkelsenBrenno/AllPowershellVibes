@@ -2,7 +2,7 @@
   "Name": "Ensure Cryptographic Service Running",
   "Workload": "Detection and Remediation",
   "Purpose": "Windows-Updates",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "Yes",

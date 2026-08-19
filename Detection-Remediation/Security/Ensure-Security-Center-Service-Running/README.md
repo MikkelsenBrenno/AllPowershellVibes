@@ -70,3 +70,16 @@ Update the `CONFIGURATION` section in both scripts before deployment. Keep servi
 
 Original implementation for this repository. Topic inspiration comes from public Intune and remediation libraries including [JayRHa/EndpointAnalyticsRemediationScripts](https://github.com/JayRHa/EndpointAnalyticsRemediationScripts), [MSEndpointMgr/ProactiveRemediations](https://github.com/MSEndpointMgr/ProactiveRemediations), [microsoft/intune-tenant-doc](https://github.com/microsoft/intune-tenant-doc), [MicrosoftDocs/memdocs](https://github.com/MicrosoftDocs/memdocs), and Microsoft Intune Remediations documentation.
 
+## Pilot Validation
+
+1. Confirm the target is a supported Windows client where the `wscsvc` service is present.
+2. Deploy with `$StartService = $false`; a stopped service must remain unchanged and remediation must exit `1`.
+3. Use an affected lab device or VM snapshot for the stopped-service case, then set `$StartService = $true` and verify the final direct service state is `Running`.
+4. Open Windows Security and confirm antivirus, firewall, and update health reporting still populates; rerun detection and verify exit `0`.
+
+Microsoft references:
+
+- [How Windows Security uses the Windows Security Center service](https://learn.microsoft.com/en-us/windows/security/operating-system-security/system-security/windows-defender-security-center/windows-defender-security-center)
+- [Microsoft service guidance for Security Center](https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services#security-center)
+- [Intune Remediations](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)
+

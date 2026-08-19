@@ -9,9 +9,9 @@
 
 .NOTES
     Name:        Detect.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     System
 
 .INTUNE
     Workload:    Detection and Remediation
@@ -69,7 +69,7 @@ function Write-Log {
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value $line -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -140,7 +140,6 @@ catch {
     catch {
     }
 
-    Write-Output 'Not compliant. Defender PUA protection could not be validated.'
+    Write-Output 'Not compliant. Microsoft Defender preference state is unavailable.'
     exit 1
 }
-

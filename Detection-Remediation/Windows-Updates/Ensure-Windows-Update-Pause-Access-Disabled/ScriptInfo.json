@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Windows Update Pause Access Disabled",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Windows-Updates",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "Medium",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Removes user access to pause Windows Update.",
+  "Tags": [
+    "Windows Update",
+    "Pause",
+    "Policy"
+  ]
+}

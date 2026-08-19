@@ -2,7 +2,7 @@
   "Name": "Ensure Diagnostic Policy Service Running",
   "Workload": "Detection and Remediation",
   "Purpose": "Endpoint-Health",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
   "Requires64BitPowerShell": "Recommended",
   "HasRemediation": "Yes",

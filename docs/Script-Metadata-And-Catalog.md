@@ -30,7 +30,7 @@ Each deployable script package includes `ScriptInfo.json`. The repository catalo
 
 ## Status Promotion
 
-New packages start as `Template`. `Example`, `Planned`, and `NeedsReview` packages are not deployable promises. Packages marked `PilotReady` or `Validated` must pass `tools\Test-IntuneWorkloadContracts.ps1`, including the evidence and portability review gates described in `docs/Intune-Workload-Contracts.md`.
+New packages start as `Template`. `Example`, `Planned`, and `NeedsReview` packages are not deployable promises. Packages marked `PilotReady` or `Validated` must pass `tools\Test-IntuneWorkloadContracts.ps1`, including the evidence, portability, and readiness-documentation gates described in `docs/Intune-Workload-Contracts.md`. `Validated` also requires non-sensitive test evidence in the package README.
 
 ## Generate The Catalog
 

@@ -1,0 +1,27 @@
+{
+  "Name": "Ensure Lid Close Action Sleep",
+  "Workload": "Detection and Remediation",
+  "Purpose": "Device-Configuration",
+  "Status": "PilotReady",
+  "Context": "System",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
+  "HasRemediation": "Yes",
+  "HasUninstall": "No",
+  "TeamsAlertReady": "No",
+  "WritesTo": "Registry",
+  "Reboot": "No",
+  "Risk": "High",
+  "DetectionEvidenceType": "DirectEvidence",
+  "DetectionEvidenceSource": "Registry",
+  "DetectionReviewStatus": "Reviewed",
+  "PortabilityReviewStatus": "Reviewed",
+  "PortabilityRiskLevel": "None",
+  "PortabilityRiskAreas": [],
+  "PortabilityNotes": "No portability risks detected by static audit.",
+  "Summary": "Configures closing a portable-device lid to put the device to sleep on AC and battery.",
+  "Tags": [
+    "Device Configuration",
+    "Power",
+    "Lid"
+  ]
+}

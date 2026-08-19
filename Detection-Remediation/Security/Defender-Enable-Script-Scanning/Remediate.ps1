@@ -9,9 +9,9 @@
 
 .NOTES
     Name:        Remediate.ps1
-    Version:     1.0.0
+    Version:     1.1.0
     PowerShell:  Windows PowerShell 5.1
-    Context:     System recommended
+    Context:     System
 
 .INTUNE
     Workload:    Detection and Remediation
@@ -73,7 +73,7 @@ function Write-Log {
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     $line = "$timestamp [$Level] $Message"
-    Add-Content -Path $LogPath -Value $line -Encoding UTF8
+    Add-Content -LiteralPath $LogPath -Value $line -Encoding UTF8
 }
 
 function Write-ScriptMetadata {
@@ -118,6 +118,10 @@ try {
         throw "Defender preference '$DefenderPreferenceName' was not found."
     }
 
+    if ($null -eq $beforeProperty.Value) {
+        throw "Defender preference '$DefenderPreferenceName' returned no value before remediation."
+    }
+
     $beforeValue = [bool]$beforeProperty.Value
     Write-Log -Message "Current $FriendlySettingName state is '$(Get-ProtectionState -DisablePreferenceValue $beforeValue)'."
 
@@ -133,7 +137,12 @@ try {
     Start-Sleep -Seconds $ValidationDelaySeconds
 
     $afterPreferences = Get-MpPreference
-    $afterValue = [bool]$afterPreferences.PSObject.Properties[$DefenderPreferenceName].Value
+    $afterProperty = $afterPreferences.PSObject.Properties[$DefenderPreferenceName]
+    if ($null -eq $afterProperty -or $null -eq $afterProperty.Value) {
+        throw "Defender preference '$DefenderPreferenceName' returned no value after remediation."
+    }
+
+    $afterValue = [bool]$afterProperty.Value
     $afterState = Get-ProtectionState -DisablePreferenceValue $afterValue
 
     if ($afterValue -eq $DesiredPreferenceValue) {
@@ -158,4 +167,3 @@ catch {
     Write-Output "Remediation failed for $FriendlySettingName."
     exit 1
 }
-

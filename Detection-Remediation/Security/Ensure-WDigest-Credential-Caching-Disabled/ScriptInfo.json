@@ -2,15 +2,15 @@
   "Name": "Ensure WDigest Credential Caching Disabled",
   "Workload": "Detection and Remediation",
   "Purpose": "Security",
-  "Status": "Example",
+  "Status": "PilotReady",
   "Context": "System",
-  "Requires64BitPowerShell": "Required for native HKLM policy paths",
+  "Requires64BitPowerShell": "Required for the native 64-bit policy registry view",
   "HasRemediation": "Yes",
   "HasUninstall": "No",
   "TeamsAlertReady": "No",
   "WritesTo": "Registry",
   "Reboot": "No",
-  "Risk": "Medium",
+  "Risk": "High",
   "DetectionEvidenceType": "DirectEvidence",
   "DetectionEvidenceSource": "Registry",
   "DetectionReviewStatus": "Reviewed",
@@ -18,10 +18,10 @@
   "PortabilityRiskLevel": "None",
   "PortabilityRiskAreas": [],
   "PortabilityNotes": "No portability risks detected by static audit.",
-  "Summary": "Detects and remediates WDigest credential caching so cleartext credentials are not stored in memory on managed Windows endpoints.",
+  "Summary": "Detects and remediates the WDigest setting that prevents storage of reusable logon credentials in LSASS.",
   "Tags": [
     "Security",
-    "Credentials",
-    "Business Premium"
+    "WDigest",
+    "Credential Protection"
   ]
 }
